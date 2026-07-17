@@ -10,10 +10,29 @@ public class WebSocketClient : MonoBehaviour
     public float speedKel;
     public bool road_type;
     private string carwaytext;
+
     public bool move_inRight;
     private string move_inText;
-    public int lights_on;
+
+    public int lights_on = 4;
     private string lights_onText;
+
+    public int Webhand_sine = 4;
+    private string handsineText;
+
+    public bool usingSmartPhone;
+    private string usingSmartPhoneText;
+
+    public bool bikelight;
+    private string bikeligthText;
+
+    public bool morning = true;
+    private string morningText;
+
+    public int drunkint;
+    public string drunkText;
+
+    public int Countviolations;
     private void Awake()
     {
         webC = this;
@@ -32,7 +51,10 @@ public class WebSocketClient : MonoBehaviour
         {
             var message = Encoding.UTF8.GetString(bytes);
             if(message != "")
-                Debug.Log("受信: " + message);
+            {
+                Debug.LogWarning("受信: " + message);
+                Countviolations++;
+            }
         };
         websocket.OnError += (e) =>
         {
@@ -82,6 +104,7 @@ public class WebSocketClient : MonoBehaviour
             move_inText = "2.0";
         else
             move_inText = "1.0";
+
         if (lights_on == 0)
             lights_onText = "0.0";
         if (lights_on == 1)
@@ -90,19 +113,52 @@ public class WebSocketClient : MonoBehaviour
             lights_onText = "2.0";
         if (lights_on == 4)
             lights_onText = "4.0";
+
+        if (morning)
+            morningText = "1.0";
+        else
+            morningText = "0.0";
+        Debug.Log("web " + Webhand_sine);
+        if (Webhand_sine == 1)
+            handsineText = "1.0";
+        else if (Webhand_sine == 2)
+            handsineText = "2.0";
+        else if (Webhand_sine == 4)
+            handsineText = "4.0";
+        else
+            handsineText = "3.0";
+
+        if (usingSmartPhone)
+            usingSmartPhoneText = "1.0";
+        else
+            usingSmartPhoneText = "0.0";
+        if (bikelight)
+            bikeligthText = "1.0";
+        else
+            bikeligthText = "0.0";
+
+        if (drunkint == 0)
+            drunkText = "0.0";
+        else if(drunkint > 0)
+            drunkText = "1.0";
+        else
+        {
+            drunkText = "2.0";
+            Debug.Log("不明な酔いレベル");
+        }
         Debug.Log("statesBefore");
         string csvPayload = string.Join("|",
             speedtext,                     // スピード
             carwaytext,                    // 道路タイプ (0.0: roadwork, 1.0: sidewalk, etc.)
             move_inText,                   // 移動方向 (1.0: left, 2.0: right)
-            "4.0",                         // hand_sine (none: 4.0)
-            "0.0",                         // using_phone (false: 0.0)
-            "0.0",                         // lights_on (false: 0.0)
+            handsineText,                  // hand_sine (lest: 1.0, right: 2.0, none: 4.0)
+            usingSmartPhoneText,           // using_phone (false: 0.0 true: 1.0)
+            bikeligthText,                 // lights_on (false: 0.0 true: 1.0)
             "0.0",                         // breaks_functional (false: 0.0)
-            "0.0",                         // passenger (false: 0.0)
-            "0.0",                         // alcohol (false: 0.0)
+            "0.0",                         // passenger (false: 0.0)歩行者
+            drunkText,                     // alcohol (false: 0.0 ture:1.0)アルコール
             lights_onText,                 // signal_state (0.0: red, 1.0: yellow, 2.0: blue, 4.0: null)
-            "0.0",                         // time_of_day (morning: 0.0)
+            morningText,                   // time_of_day (morning: 0.0)
             "0.0",                         // stop_sign_present (false: 0.0)
             "4.0",                         // crossing_gate (none: 4.0)
             "0.0"                          // pedestrians_nearby (false: 0.0)

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using UnityEngine.UI;
 public class playerMnager : MonoBehaviour
 {
     public float moveForce = 20f;   // 加える力の強さ
@@ -17,15 +17,24 @@ public class playerMnager : MonoBehaviour
     private bool traficlightIn2 = false;
     private bool carwayright;
     public bool carway;
-    private Vector3 nowflem;
-    private Vector3 beforeflem;
+    private int hand_sine = 4;//left:1 rigth:2 none:4
+    public GameObject handleft;
+    public GameObject handright;
+    private float handinclination = 0;//傾き
+    private float handdismiter = 1f;
+    private bool usingSmartPhone;
+    public Camera maincamera;
+    public CanvasGroup CanvasGroup;
+    public GameObject bikelight;
+    private int DrunkLevel;//酔い度　0~3
+    private float DrunkNoise = 0;
+    public Text DrunkText;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         Mcolor.color = Color.green;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.constraints = RigidbodyConstraints.FreezePosition;
-        beforeflem = transform.position;
     }
 
     void Update()
@@ -37,13 +46,13 @@ public class playerMnager : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.None;
         }
-        if(GameMnager.Insector.GameStatus == "finish")
+        if (GameMnager.Insector.GameStatus == "finish")
         {
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             rb.constraints = RigidbodyConstraints.FreezePosition;
             playerReset();//初期配置
         }
-        if((Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift)) && Jokou == false)
+        if ((Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift)) && Jokou == false)
         {
             moveForce = 15f;
         }
@@ -59,7 +68,7 @@ public class playerMnager : MonoBehaviour
         {
             moveForce = 20f;
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             playerReset();
         }
@@ -68,12 +77,12 @@ public class playerMnager : MonoBehaviour
             JokouUnFreezeRotation();
             Jokou = false;
         }
-        else if(!Jokou && Input.GetKeyDown(KeyCode.Space))
+        else if (!Jokou && Input.GetKeyDown(KeyCode.Space))
         {//下のは歩行
             JokouFreezeRotation();
             Jokou = true;
         }
-        if(gameObject.transform.position.y < 80f)
+        if (gameObject.transform.position.y < 80f)
         {
             Debug.Log("落ちないためにリセット");
             playerReset();
@@ -84,13 +93,110 @@ public class playerMnager : MonoBehaviour
             playerReset();
             GameMnager.Insector.PlayerReset = false;
         }
-        if (Mathf.Approximately(Time.deltaTime, 0))
-            return;
-        nowflem = transform.position;
-        Vector3 velocity = (nowflem - beforeflem) / Time.deltaTime;
-        float velocityZ = velocity.z;
-        
-       
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (handleft.activeSelf == true)//すでに左手を出していたら直す
+            {
+                handleft.SetActive(false);
+            }
+            else
+            {
+                handleft.SetActive(true);
+            }
+            WebSocketClient.webC.Webhand_sine = hand_sine;
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (handright.activeSelf == true)//すでに右手を出していたら直す
+            {
+                handright.SetActive(false);
+            }
+            else
+            {
+                handright.SetActive(true);
+            }
+            WebSocketClient.webC.Webhand_sine = hand_sine;
+        }
+        if (handleft.activeSelf == true && handright.activeSelf == true)
+        {
+            handinclination = 0;
+            handdismiter = 100f;
+            hand_sine = 4;
+        }
+        else if (handright.activeSelf == true)
+        {
+            handinclination = -10f;
+            handdismiter = 10f;
+            hand_sine = 2;
+        }
+        else if (handleft.activeSelf == true)
+        {
+            handinclination = 10f;
+            handdismiter = 10f;
+            hand_sine = 1;
+        }
+        else
+        {
+            handinclination = 0f;
+            handdismiter = 1f;
+            hand_sine = 4;
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (usingSmartPhone)
+            {
+                usingSmartPhone = false;
+                maincamera.farClipPlane = 300f;
+                CanvasGroup.alpha = 0;
+            }
+            else
+            {
+                usingSmartPhone = true;
+                maincamera.farClipPlane = 50f;
+                CanvasGroup.alpha = 1;
+            }
+            Debug.Log(usingSmartPhone);
+            WebSocketClient.webC.usingSmartPhone = usingSmartPhone;
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (bikelight.activeSelf)
+            {
+                bikelight.SetActive(false);
+            }
+            else
+            {
+                bikelight.SetActive(true);
+            }
+            WebSocketClient.webC.bikelight = bikelight.activeSelf;
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            if (DrunkLevel < 3)
+            {
+                DrunkLevel++;
+                DrunkText.text = "酔い度:" + DrunkLevel;
+            }
+            else
+            {
+                Debug.Log("drunklevel is Max" + DrunkLevel);
+            }
+            WebSocketClient.webC.drunkint = DrunkLevel;
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            if (0 < DrunkLevel)
+            {
+                DrunkLevel--;
+                DrunkText.text = "酔い度:" + DrunkLevel;
+            }
+            else
+            {
+                Debug.Log("drunklevel is Min" + DrunkLevel);
+            }
+            WebSocketClient.webC.drunkint = DrunkLevel;
+        }
+        StartCoroutine(Noise());
     }
     void playerReset()
     {
@@ -98,6 +204,14 @@ public class playerMnager : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 180f, 0f);
         rb.velocity = new Vector3(0f, 0f, 0f); ;
         rb.rotation = Quaternion.Euler(0f, 0f, 0f);
+        handleft.SetActive(false);
+        handright.SetActive(false);
+        hand_sine = 4;
+        usingSmartPhone = false;
+        maincamera.farClipPlane = 300f;
+        CanvasGroup.alpha = 0;
+        DrunkLevel = 0;
+        DrunkText.text = "酔い度:" + DrunkLevel;
         JokouFreezeRotation();
         Jokou = true;
     }
@@ -115,20 +229,25 @@ public class playerMnager : MonoBehaviour
         Mcolor.color = Color.green;
         people.localPosition = new Vector3(0, 0, 0);
     }
+    IEnumerator Noise()
+    {
+        DrunkNoise = Random.Range(-1f, 1f) * DrunkLevel;
+        yield return new WaitForSeconds(0.2f);
+    }
     void FixedUpdate()
     {
         if (GameMnager.Insector.GameStatus != "play") return;
         Vector3 localVel = transform.InverseTransformDirection(rb.velocity);
         WebSocketClient.webC.speedKel = localVel.z;
         string a = localVel.z.ToString("F14");
-        Debug.Log("valo " + a + "  " + localVel.z);
+        //Debug.Log("valo " + a + "  " + localVel.z);
         //Debug.DrawRay(transform.position, -transform.up,Color.red,0.8f);
         float moveInput = Input.GetAxis("Vertical");
         float turnInput = Input.GetAxis("Horizontal");
         float rollAngle = transform.localEulerAngles.z;
         if (rollAngle > 180) rollAngle -= 360;
         if (Physics.Raycast(transform.position, -transform.up, 0.8f, groundlayer))
-            if (Jokou)
+            if (Jokou)//歩き
             {
                 //Debug.Log(transform.localEulerAngles.x);
 
@@ -149,15 +268,14 @@ public class playerMnager : MonoBehaviour
                 //Quaternion turnRotation = Quaternion.Euler(0f, turnInput * turnSpeed * Time.fixedDeltaTime * moveInput / 2, 0f);
                 //rb.MoveRotation();
             }
-            else
+            else//↓自転車
             {
+                //酔っているときのnoise
+                turnInput += DrunkNoise;
                 // 1. 回転（A/Dキー）
-
                 // 2. 向いている方向に力を加える（W/Sキー）
-
-
                 // 傾きを打ち消す方向の加速度
-                float targetRollAcc = -rollAngle * Math.Abs(localVel.z / 2) / 1 + turnInput * turnSpeed / -2;
+                float targetRollAcc = -rollAngle * Mathf.Abs(localVel.z / 2) / handdismiter + turnInput * turnSpeed / -2 + handinclination;
                 //Debug.Log(targetRollAcc);
                 Vector3 sideSpeed = transform.right * localVel.x * 2;
                 rb.AddForce(-sideSpeed, ForceMode.VelocityChange);//滑らないよう加速度適用
@@ -199,18 +317,15 @@ public class playerMnager : MonoBehaviour
             if (traficlightMnager.traficColor == 1)//赤
             {
                 WebSocketClient.webC.lights_on = 0;
-                Debug.Log("red");
                 GameMnager.whatSin = GameMnager.violationType.IgnoringTrafficLights;
             }
             if (traficlightMnager.traficColor == 2)//黄色
             {
                 WebSocketClient.webC.lights_on = 1;
-                Debug.Log("yellow");
             }
             if (traficlightMnager.traficColor == 3)//青
             {
                 WebSocketClient.webC.lights_on = 2;
-                Debug.Log("bule");
             }
         }
         if (other.gameObject.tag == "traficlight2" && !traficlightIn)
@@ -219,18 +334,15 @@ public class playerMnager : MonoBehaviour
             if (traficlightMnager.traficColor2 == 4)//赤
             {
                 WebSocketClient.webC.lights_on = 0;
-                Debug.Log("red2222");
                 GameMnager.whatSin = GameMnager.violationType.IgnoringTrafficLights;
             }
             if (traficlightMnager.traficColor2 == 5)//黄色
             {
                 WebSocketClient.webC.lights_on = 1;
-                Debug.Log("yellow2222");
             }
             if (traficlightMnager.traficColor2 == 6)//青
             {
                 WebSocketClient.webC.lights_on = 2;
-                Debug.Log("bule2222");
             }
         }
         if(other.gameObject.tag == "bikewaypoint")

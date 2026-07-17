@@ -9,7 +9,7 @@ public class traficlightMnager : MonoBehaviour
     private float timerred = 14;//0~14Ô
     private float timerblue = 22;//14~22Â
     private float timeryellow = 24;//22~24‰©F
-    private float timerred2 = 24;//12~24Ô
+    //private float timerred2 = 24;//12~24Ô
     private float timerredshrot2 = 2;//0~2Ô
     private float timerblue2 = 10;//2~10Â
     private float timeryellow2 = 12;//10~12‰©F

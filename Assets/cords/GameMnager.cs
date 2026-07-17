@@ -20,12 +20,12 @@ public class GameMnager : MonoBehaviour
     
     
     public CanvasGroup canvas;//uiを非表示に
-    public GameObject UI;
+    public CanvasGroup UIsgroup;
     public Text title;
     public Text explain;
     public GameObject startbutton;
     public GameObject nextbutton;
-    private int nextint = 2;
+    private int nextint = 3;
     private int nextCount = 0;
 
     public GameObject penalty;//罰金
@@ -33,6 +33,20 @@ public class GameMnager : MonoBehaviour
     private int penaltyint = 0;
 
     public CanvasGroup Danger;//違反時の表示
+
+    private float daytime = 50;//時間 太陽の角度 50:朝 210:夜 0~360
+    public GameObject Sun;//明るさ
+
+    public CanvasGroup UIcanvas;
+
+    public CanvasGroup Risultgroup;
+    public Text violationsNumber;
+    public Text resultpenlty;
+    public Text ClearTimeText;
+    private float ClearTime;
+    public Text Rank;//A,B,Cなどのやつ
+    public Text RankText;//そのA,B,Cに対する説明
+    public Text evaluation;//評価
     // UIを表示
     private void ShowUI()
     {
@@ -56,13 +70,13 @@ public class GameMnager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //canvas.enabled = true;//仮置き
-        UI.SetActive(true);
+        UIsgroup.alpha = 1;
         startbutton.SetActive(false);
 
-        penalty.SetActive(false);
+        UIcanvas.alpha = 0;
         penaltytext = penalty.GetComponent<Text>();
 
+        Risultgroup.alpha = 0;
         Danger.alpha = 0f;
         Danger.interactable = false;
         Danger.blocksRaycasts = false;
@@ -73,6 +87,10 @@ public class GameMnager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameStatus == "play")
+        {
+            ClearTime += Time.deltaTime;
+        }
         //Debug.Log(Countpls);
         if (stage == 0 && Countpls)
         {
@@ -91,8 +109,22 @@ public class GameMnager : MonoBehaviour
         }
         if (whatSin == violationType.IgnoringTrafficLights)//信号無視 6000円
         {  
-            Debug.Log("信号無視 6000円");
-            //guilty(6000);
+            //Debug.Log("信号無視 6000円 今は切っている");
+            whatSin = violationType.none;
+            guilty(6000);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Sun.transform.Rotate(Vector3.right * 180f);
+            DynamicGI.UpdateEnvironment();
+            if(Sun.transform.eulerAngles.x == 50f)
+            {
+                WebSocketClient.webC.morning = true;
+            }
+            else
+            {
+                WebSocketClient.webC.morning = false;
+            }
         }
     }
     private void guilty(int value)
@@ -134,9 +166,18 @@ public class GameMnager : MonoBehaviour
         }
         if (nextCount == 1)
         {
-            explain.text = "自転車の色はspaceキーでの変更ができます\n" +
-                "リスポーン時は青色になります\n" +
-                "それではstartボタンを教えてください";
+            explain.text = "自転車の色はspaceキーでの変更ができる\n" +
+                "リスポーン時は青色にできるよ\n" +
+                "それではstartボタンを\n" +
+                "押してね";
+        }
+        if (nextCount == 2)
+        {
+            title.text = "チュートリアル";
+            explain.text = "みどりのチェックポイントを\n" +
+                "通っていってね\n" +
+                "赤色がゴールだよ\n" +
+                "信号に注意しよう";
         }
         nextCount++;
         if (nextint == nextCount)
@@ -149,13 +190,13 @@ public class GameMnager : MonoBehaviour
     public void startgame()
     {
         //canvas.enabled = false;
-        UI.SetActive(false);
+        UIsgroup.alpha = 0;
         GameStatus = "play";
         Debug.Log(GameStatus);
-        penalty.SetActive(true);
+        UIcanvas.alpha = 1;
         penaltytext.text = "罰金:0円";
         penaltyint = 0;
-
+        Risultgroup.alpha = 0;
         if(stage == 0)
         {
             Countwaypoints = 0;
@@ -179,7 +220,44 @@ public class GameMnager : MonoBehaviour
             explain.text = "車に注意しよう\n*車はすべて直進で進むよ*";
 
         }
-        UI.SetActive(true);
-        penalty.SetActive(false);
+        UIsgroup.alpha = 1;
+        UIcanvas.alpha = 0;
+        int V = WebSocketClient.webC.Countviolations;
+        if (V == 0)
+        {
+            Rank.text = "A";
+            RankText.text = "最高ランク";
+            evaluation.text = "清廉潔白";
+        }
+        else if (V < 3)
+        {
+            Rank.text = "B";
+            RankText.text = "ランク";
+            evaluation.text = "微犯罪者";
+        }
+        else if (V < 5)
+        {
+            Rank.text = "C";
+            RankText.text = "ランク";
+            evaluation.text = "犯罪者予備軍";
+        }
+        else if (V < 7)
+        {
+            Rank.text = "D";
+            RankText.text = "ランク";
+            evaluation.text = "犯罪者";
+        }
+        else if (V < 9)
+        {
+            Rank.text = "E";
+            RankText.text = "最低ランク";
+            evaluation.text = "重罪人";
+        }
+        violationsNumber.text = "違反回数:" + V;
+        WebSocketClient.webC.Countviolations = 0;
+        resultpenlty.text = "罰金" + penaltyint;
+        ClearTimeText.text = "クリア時間:" + ClearTime;
+        ClearTime = 0;
+        Risultgroup.alpha = 1;
     }
 }
