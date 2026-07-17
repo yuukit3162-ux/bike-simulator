@@ -20,7 +20,7 @@ public class GameMnager : MonoBehaviour
     
     
     public CanvasGroup canvas;//uiを非表示に
-    public CanvasGroup UIsgroup;
+    public CanvasGroup UIsgroup;//UIs
     public Text title;
     public Text explain;
     public GameObject startbutton;
@@ -37,7 +37,7 @@ public class GameMnager : MonoBehaviour
     private float daytime = 50;//時間 太陽の角度 50:朝 210:夜 0~360
     public GameObject Sun;//明るさ
 
-    public CanvasGroup UIcanvas;
+    public CanvasGroup UIcanvas;//アルコール　罰金
 
     public CanvasGroup Risultgroup;
     public Text violationsNumber;
@@ -137,6 +137,7 @@ public class GameMnager : MonoBehaviour
         //罰金を増やす
         penaltyint += value;
         penaltytext.text = "罰金:" + penaltyint + "円";
+        WebSocketClient.webC.Countviolations++;
         whatSin = violationType.none;
         StartCoroutine(Fadeout());
     }
@@ -156,45 +157,56 @@ public class GameMnager : MonoBehaviour
         Danger.interactable = false;
         Danger.blocksRaycasts = false;
     }
-    public void nextTo()
+    public void nextTo()//nextbutton
     {
-        if (nextCount == 0)
+        if(stage == 1)
         {
-            explain.text = "自転車には青色と緑色があって\n" +
-                "青色:動きが遅いが倒れない、歩いているイメージ\n" +
-                "緑色:動きが早いが倒れる";
-        }
-        if (nextCount == 1)
-        {
-            explain.text = "自転車の色はspaceキーでの変更ができる\n" +
-                "リスポーン時は青色にできるよ\n" +
-                "それではstartボタンを\n" +
-                "押してね";
-        }
-        if (nextCount == 2)
-        {
-            title.text = "チュートリアル";
-            explain.text = "みどりのチェックポイントを\n" +
-                "通っていってね\n" +
-                "赤色がゴールだよ\n" +
-                "信号に注意しよう";
-        }
-        nextCount++;
-        if (nextint == nextCount)
-        {
+            Risultgroup.alpha = 0;
             nextbutton.SetActive(false);
+            UIsgroup.alpha = 1;
             startbutton.SetActive(true);
         }
-        
+        if(stage == 0)
+        {
+            if (nextCount == 0)
+            {
+                explain.text = "自転車には青色と緑色があって\n" +
+                    "青色:動きが遅いが倒れない、歩いているイメージ\n" +
+                    "緑色:動きが早いが倒れる";
+            }
+            if (nextCount == 1)
+            {
+                explain.text = "自転車の色はspaceキーでの変更ができる\n" +
+                    "リスポーン時は青色にできるよ\n" +
+                    "それではstartボタンを\n" +
+                    "押してね";
+            }
+            if (nextCount == 2)
+            {
+                title.text = "チュートリアル";
+                explain.text = "みどりのチェックポイントを\n" +
+                    "通っていってね\n" +
+                    "赤色がゴールだよ\n" +
+                    "信号に注意しよう";
+            }
+            nextCount++;
+            if (nextint == nextCount)
+            {
+                nextbutton.SetActive(false);
+                startbutton.SetActive(true);
+            }
+        }
     }
-    public void startgame()
+    public void startgame()//startbutton
     {
         //canvas.enabled = false;
         UIsgroup.alpha = 0;
+        startbutton.SetActive(false);
         GameStatus = "play";
         Debug.Log(GameStatus);
         UIcanvas.alpha = 1;
         penaltytext.text = "罰金:0円";
+        Debug.Log("罰金リセット");
         penaltyint = 0;
         Risultgroup.alpha = 0;
         if(stage == 0)
@@ -220,7 +232,6 @@ public class GameMnager : MonoBehaviour
             explain.text = "車に注意しよう\n*車はすべて直進で進むよ*";
 
         }
-        UIsgroup.alpha = 1;
         UIcanvas.alpha = 0;
         int V = WebSocketClient.webC.Countviolations;
         if (V == 0)
@@ -229,25 +240,25 @@ public class GameMnager : MonoBehaviour
             RankText.text = "最高ランク";
             evaluation.text = "清廉潔白";
         }
-        else if (V < 3)
+        else if (V < 3)//1 2
         {
             Rank.text = "B";
             RankText.text = "ランク";
             evaluation.text = "微犯罪者";
         }
-        else if (V < 5)
+        else if (V < 5)//3 4
         {
             Rank.text = "C";
             RankText.text = "ランク";
             evaluation.text = "犯罪者予備軍";
         }
-        else if (V < 7)
+        else if (V < 7)//5 6
         {
             Rank.text = "D";
             RankText.text = "ランク";
             evaluation.text = "犯罪者";
         }
-        else if (V < 9)
+        else 
         {
             Rank.text = "E";
             RankText.text = "最低ランク";
@@ -255,9 +266,10 @@ public class GameMnager : MonoBehaviour
         }
         violationsNumber.text = "違反回数:" + V;
         WebSocketClient.webC.Countviolations = 0;
-        resultpenlty.text = "罰金" + penaltyint;
+        resultpenlty.text = "罰金:" + penaltyint + "円";
         ClearTimeText.text = "クリア時間:" + ClearTime;
         ClearTime = 0;
         Risultgroup.alpha = 1;
+        nextbutton.SetActive(true);
     }
 }
