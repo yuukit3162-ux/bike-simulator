@@ -17,7 +17,7 @@ public class JsonPostExample : MonoBehaviour
     void Start()
     {
         // データの準備
-        PostData data = new PostData {model="LFM2.5-1.2B-JP", prompt="", stream=False};
+        PostData data = new PostData {model="LFM2.5-1.2B-JP", prompt="はろーわーるど", stream=False};
 
         // コルーチンの開始
         StartCoroutine(PostJsonCoroutine("http://192.168.154.105:11434/api/generate", data));
