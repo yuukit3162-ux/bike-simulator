@@ -20,7 +20,7 @@ public class JsonPostExample : MonoBehaviour
         PostData data = new PostData {model="LFM2.5-1.2B-JP", prompt="", stream=False};
 
         // コルーチンの開始
-        StartCoroutine(PostJsonCoroutine("https://example.com", data));
+        StartCoroutine(PostJsonCoroutine("http://192.168.154.105:11434/api/generate", data));
     }
 
     IEnumerator PostJsonCoroutine(string url, PostData data)
