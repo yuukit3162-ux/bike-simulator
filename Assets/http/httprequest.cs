@@ -65,7 +65,6 @@ public class JsonPostExample : MonoBehaviour
             {
                 getdata = JsonUtility.FromJson<GetData>(request.downloadHandler.text);
                 Debug.Log(data);
-                return data;
             }
             else
             {
