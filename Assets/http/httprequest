@@ -9,27 +9,28 @@ public class JsonPostExample : MonoBehaviour
     [System.Serializable]
     public class PostData
     {
-        public string name;
-        public int score;
+        public string model;
+        public string prompt;
+        public bool stream;
     }
 
     void Start()
     {
         // データの準備
-        PostData data = new PostData { name = "Player1", score = 999 };
-        string json = JsonUtility.ToJson(data);
+        PostData data = new PostData {model="LFM2.5-1.2B-JP", prompt="", stream=False};
 
         // コルーチンの開始
-        StartCoroutine(PostJsonCoroutine("https://example.com", json));
+        StartCoroutine(PostJsonCoroutine("https://example.com", data));
     }
 
-    IEnumerator PostJsonCoroutine(string url, string jsonString)
+    IEnumerator PostJsonCoroutine(string url, PostData data)
     {
+        string jsonString = JsonUtility.ToJson(data);
         // 1. リクエストの作成（空のWebRequestを作成し、設定を流し込む）
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
-            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonString);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            //byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonString);
+            request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(jsonString));
             request.downloadHandler = new DownloadHandlerBuffer();
             
             // 2. ヘッダーの追加（JSON送信に必須）
