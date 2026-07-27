@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Text;
+using UnityEngine;
+using UnityEngine.Networking;
+
+public class JsonPostExample : MonoBehaviour
+{
+    // 送信するJSONデータの構造体
+    [System.Serializable]
+    public class PostData
+    {
+        public string name;
+        public int score;
+    }
+
+    void Start()
+    {
+        // データの準備
+        PostData data = new PostData { name = "Player1", score = 999 };
+        string json = JsonUtility.ToJson(data);
+
+        // コルーチンの開始
+        StartCoroutine(PostJsonCoroutine("https://example.com", json));
+    }
+
+    IEnumerator PostJsonCoroutine(string url, string jsonString)
+    {
+        // 1. リクエストの作成（空のWebRequestを作成し、設定を流し込む）
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+        {
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonString);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            
+            // 2. ヘッダーの追加（JSON送信に必須）
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            // 3. 送信と待機
+            yield return request.SendWebRequest();
+
+            // 4. 結果の処理
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("送信成功!: " + request.downloadHandler.text);
+            }
+            else
+            {
+                Debug.LogError("エラー発生: " + request.error);
+            }
+        }
+    }
+}
