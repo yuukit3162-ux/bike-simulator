@@ -5,6 +5,11 @@ using UnityEngine.Networking;
 
 public class JsonPostExample : MonoBehaviour
 {
+    //https://qiita.com/g0e/items/9a4f886897fd46f107a8
+    [Serializable]
+    public class JsonSchema{
+        }
+    
     [Serializable]
     public class LlmMessage
     {
@@ -18,6 +23,7 @@ public class JsonPostExample : MonoBehaviour
         public string model;
         public List<LlmMessage> message;
         public bool stream;
+        public JsonSchema format;
     }
 
     [System.Serializable]
