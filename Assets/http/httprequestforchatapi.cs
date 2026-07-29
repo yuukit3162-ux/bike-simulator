@@ -23,7 +23,7 @@ public class JsonPostExample : MonoBehaviour
     [System.Serializable]
     public class GetData
     {
-        public List<LlmMessage> messages;
+        public LlmMessage message;
     }
 
     private GetData getdata;
