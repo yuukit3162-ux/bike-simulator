@@ -64,7 +64,7 @@ public class JsonPostExample : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 getdata = JsonUtility.FromJson<GetData>(request.downloadHandler.text);
-                Debug.Log(data);
+                Debug.Log(getdata);
             }
             else
             {
