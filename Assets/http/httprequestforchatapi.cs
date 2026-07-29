@@ -5,32 +5,25 @@ using UnityEngine.Networking;
 
 public class JsonPostExample : MonoBehaviour
 {
-
+    [Serializable]
+    public class LlmMessage
+    {
+        public string role;
+        public string content;
+    }
     // 送信するJSONデータの構造体
     [System.Serializable]
     public class PostData
     {
         public string model;
-        public string prompt;
+        public List<LlmMessage> messages;
         public bool stream;
-        public list<int> context;
     }
 
     [System.Serializable]
     public class GetData
     {
-        public string model;
-        public string created_at;
-        public string response;
-        public bool done;
-        public string done_reason;
-        public list<int> context;
-        public int total_duration;
-        public int load_duration;
-        public int prompt_eval_count;
-        public int prompt_eval_duration;
-        public int eval_count;
-        public int eval_duration;
+        public List<LlmMessage> messages;
     }
 
     private GetData getdata;
@@ -38,10 +31,19 @@ public class JsonPostExample : MonoBehaviour
     void Start()
     {
         // データの準備
-        PostData data = new PostData {model="LFM2.5-1.2B-JP", prompt="はろーわーるど", stream=False ,context =  new List<int>()};
+        PostData data = new PostData {
+            model="LFM2.5-1.2B-JP",
+            messages= new List<LlmMessage>
+                {
+                    new LlmMessage { role = "system", content = "あなたのIDは1357です。" },
+                    new LlmMessage { role = "assistant", content = "私はAIアシスタントです。" },
+                    new LlmMessage { role = "user", content = "こんにちは！" }
+                },
+            stream=False
+            };
 
         // コルーチンの開始
-        StartCoroutine(PostJsonCoroutine("http://192.168.154.105:11434/api/generate", data));
+        StartCoroutine(PostJsonCoroutine("http://192.168.154.105:11434/api/chat", data));
     }
 
     IEnumerator PostJsonCoroutine(string url, PostData data)
