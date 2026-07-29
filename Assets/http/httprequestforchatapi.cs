@@ -16,7 +16,7 @@ public class JsonPostExample : MonoBehaviour
     public class PostData
     {
         public string model;
-        public List<LlmMessage> messages;
+        public List<LlmMessage> message;
         public bool stream;
     }
 
