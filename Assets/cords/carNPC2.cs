@@ -12,6 +12,7 @@ public class carNPC2 : MonoBehaviour
     public int CarCondition = 1;//0:停止 1:直進　2:右回転　3:左回転
     private bool isTouching = false;
     private bool isTouching2 = false;
+    private bool carway;
     public traficlightMnager traficlightMnager;
     Rigidbody Rigidbody;
     private Camera dummyCamera;
@@ -267,6 +268,10 @@ public class carNPC2 : MonoBehaviour
         {
             isTouching2 = true;
         }
+        if (other.gameObject.tag == "carway")
+        {
+            carway = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -278,6 +283,10 @@ public class carNPC2 : MonoBehaviour
         if (other.CompareTag("traficlight2"))
         {
             isTouching2 = false;
+        }
+        if (other.gameObject.tag == "carway")
+        {
+            carway = false;//いったんフラグだけ作成、挙動はこれから考える。
         }
     }
 
