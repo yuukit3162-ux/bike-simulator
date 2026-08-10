@@ -1,9 +1,11 @@
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
+using System.Collections;
 
-public class JsonPostExample : MonoBehaviour
+public class httprequestforchatapi : MonoBehaviour
 {
     //https://qiita.com/g0e/items/9a4f886897fd46f107a8
     [Serializable]
@@ -39,13 +41,13 @@ public class JsonPostExample : MonoBehaviour
         // データの準備
         PostData data = new PostData {
             model="LFM2.5-1.2B-JP",
-            messages= new List<LlmMessage>
+            message= new List<LlmMessage> 
                 {
                     new LlmMessage { role = "system", content = "あなたのIDは1357です。" },
                     new LlmMessage { role = "assistant", content = "私はAIアシスタントです。" },
                     new LlmMessage { role = "user", content = "こんにちは！" }
                 },
-            stream=False
+            stream = false
             };
 
         // コルーチンの開始

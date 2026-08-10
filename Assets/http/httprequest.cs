@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -13,7 +14,7 @@ public class JsonPostExample : MonoBehaviour
         public string model;
         public string prompt;
         public bool stream;
-        public list<int> context;
+        public List<int> context;
     }
 
     [System.Serializable]
@@ -24,7 +25,7 @@ public class JsonPostExample : MonoBehaviour
         public string response;
         public bool done;
         public string done_reason;
-        public list<int> context;
+        public List<int> context;
         public int total_duration;
         public int load_duration;
         public int prompt_eval_count;
@@ -38,7 +39,7 @@ public class JsonPostExample : MonoBehaviour
     void Start()
     {
         // データの準備
-        PostData data = new PostData {model="LFM2.5-1.2B-JP", prompt="はろーわーるど", stream=False ,context =  new List<int>()};
+        PostData data = new PostData {model="LFM2.5-1.2B-JP", prompt="はろーわーるど", stream=false ,context =  new List<int>()};
 
         // コルーチンの開始
         StartCoroutine(PostJsonCoroutine("http://192.168.154.105:11434/api/generate", data));
