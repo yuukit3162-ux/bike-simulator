@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,16 +29,19 @@ public class GameMnager : MonoBehaviour
     private int nextint = 3;
     private int nextCount = 0;
 
-    public GameObject penalty;//”±‹à
+    public GameObject penalty;//”½‘¥‹à
     private Text penaltytext;
     private int penaltyint = 0;
 
     public CanvasGroup Danger;//ˆá”½‚Ì•\¦
+    public Text DangerText;
+    private Dictionary<int, string> DangerDictionary;
+    private Dictionary<violationType, int> violatDictionary;
 
     private float daytime = 50;//ŠÔ ‘¾—z‚ÌŠp“x 50:’© 210:–é 0~360
     public GameObject Sun;//–¾‚é‚³
 
-    public CanvasGroup UIcanvas;//ƒAƒ‹ƒR[ƒ‹@”±‹à
+    public CanvasGroup UIcanvas;//ƒAƒ‹ƒR[ƒ‹@”½‘¥‹à
 
     public CanvasGroup Risultgroup;
     public Text violationsNumber;
@@ -52,8 +56,8 @@ public class GameMnager : MonoBehaviour
     {
         Debug.Log("showUI");
         Danger.alpha = 1f;
-        Danger.interactable = true;
-        Danger.blocksRaycasts = true;
+        //Danger.interactable = true;
+        //Danger.blocksRaycasts = true;//‚¢‚é‚©•ª‚©‚ç‚È‚¢
     }
     public GameObject[] waypoints;
     private void Awake()
@@ -64,8 +68,12 @@ public class GameMnager : MonoBehaviour
     {
         none,//–³‚µ
         IgnoringTrafficLights,//M†–³‹
-        RunningBackwards//‹t‘–
-
+        RunningBackwards,//‹t‘–(‰E‘¤’Ês)
+        smartphoneUse,//‚È‚ª‚çƒXƒ}ƒz
+        OnTheSidewalk,//•à“¹‘–s
+        FailStop, //ˆê•s’â~
+        drunkDriving,//ğ‹C‘Ñ‚Ñ‰^“]
+        offLights //–éŠÔ–³“”‰Î
     }
     // Start is called before the first frame update
     void Start()
@@ -78,10 +86,34 @@ public class GameMnager : MonoBehaviour
 
         Risultgroup.alpha = 0;
         Danger.alpha = 0f;
-        Danger.interactable = false;
-        Danger.blocksRaycasts = false;
+        //Danger.interactable = false;
+        //Danger.blocksRaycasts = false;//‚¢‚é‚©•ª‚©‚ç‚È‚¢
 
         stage = 0;
+        DangerDictionary = new Dictionary<int, string>
+        {
+            {0, "ˆá”½‚È‚µ" },
+            {1, "M†–³‹‚É‚æ‚è\r\n”½‘¥‹à:6000‰~" },
+            {2 ,"‹t‘–‚É‚æ‚è\r\n”½‘¥‹à:6000‰~" },
+            {3 ,"‚È‚ª‚çƒXƒ}ƒz‚É‚æ‚è\r\n”½‘¥‹à:12000‰~" },
+            {4 ,"•à“¹‘–s‚É‚æ‚è\r\n”½‘¥‹à:6000‰~" },
+            {5 ,"ˆê•s’â~‚É‚æ‚è\r\n”½‘¥‹à:5000‰~" },
+            {6 ,"ğ‹C‘Ñ‚Ñ‰^“]‚É‚æ‚è\r\n”±‹à:500000‰~" },
+            {7 ,"–éŠÔ–³“”‰Î‚É‚æ‚è\r\n”½‘¥‹à:5000‰~" }
+        };
+
+        violatDictionary = new Dictionary<violationType, int>
+        {
+            {violationType.none, 0},
+            {violationType.IgnoringTrafficLights, 6000},//”½‘¥‹à
+            {violationType.RunningBackwards, 6000},//”½‘¥‹à
+            {violationType.smartphoneUse, 12000},//”½‘¥‹à
+            {violationType.OnTheSidewalk, 6000},//”½‘¥‹à
+            {violationType.FailStop, 5000},//”½‘¥‹à
+            {violationType.drunkDriving, 500000},//”±‹à
+            {violationType.offLights, 5000},//”½‘¥‹à
+
+        };
     }
 
     // Update is called once per frame
@@ -107,12 +139,16 @@ public class GameMnager : MonoBehaviour
             }
             Countpls = false;
         }
-        if (whatSin == violationType.IgnoringTrafficLights)//M†–³‹ 6000‰~
-        {  
-            //Debug.Log("M†–³‹ 6000‰~ ¡‚ÍØ‚Á‚Ä‚¢‚é");
-            whatSin = violationType.none;
-            guilty(6000);
+        if(whatSin != violationType.none)
+        {
+            int Dnumber = (int)whatSin;
+            int penalty = violatDictionary[whatSin];
+            DangerText.text = DangerDictionary[Dnumber];
+            guilty(penalty);
         }
+        
+
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             Sun.transform.Rotate(Vector3.right * 180f);
@@ -134,9 +170,9 @@ public class GameMnager : MonoBehaviour
 
         //player‚ÌˆÊ’u‚ğƒŠƒZƒbƒg
         PlayerReset = true;
-        //”±‹à‚ğ‘‚â‚·
+        //‘Šz‚ğ‘‚â‚·
         penaltyint += value;
-        penaltytext.text = "”±‹à:" + penaltyint + "‰~";
+        penaltytext.text = "‘Šz:" + penaltyint + "‰~";
         WebSocketClient.webC.Countviolations++;
         whatSin = violationType.none;
         StartCoroutine(Fadeout());
@@ -154,8 +190,8 @@ public class GameMnager : MonoBehaviour
         }
         Debug.Log("”ñ•\¦");
         Danger.alpha = 0f;
-        Danger.interactable = false;
-        Danger.blocksRaycasts = false;
+        //Danger.interactable = false;
+        //Danger.blocksRaycasts = false;//‚¢‚é‚©•ª‚©‚ç‚È‚¢
     }
     public void nextTo()//nextbutton
     {
@@ -205,8 +241,8 @@ public class GameMnager : MonoBehaviour
         GameStatus = "play";
         Debug.Log(GameStatus);
         UIcanvas.alpha = 1;
-        penaltytext.text = "”±‹à:0‰~";
-        Debug.Log("”±‹àƒŠƒZƒbƒg");
+        penaltytext.text = "‘Šz:0‰~";
+        Debug.Log("‘ŠzƒŠƒZƒbƒg");
         penaltyint = 0;
         Risultgroup.alpha = 0;
         if(stage == 0)
@@ -266,7 +302,7 @@ public class GameMnager : MonoBehaviour
         }
         violationsNumber.text = "ˆá”½‰ñ”:" + V;
         WebSocketClient.webC.Countviolations = 0;
-        resultpenlty.text = "”±‹à:" + penaltyint + "‰~";
+        resultpenlty.text = "‘Šz:" + penaltyint + "‰~";
         ClearTimeText.text = "ƒNƒŠƒAŠÔ:" + ClearTime;
         ClearTime = 0;
         Risultgroup.alpha = 1;

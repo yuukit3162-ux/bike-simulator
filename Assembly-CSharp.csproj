@@ -67,18 +67,11 @@
     <Compile Include="Assets\cords\GameMnager.cs" />
     <Compile Include="Assets\cords\hekomaseru.cs" />
     <Compile Include="Assets\cords\maincameraMnager.cs" />
-    <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\MoveCamera.cs" />
     <Compile Include="Assets\http\httprequestforchatapi.cs" />
     <Compile Include="Assets\cords\nextbutton.cs" />
-    <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\CameraController.cs" />
-    <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\Util\SetFPS.cs" />
-    <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\ZRNGUIController.cs" />
     <Compile Include="Assets\cords\startgamebutton.cs" />
     <Compile Include="Assets\websoket\websoket.cs" />
-    <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\Util\ViewFPS.cs" />
     <Compile Include="Assets\cords\nomalcarMnager.cs" />
-    <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\AmbientController.cs" />
-    <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\FlyThroughController.cs" />
     <Compile Include="Assets\http\httprequest.cs" />
     <Compile Include="Assets\cords\nomalcar.cs" />
     <Compile Include="Assets\cords\PoliceNPCMnager.cs" />
@@ -87,11 +80,8 @@
     <Compile Include="Assets\cords\carNPC.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\ZRNAssets\005339_08932_25_14\Shaders\su_VertexCol_1UV_Single.shader" />
-    <None Include="Assets\ZRNAssets\005339_08932_25_14\Shaders\StandardDoubleClip.shader" />
-    <None Include="Assets\ZRNAssets\005339_08932_25_14\Documents\ReadMe.txt" />
+    <None Include="Assets\ZRNAssets\Documents\ReadMe.txt" />
     <None Include="Assets\materiar\bildings.shader" />
-    <None Include="Assets\ZRNAssets\005339_08932_25_14\Shaders\su_Double_and_Clip.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

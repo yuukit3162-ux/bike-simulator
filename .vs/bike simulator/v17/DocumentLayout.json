@@ -3,7 +3,19 @@
   "WorkspaceRootPath": "C:\\Users\\imani\\bike simulator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{77BC2824-D0C4-2E37-067A-54902A610542}|Assembly-CSharp.csproj|c:\\users\\imani\\bike simulator\\assets\\http\\httprequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{77BC2824-D0C4-2E37-067A-54902A610542}|Assembly-CSharp.csproj|c:\\users\\imani\\bike simulator\\assets\\cords\\gamemnager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{77BC2824-D0C4-2E37-067A-54902A610542}|Assembly-CSharp.csproj|solutionrelative:assets\\cords\\gamemnager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77BC2824-D0C4-2E37-067A-54902A610542}|Assembly-CSharp.csproj|c:\\users\\imani\\bike simulator\\assets\\cords\\playermnager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{77BC2824-D0C4-2E37-067A-54902A610542}|Assembly-CSharp.csproj|solutionrelative:assets\\cords\\playermnager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\imani\\bike simulator\\Assets\\ZRNAssets\\Shaders\\StandardDoubleClip.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\ZRNAssets\\Shaders\\StandardDoubleClip.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77BC2824-D0C4-2E37-067A-54902A610542}|Assembly-CSharp.csproj|C:\\Users\\imani\\bike simulator\\assets\\http\\httprequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{77BC2824-D0C4-2E37-067A-54902A610542}|Assembly-CSharp.csproj|solutionrelative:assets\\http\\httprequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -18,11 +30,48 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "playerMnager.cs",
+              "DocumentMoniker": "C:\\Users\\imani\\bike simulator\\Assets\\cords\\playerMnager.cs",
+              "RelativeDocumentMoniker": "Assets\\cords\\playerMnager.cs",
+              "ToolTip": "C:\\Users\\imani\\bike simulator\\Assets\\cords\\playerMnager.cs",
+              "RelativeToolTip": "Assets\\cords\\playerMnager.cs",
+              "ViewState": "AgIAADYBAAAAAAAAAAD4vz8BAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T09:00:44.573Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "GameMnager.cs",
+              "DocumentMoniker": "C:\\Users\\imani\\bike simulator\\Assets\\cords\\GameMnager.cs",
+              "RelativeDocumentMoniker": "Assets\\cords\\GameMnager.cs",
+              "ToolTip": "C:\\Users\\imani\\bike simulator\\Assets\\cords\\GameMnager.cs",
+              "RelativeToolTip": "Assets\\cords\\GameMnager.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAA5wGUAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T08:42:16.984Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StandardDoubleClip.shader",
+              "DocumentMoniker": "C:\\Users\\imani\\bike simulator\\Assets\\ZRNAssets\\Shaders\\StandardDoubleClip.shader",
+              "RelativeDocumentMoniker": "Assets\\ZRNAssets\\Shaders\\StandardDoubleClip.shader",
+              "ToolTip": "C:\\Users\\imani\\bike simulator\\Assets\\ZRNAssets\\Shaders\\StandardDoubleClip.shader",
+              "RelativeToolTip": "Assets\\ZRNAssets\\Shaders\\StandardDoubleClip.shader",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
+              "WhenOpened": "2026-08-17T07:00:56.352Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "httprequest.cs",
               "DocumentMoniker": "C:\\Users\\imani\\bike simulator\\Assets\\http\\httprequest.cs",
               "RelativeDocumentMoniker": "Assets\\http\\httprequest.cs",
@@ -30,12 +79,11 @@
               "RelativeToolTip": "Assets\\http\\httprequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAABcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-10T01:23:22.314Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-10T01:23:22.314Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "httprequestforchatapi.cs",
               "DocumentMoniker": "C:\\Users\\imani\\bike simulator\\Assets\\http\\httprequestforchatapi.cs",
               "RelativeDocumentMoniker": "Assets\\http\\httprequestforchatapi.cs",
