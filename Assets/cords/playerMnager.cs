@@ -29,6 +29,7 @@ public class playerMnager : MonoBehaviour
     private int DrunkLevel;//êåÇ¢ìxÅ@0~3
     private float DrunkNoise = 0;
     public Text DrunkText;
+    private float nowSpeed;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -141,6 +142,7 @@ public class playerMnager : MonoBehaviour
             handdismiter = 1f;
             hand_sine = 4;
         }
+
         if (Input.GetKeyDown(KeyCode.T))
         {
             if (usingSmartPhone)
@@ -157,6 +159,21 @@ public class playerMnager : MonoBehaviour
             }
             Debug.Log(usingSmartPhone);
             WebSocketClient.webC.usingSmartPhone = usingSmartPhone;
+        }
+        if (nowSpeed > 0 && Jokou == false)
+        {
+            if (usingSmartPhone)
+            {
+                GameMnager.whatSin = GameMnager.violationType.smartphoneUse;
+            }
+            if(DrunkLevel > 0)
+            {
+                GameMnager.whatSin = GameMnager.violationType.drunkDriving;
+            }
+            if (!bikelight.activeSelf && GameMnager.Insector.night)
+            {
+                GameMnager.whatSin = GameMnager.violationType.offLights;
+            }
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -197,6 +214,36 @@ public class playerMnager : MonoBehaviour
             WebSocketClient.webC.drunkint = DrunkLevel;
         }
         StartCoroutine(Noise());
+
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GameMnager.whatSin = GameMnager.violationType.IgnoringTrafficLights;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            GameMnager.whatSin = GameMnager.violationType.RunningBackwards;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GameMnager.whatSin = GameMnager.violationType.smartphoneUse;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            GameMnager.whatSin = GameMnager.violationType.OnTheSidewalk;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            GameMnager.whatSin = GameMnager.violationType.FailStop;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            GameMnager.whatSin = GameMnager.violationType.drunkDriving;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            GameMnager.whatSin = GameMnager.violationType.offLights;
+        }
     }
     void playerReset()
     {
@@ -238,8 +285,9 @@ public class playerMnager : MonoBehaviour
     {
         if (GameMnager.Insector.GameStatus != "play") return;
         Vector3 localVel = transform.InverseTransformDirection(rb.velocity);
-        WebSocketClient.webC.speedKel = localVel.z;
-        string a = localVel.z.ToString("F14");
+        nowSpeed = localVel.z;
+        WebSocketClient.webC.speedKel = nowSpeed;
+        string a = nowSpeed.ToString("F14");
         //Debug.Log("valo " + a + "  " + localVel.z);
         //Debug.DrawRay(transform.position, -transform.up,Color.red,0.8f);
         float moveInput = Input.GetAxis("Vertical");

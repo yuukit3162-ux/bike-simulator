@@ -38,8 +38,8 @@ public class GameMnager : MonoBehaviour
     private Dictionary<int, string> DangerDictionary;
     private Dictionary<violationType, int> violatDictionary;
 
-    private float daytime = 50;//ŠÔ ‘¾—z‚ÌŠp“x 50:’© 210:–é 0~360
     public GameObject Sun;//–¾‚é‚³
+    private float lightAngle = 50f;//ŠÔ ‘¾—z‚ÌŠp“x 50:’© 210:–é 0~360
 
     public CanvasGroup UIcanvas;//ƒAƒ‹ƒR[ƒ‹@”½‘¥‹à
 
@@ -51,10 +51,15 @@ public class GameMnager : MonoBehaviour
     public Text Rank;//A,B,C‚È‚Ç‚Ì‚â‚Â
     public Text RankText;//‚»‚ÌA,B,C‚É‘Î‚·‚éà–¾
     public Text evaluation;//•]‰¿
+
+    private bool FadeoutB = false;
+    private float counttime = 0;
+    public bool night = false;
     // UI‚ğ•\¦
     private void ShowUI()
     {
         Debug.Log("showUI");
+        counttime = 0;
         Danger.alpha = 1f;
         //Danger.interactable = true;
         //Danger.blocksRaycasts = true;//‚¢‚é‚©•ª‚©‚ç‚È‚¢
@@ -105,13 +110,13 @@ public class GameMnager : MonoBehaviour
         violatDictionary = new Dictionary<violationType, int>
         {
             {violationType.none, 0},
-            {violationType.IgnoringTrafficLights, 6000},//”½‘¥‹à
+            {violationType.IgnoringTrafficLights, 6000},//”½‘¥‹à ‚Å‚«‚½
             {violationType.RunningBackwards, 6000},//”½‘¥‹à
-            {violationType.smartphoneUse, 12000},//”½‘¥‹à
+            {violationType.smartphoneUse, 12000},//”½‘¥‹à@‚Å‚«‚½
             {violationType.OnTheSidewalk, 6000},//”½‘¥‹à
             {violationType.FailStop, 5000},//”½‘¥‹à
-            {violationType.drunkDriving, 500000},//”±‹à
-            {violationType.offLights, 5000},//”½‘¥‹à
+            {violationType.drunkDriving, 500000},//”±‹à ‚Å‚«‚½
+            {violationType.offLights, 5000},//”½‘¥‹à@‚Å‚«‚½
 
         };
     }
@@ -151,14 +156,20 @@ public class GameMnager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Sun.transform.Rotate(Vector3.right * 180f);
+            if (lightAngle == 50f)
+                lightAngle = 310f;
+            else
+                lightAngle = 50f;
+            Sun.transform.rotation = Quaternion.Euler(lightAngle, -30f, 0f);
             DynamicGI.UpdateEnvironment();
-            if(Sun.transform.eulerAngles.x == 50f)
+            if (lightAngle == 50f)
             {
+                night = false;
                 WebSocketClient.webC.morning = true;
             }
             else
             {
+                night = true;
                 WebSocketClient.webC.morning = false;
             }
         }
@@ -175,12 +186,16 @@ public class GameMnager : MonoBehaviour
         penaltytext.text = "‘Šz:" + penaltyint + "‰~";
         WebSocketClient.webC.Countviolations++;
         whatSin = violationType.none;
-        StartCoroutine(Fadeout());
+        if(FadeoutB == false)
+        {
+            StartCoroutine(Fadeout());
+        }
     }
     IEnumerator Fadeout()
     {
+        FadeoutB = true;
         yield return new WaitForSeconds(1);
-        float counttime = 0f;
+        counttime = 0f;
         while (Danger.alpha > 0)
         {
             counttime += Time.deltaTime;
@@ -188,6 +203,7 @@ public class GameMnager : MonoBehaviour
             Danger.alpha = Mathf.Lerp(1f, 0f, percentage);
             yield return null;
         }
+        FadeoutB = false;
         Debug.Log("”ñ•\¦");
         Danger.alpha = 0f;
         //Danger.interactable = false;

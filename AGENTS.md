@@ -2,7 +2,7 @@
 - Project name: bike simulator
 - Unity version: Unity 2022.3.45f1
 - Active game object:
-  - Name: Penalty
+  - Name: bicycle (1)
   - Tag: Untagged
-  - Layer: UI
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
