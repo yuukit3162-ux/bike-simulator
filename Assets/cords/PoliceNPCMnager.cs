@@ -28,11 +28,11 @@ public class PoliceNPCMnager : MonoBehaviour
         if (WebSocketClient.webC.Countviolations == 0)
         {
 
-        }
+        }//çµå±€pythonã§ã®åˆ¤å®šã˜ãŸã„ã¯æ–­å¿µã—ãŸã‹ã‚‰WebSocketClientã¯ã‚‚ã†ä½¿ã‚ãªã„ã‚“ã˜ã‚ƒãªã„ã®ï¼Ÿ
         else if (WebSocketClient.webC.Countviolations < 3)//1.2
         {
-            speed = 10;//speed‚Í‚æ‚è‘å‚«‚­‚È‚¢‚ÆŒã‚ë‚É‰º‚ª‚é
-            //’¼‚µ‚½‚¢‚È‚çƒR[ƒh‚ğ‘‚«Š·‚¦‚È‚¢‚Æ‚¢‚¯‚È‚¢‚æw
+            speed = 10;//speedã¯ã‚ˆã‚Šå¤§ãããªã„ã¨å¾Œã‚ã«ä¸‹ãŒã‚‹
+            //ç›´ã—ãŸã„ãªã‚‰ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ãæ›ãˆãªã„ã¨ã„ã‘ãªã„ã‚ˆw
         }
         else if (WebSocketClient.webC.Countviolations < 5)//3.4
         {
