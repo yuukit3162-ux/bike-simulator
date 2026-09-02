@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class playerMnager : MonoBehaviour
 {
-    public float moveForce = 20f;   // ‰Á‚¦‚é—Í‚Ì‹­‚³
-    public float maxSpeed = 10000f;    // Å‚‘¬“x‚Ì§ŒÀ
-    public float turnSpeed = 180f;  // ‰ñ“]‘¬“x
+    public float moveForce = 20f;   // åŠ ãˆã‚‹åŠ›ã®å¼·ã•
+    public float maxSpeed = 10000f;    // æœ€é«˜é€Ÿåº¦ã®åˆ¶é™
+    public float turnSpeed = 180f;  // å›è»¢é€Ÿåº¦
     private Rigidbody rb;
     public LayerMask groundlayer;
     private bool Jokou = false;
@@ -20,13 +20,13 @@ public class playerMnager : MonoBehaviour
     private int hand_sine = 4;//left:1 rigth:2 none:4
     public GameObject handleft;
     public GameObject handright;
-    private float handinclination = 0;//ŒX‚«
+    private float handinclination = 0;//å‚¾ã
     private float handdismiter = 1f;
     private bool usingSmartPhone;
     public Camera maincamera;
     public CanvasGroup CanvasGroup;
     public GameObject bikelight;
-    private int DrunkLevel;//Œ‚¢“x@0~3
+    private int DrunkLevel;//é…”ã„åº¦ã€€0~3
     private float DrunkNoise = 0;
     public Text DrunkText;
     private float nowSpeed;
@@ -51,7 +51,7 @@ public class playerMnager : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             rb.constraints = RigidbodyConstraints.FreezePosition;
-            playerReset();//‰Šú”z’u
+            playerReset();//åˆæœŸé…ç½®
         }
         if ((Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift)) && Jokou == false)
         {
@@ -74,18 +74,19 @@ public class playerMnager : MonoBehaviour
             playerReset();
         }
         if (Jokou && Input.GetKeyDown(KeyCode.Space))
-        {//‰º‚Ì‚Í©“]Ô
+        {//ä¸‹ã®ã¯è‡ªè»¢è»Š
             JokouUnFreezeRotation();
             Jokou = false;
+            //ã‚‚ã—é£²ã‚“ã§ä¹—ã£ãŸç¬é–“é£›ã°ã™ãªã‚‰ã“ã“ã§åˆ†å²
         }
         else if (!Jokou && Input.GetKeyDown(KeyCode.Space))
-        {//‰º‚Ì‚Í•às
+        {//ä¸‹ã®ã¯æ­©è¡Œ
             JokouFreezeRotation();
             Jokou = true;
         }
         if (gameObject.transform.position.y < 80f)
         {
-            Debug.Log("—‚¿‚È‚¢‚½‚ß‚ÉƒŠƒZƒbƒg");
+            Debug.Log("è½ã¡ãªã„ãŸã‚ã«ãƒªã‚»ãƒƒãƒˆ");
             playerReset();
         }
 
@@ -96,7 +97,7 @@ public class playerMnager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (handleft.activeSelf == true)//‚·‚Å‚É¶è‚ğo‚µ‚Ä‚¢‚½‚ç’¼‚·
+            if (handleft.activeSelf == true)//ã™ã§ã«å·¦æ‰‹ã‚’å‡ºã—ã¦ã„ãŸã‚‰ç›´ã™
             {
                 handleft.SetActive(false);
             }
@@ -108,7 +109,7 @@ public class playerMnager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (handright.activeSelf == true)//‚·‚Å‚É‰Eè‚ğo‚µ‚Ä‚¢‚½‚ç’¼‚·
+            if (handright.activeSelf == true)//ã™ã§ã«å³æ‰‹ã‚’å‡ºã—ã¦ã„ãŸã‚‰ç›´ã™
             {
                 handright.SetActive(false);
             }
@@ -192,7 +193,7 @@ public class playerMnager : MonoBehaviour
             if (DrunkLevel < 3)
             {
                 DrunkLevel++;
-                DrunkText.text = "Œ‚¢“x:" + DrunkLevel;
+                DrunkText.text = "é…”ã„åº¦:" + DrunkLevel;
             }
             else
             {
@@ -205,7 +206,7 @@ public class playerMnager : MonoBehaviour
             if (0 < DrunkLevel)
             {
                 DrunkLevel--;
-                DrunkText.text = "Œ‚¢“x:" + DrunkLevel;
+                DrunkText.text = "é…”ã„åº¦:" + DrunkLevel;
             }
             else
             {
@@ -258,11 +259,11 @@ public class playerMnager : MonoBehaviour
         maincamera.farClipPlane = 300f;
         CanvasGroup.alpha = 0;
         DrunkLevel = 0;
-        DrunkText.text = "Œ‚¢“x:" + DrunkLevel;
+        DrunkText.text = "é…”ã„åº¦:" + DrunkLevel;
         JokouFreezeRotation();
         Jokou = true;
     }
-    void JokouFreezeRotation()//•à‚«
+    void JokouFreezeRotation()//æ­©ã
     {
         
         //rb.rotation = Quaternion.Euler(0f, gameObject.transform.rotation.y, 0f);
@@ -270,7 +271,7 @@ public class playerMnager : MonoBehaviour
         Mcolor.color = Color.blue;
         people.localPosition = new Vector3(0, -0.3f, 0);
     }
-    void JokouUnFreezeRotation()//©“]Ô
+    void JokouUnFreezeRotation()//è‡ªè»¢è»Š
     {
         rb.constraints = RigidbodyConstraints.None;
         Mcolor.color = Color.green;
@@ -295,13 +296,13 @@ public class playerMnager : MonoBehaviour
         float rollAngle = transform.localEulerAngles.z;
         if (rollAngle > 180) rollAngle -= 360;
         if (Physics.Raycast(transform.position, -transform.up, 0.8f, groundlayer))
-            if (Jokou)//•à‚«
+            if (Jokou)//æ­©ã
             {
                 //Debug.Log(transform.localEulerAngles.x);
 
                 float rollAnglex = transform.localEulerAngles.x;
                 if (rollAnglex > 180) rollAnglex -= 360;
-                //rb.AddRelativeTorque(-transform.localEulerAngles.x, 0f, -rollAngle * 100);
+                
                 Vector3 tt2 = transform.forward;
                 tt2.y = 0;
                 if (maxSpeed > localVel.z)
@@ -309,43 +310,42 @@ public class playerMnager : MonoBehaviour
                     tt2 *= moveInput * 50;
                 }
                 tt2 -= transform.right * localVel.x * 2;
-                rb.AddForce(tt2, ForceMode.Acceleration);
                 Quaternion turnRotation = Quaternion.Euler(-rollAnglex, turnInput * turnSpeed * Time.fixedDeltaTime, -rollAngle);
                 rb.MoveRotation(rb.rotation * turnRotation);
-                //yƒ[ƒ‹‰Á‘¬“x
+                //yãƒ­ãƒ¼ãƒ«åŠ é€Ÿåº¦
                 //Quaternion turnRotation = Quaternion.Euler(0f, turnInput * turnSpeed * Time.fixedDeltaTime * moveInput / 2, 0f);
                 //rb.MoveRotation();
             }
-            else//«©“]Ô
+            else//â†“è‡ªè»¢è»Š
             {
-                //Œ‚Á‚Ä‚¢‚é‚Æ‚«‚Ìnoise
+                //é…”ã£ã¦ã„ã‚‹ã¨ãã®noise
                 turnInput += DrunkNoise;
-                // 1. ‰ñ“]iA/DƒL[j
-                // 2. Œü‚¢‚Ä‚¢‚é•ûŒü‚É—Í‚ğ‰Á‚¦‚éiW/SƒL[j
-                // ŒX‚«‚ğ‘Å‚¿Á‚·•ûŒü‚Ì‰Á‘¬“x
+                // 1. å›è»¢ï¼ˆA/Dã‚­ãƒ¼ï¼‰
+                // 2. å‘ã„ã¦ã„ã‚‹æ–¹å‘ã«åŠ›ã‚’åŠ ãˆã‚‹ï¼ˆW/Sã‚­ãƒ¼ï¼‰
+                // å‚¾ãã‚’æ‰“ã¡æ¶ˆã™æ–¹å‘ã®åŠ é€Ÿåº¦
                 float targetRollAcc = -rollAngle * Mathf.Abs(localVel.z / 2) / handdismiter + turnInput * turnSpeed / -2 + handinclination;
                 //Debug.Log(targetRollAcc);
                 Vector3 sideSpeed = transform.right * localVel.x * 2;
-                rb.AddForce(-sideSpeed, ForceMode.VelocityChange);//ŠŠ‚ç‚È‚¢‚æ‚¤‰Á‘¬“x“K—p
+                rb.AddForce(-sideSpeed, ForceMode.VelocityChange);//æ»‘ã‚‰ãªã„ã‚ˆã†åŠ é€Ÿåº¦é©ç”¨
                 
 
-                // ‘Š‘ÎÀ•W‚ÌZ²iforwardj‚É‘Î‚µ‚Ä‰Á‘¬“x‚ğ“K—p
-                rb.AddRelativeTorque(-localVel.z * 0.7f, 0f, Vector3.forward.z * targetRollAcc, ForceMode.Acceleration);//‰Á‘¬“x“K—p
+                // ç›¸å¯¾åº§æ¨™ã®Zè»¸ï¼ˆforwardï¼‰ã«å¯¾ã—ã¦åŠ é€Ÿåº¦ã‚’é©ç”¨
+                rb.AddRelativeTorque(-localVel.z * 0.7f, 0f, Vector3.forward.z * targetRollAcc, ForceMode.Acceleration);//åŠ é€Ÿåº¦é©ç”¨
                 Quaternion turnRotation = Quaternion.Euler(0f, turnInput * turnSpeed * Time.fixedDeltaTime * moveInput / 2, 0f);
-                rb.MoveRotation(rb.rotation * turnRotation);//yƒ[ƒ‹‰Á‘¬“x
+                rb.MoveRotation(rb.rotation * turnRotation);//yãƒ­ãƒ¼ãƒ«åŠ é€Ÿåº¦
                 Vector3 force = transform.forward * moveInput * moveForce;
-                // Œ»İ‚Ì‘¬“x‚ªÅ‚‘¬“x‚ğ’´‚¦‚Ä‚¢‚È‚¢‚¾‚¯—Í‚ğ‰Á‚¦‚é
-                rb.AddForce(force, ForceMode.Acceleration);//‰Á‘¬
+                // ç¾åœ¨ã®é€Ÿåº¦ãŒæœ€é«˜é€Ÿåº¦ã‚’è¶…ãˆã¦ã„ãªã„æ™‚ã ã‘åŠ›ã‚’åŠ ãˆã‚‹
+                rb.AddForce(force, ForceMode.Acceleration);//åŠ é€Ÿ
                 
                 //else
                 //{
                 //    Vector3 sideSpeed = transform.right * localVel.x * 2;
-                //    rb.AddForce(-sideSpeed, ForceMode.VelocityChange);//ŠŠ‚ç‚È‚¢‚æ‚¤‰Á‘¬“x“K—p
+                
                 //    Quaternion turnRotation = Quaternion.Euler(0f, turnInput * turnSpeed * Time.fixedDeltaTime * moveInput / 2, 0f);
-                //    rb.MoveRotation(rb.rotation * turnRotation);//yƒ[ƒ‹‰Á‘¬“x
+                //    rb.MoveRotation(rb.rotation * turnRotation);//yãƒ­ãƒ¼ãƒ«åŠ é€Ÿåº¦
                 //    Vector3 force = transform.forward * moveInput * moveForce;
-                //    // Œ»İ‚Ì‘¬“x‚ªÅ‚‘¬“x‚ğ’´‚¦‚Ä‚¢‚È‚¢‚¾‚¯—Í‚ğ‰Á‚¦‚é
-                //    rb.AddForce(force, ForceMode.Acceleration);//‰Á‘¬
+                //    // ç¾åœ¨ã®é€Ÿåº¦ãŒæœ€é«˜é€Ÿåº¦ã‚’è¶…ãˆã¦ã„ãªã„æ™‚ã ã‘åŠ›ã‚’åŠ ãˆã‚‹
+                
                 //}
 
 
@@ -362,16 +362,16 @@ public class playerMnager : MonoBehaviour
         if (other.gameObject.tag == "traficlight" && !traficlightIn2)
         {
             traficlightIn = true;
-            if (traficlightMnager.traficColor == 1)//Ô
+            if (traficlightMnager.traficColor == 1)//èµ¤
             {
                 WebSocketClient.webC.lights_on = 0;
                 GameMnager.whatSin = GameMnager.violationType.IgnoringTrafficLights;
             }
-            if (traficlightMnager.traficColor == 2)//‰©F
+            if (traficlightMnager.traficColor == 2)//é»„è‰²
             {
                 WebSocketClient.webC.lights_on = 1;
             }
-            if (traficlightMnager.traficColor == 3)//Â
+            if (traficlightMnager.traficColor == 3)//é’
             {
                 WebSocketClient.webC.lights_on = 2;
             }
@@ -379,16 +379,16 @@ public class playerMnager : MonoBehaviour
         if (other.gameObject.tag == "traficlight2" && !traficlightIn)
         {
             traficlightIn2 = true;
-            if (traficlightMnager.traficColor2 == 4)//Ô
+            if (traficlightMnager.traficColor2 == 4)//èµ¤
             {
                 WebSocketClient.webC.lights_on = 0;
                 GameMnager.whatSin = GameMnager.violationType.IgnoringTrafficLights;
             }
-            if (traficlightMnager.traficColor2 == 5)//‰©F
+            if (traficlightMnager.traficColor2 == 5)//é»„è‰²
             {
                 WebSocketClient.webC.lights_on = 1;
             }
-            if (traficlightMnager.traficColor2 == 6)//Â
+            if (traficlightMnager.traficColor2 == 6)//é’
             {
                 WebSocketClient.webC.lights_on = 2;
             }
@@ -416,7 +416,7 @@ public class playerMnager : MonoBehaviour
             //if (other.gameObject.GetComponent<Rigidbody>() == null)
             //    return;
             //Rigidbody r = other.gameObject.GetComponent<Rigidbody>();
-            Debug.Log("Õ“Ë¡‚ÍØ‚Á‚Ä‚¢‚é");
+            Debug.Log("è¡çªä»Šã¯åˆ‡ã£ã¦ã„ã‚‹");
             Rigidbody r = gameObject.GetComponent<Rigidbody>();
             //r.AddForce(new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)) * 10000, ForceMode.Acceleration);
         }
