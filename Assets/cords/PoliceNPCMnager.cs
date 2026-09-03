@@ -16,33 +16,33 @@ public class PoliceNPCMnager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (WebSocketClient.webC.Countviolations > 0)
+        if (GameMnager.Insector.violatcount > 0)
         {
             Vector3 dir = (Player.position - transform.position).normalized;
             Quaternion lookrotation = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Lerp(transform.rotation, 
+            transform.rotation = Quaternion.Lerp(transform.rotation,
                 Quaternion.Euler(0, lookrotation.eulerAngles.y, 0), rotateSpeed * Time.deltaTime);
             //transform.position += transform.forward * speed * Time.deltaTime;
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-        if (WebSocketClient.webC.Countviolations == 0)
+        if (GameMnager.Insector.violatcount == 0)
         {
 
         }//結局pythonでの判定じたいは断念したからWebSocketClientはもう使わないんじゃないの？
-        else if (WebSocketClient.webC.Countviolations < 3)//1.2
+        else if (GameMnager.Insector.violatcount < 3)//1.2
         {
             speed = 10;//speedはより大きくないと後ろに下がる
             //直したいならコードを書き換えないといけないよw
         }
-        else if (WebSocketClient.webC.Countviolations < 5)//3.4
+        else if (GameMnager.Insector.violatcount < 5)//3.4
         {
             speed = 15;
         }
-        else if (WebSocketClient.webC.Countviolations < 7)//5.6
+        else if (GameMnager.Insector.violatcount < 7)//5.6
         {
             speed = 20;
         }
-        else if (WebSocketClient.webC.Countviolations < 8)//7.8
+        else if (GameMnager.Insector.violatcount < 8)//7.8
         {
             speed = 25;
         }

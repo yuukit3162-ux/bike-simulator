@@ -37,6 +37,7 @@ public class GameMnager : MonoBehaviour
     public Text DangerText;
     private Dictionary<int, string> DangerDictionary;
     private Dictionary<violationType, int> violatDictionary;
+    public int violatcount = 0;
 
     public GameObject Sun;//–¾‚é‚³
     private float lightAngle = 50f;//ŠÔ ‘¾—z‚ÌŠp“x 50:’© 210:–é 0~360
@@ -165,12 +166,12 @@ public class GameMnager : MonoBehaviour
             if (lightAngle == 50f)
             {
                 night = false;
-                WebSocketClient.webC.morning = true;
+                //WebSocketClient.webC.morning = true;
             }
             else
             {
                 night = true;
-                WebSocketClient.webC.morning = false;
+                //WebSocketClient.webC.morning = false;
             }
         }
     }
@@ -184,7 +185,8 @@ public class GameMnager : MonoBehaviour
         //‘Šz‚ğ‘‚â‚·
         penaltyint += value;
         penaltytext.text = "‘Šz:" + penaltyint + "‰~";
-        WebSocketClient.webC.Countviolations++;
+        //WebSocketClient.webC.Countviolations++;
+        violatcount++;
         whatSin = violationType.none;
         if(FadeoutB == false)
         {
@@ -285,26 +287,26 @@ public class GameMnager : MonoBehaviour
 
         }
         UIcanvas.alpha = 0;
-        int V = WebSocketClient.webC.Countviolations;
-        if (V == 0)
+        //int V = WebSocketClient.webC.Countviolations;
+        if (violatcount == 0)
         {
             Rank.text = "A";
             RankText.text = "Å‚ƒ‰ƒ“ƒN";
             evaluation.text = "´—õŒ‰”’";
         }
-        else if (V < 3)//1 2
+        else if (violatcount < 3)//1 2
         {
             Rank.text = "B";
             RankText.text = "ƒ‰ƒ“ƒN";
             evaluation.text = "”÷”ÆßÒ";
         }
-        else if (V < 5)//3 4
+        else if (violatcount < 5)//3 4
         {
             Rank.text = "C";
             RankText.text = "ƒ‰ƒ“ƒN";
             evaluation.text = "”ÆßÒ—\”õŒR";
         }
-        else if (V < 7)//5 6
+        else if (violatcount < 7)//5 6
         {
             Rank.text = "D";
             RankText.text = "ƒ‰ƒ“ƒN";
@@ -316,8 +318,9 @@ public class GameMnager : MonoBehaviour
             RankText.text = "Å’áƒ‰ƒ“ƒN";
             evaluation.text = "dßl";
         }
-        violationsNumber.text = "ˆá”½‰ñ”:" + V;
-        WebSocketClient.webC.Countviolations = 0;
+        violationsNumber.text = "ˆá”½‰ñ”:" + violatcount;
+        //WebSocketClient.webC.Countviolations = 0;
+        violatcount = 0;
         resultpenlty.text = "‘Šz:" + penaltyint + "‰~";
         ClearTimeText.text = "ƒNƒŠƒAŠÔ:" + ClearTime;
         ClearTime = 0;

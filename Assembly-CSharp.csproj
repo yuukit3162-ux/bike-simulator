@@ -55,7 +55,7 @@
     <UnityVersion>2022.3.45f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.45f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.45f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -70,12 +70,11 @@
     <Compile Include="Assets\http\httprequestforchatapi.cs" />
     <Compile Include="Assets\cords\nextbutton.cs" />
     <Compile Include="Assets\cords\startgamebutton.cs" />
-    <Compile Include="Assets\websoket\websoket.cs" />
     <Compile Include="Assets\cords\nomalcarMnager.cs" />
+    <Compile Include="Assets\cords\PoliceNPCMnager2.cs" />
     <Compile Include="Assets\http\httprequest.cs" />
     <Compile Include="Assets\cords\nomalcar.cs" />
     <Compile Include="Assets\cords\PoliceNPCMnager.cs" />
-    <Compile Include="Assets\websoket\WebSocketClient.cs" />
     <Compile Include="Assets\cords\traficlightMnager.cs" />
     <Compile Include="Assets\cords\carNPC.cs" />
   </ItemGroup>

@@ -40,8 +40,8 @@ public class playerMnager : MonoBehaviour
 
     void Update()
     {
-        WebSocketClient.webC.road_type = carway;
-        WebSocketClient.webC.move_inRight = carwayright;
+        //WebSocketClient.webC.road_type = carway;
+        //WebSocketClient.webC.move_inRight = carwayright;
         // Debug.Log(carway);
         if (GameMnager.Insector.GameStatus == "play")
         {
@@ -105,7 +105,7 @@ public class playerMnager : MonoBehaviour
             {
                 handleft.SetActive(true);
             }
-            WebSocketClient.webC.Webhand_sine = hand_sine;
+            //WebSocketClient.webC.Webhand_sine = hand_sine;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -117,7 +117,7 @@ public class playerMnager : MonoBehaviour
             {
                 handright.SetActive(true);
             }
-            WebSocketClient.webC.Webhand_sine = hand_sine;
+            //WebSocketClient.webC.Webhand_sine = hand_sine;
         }
         if (handleft.activeSelf == true && handright.activeSelf == true)
         {
@@ -159,7 +159,7 @@ public class playerMnager : MonoBehaviour
                 CanvasGroup.alpha = 1;
             }
             Debug.Log(usingSmartPhone);
-            WebSocketClient.webC.usingSmartPhone = usingSmartPhone;
+            //WebSocketClient.webC.usingSmartPhone = usingSmartPhone;
         }
         if (nowSpeed > 0 && Jokou == false)
         {
@@ -186,7 +186,7 @@ public class playerMnager : MonoBehaviour
             {
                 bikelight.SetActive(true);
             }
-            WebSocketClient.webC.bikelight = bikelight.activeSelf;
+            //WebSocketClient.webC.bikelight = bikelight.activeSelf;
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -199,7 +199,7 @@ public class playerMnager : MonoBehaviour
             {
                 Debug.Log("drunklevel is Max" + DrunkLevel);
             }
-            WebSocketClient.webC.drunkint = DrunkLevel;
+            //WebSocketClient.webC.drunkint = DrunkLevel;
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -212,7 +212,7 @@ public class playerMnager : MonoBehaviour
             {
                 Debug.Log("drunklevel is Min" + DrunkLevel);
             }
-            WebSocketClient.webC.drunkint = DrunkLevel;
+            //WebSocketClient.webC.drunkint = DrunkLevel;
         }
         StartCoroutine(Noise());
 
@@ -287,7 +287,7 @@ public class playerMnager : MonoBehaviour
         if (GameMnager.Insector.GameStatus != "play") return;
         Vector3 localVel = transform.InverseTransformDirection(rb.velocity);
         nowSpeed = localVel.z;
-        WebSocketClient.webC.speedKel = nowSpeed;
+        //WebSocketClient.webC.speedKel = nowSpeed;
         string a = nowSpeed.ToString("F14");
         //Debug.Log("valo " + a + "  " + localVel.z);
         //Debug.DrawRay(transform.position, -transform.up,Color.red,0.8f);
@@ -364,16 +364,16 @@ public class playerMnager : MonoBehaviour
             traficlightIn = true;
             if (traficlightMnager.traficColor == 1)//赤
             {
-                WebSocketClient.webC.lights_on = 0;
+                //WebSocketClient.webC.lights_on = 0;
                 GameMnager.whatSin = GameMnager.violationType.IgnoringTrafficLights;
             }
             if (traficlightMnager.traficColor == 2)//黄色
             {
-                WebSocketClient.webC.lights_on = 1;
+                //WebSocketClient.webC.lights_on = 1;
             }
             if (traficlightMnager.traficColor == 3)//青
             {
-                WebSocketClient.webC.lights_on = 2;
+                //WebSocketClient.webC.lights_on = 2;
             }
         }
         if (other.gameObject.tag == "traficlight2" && !traficlightIn)
@@ -381,16 +381,16 @@ public class playerMnager : MonoBehaviour
             traficlightIn2 = true;
             if (traficlightMnager.traficColor2 == 4)//赤
             {
-                WebSocketClient.webC.lights_on = 0;
+                //WebSocketClient.webC.lights_on = 0;
                 GameMnager.whatSin = GameMnager.violationType.IgnoringTrafficLights;
             }
             if (traficlightMnager.traficColor2 == 5)//黄色
             {
-                WebSocketClient.webC.lights_on = 1;
+                //WebSocketClient.webC.lights_on = 1;
             }
             if (traficlightMnager.traficColor2 == 6)//青
             {
-                WebSocketClient.webC.lights_on = 2;
+                //WebSocketClient.webC.lights_on = 2;
             }
         }
         if(other.gameObject.tag == "bikewaypoint")
@@ -438,12 +438,12 @@ public class playerMnager : MonoBehaviour
         }
         if (other.gameObject.tag == "traficlight")
         {
-            WebSocketClient.webC.lights_on = 4;
+            //WebSocketClient.webC.lights_on = 4;
             traficlightIn = false;
         }
         if (other.gameObject.tag == "traficlight2")
         {
-            WebSocketClient.webC.lights_on = 4;
+            //WebSocketClient.webC.lights_on = 4;
             traficlightIn2 = false;
         }
     }

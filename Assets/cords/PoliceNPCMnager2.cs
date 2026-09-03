@@ -7,7 +7,7 @@ public class PoliceNPCMnager2 : MonoBehaviour
 {
     Rigidbody my_Rigidbody;
     public Rigidbody Player;
-    public float speed = 10;
+    public float speed = 10f;
     private float rotateSpeed = 3;
     void Start()
     {
@@ -22,10 +22,10 @@ public class PoliceNPCMnager2 : MonoBehaviour
             Player,
             20f,
             speed,
-            speed*0.5,
+            speed*0.5f,
             rotateSpeed);
-        m_Rigidbody.AddForce(Transform.forward*Mathf.Clamp(control.accel,-speed*0.5,speed))
-        m_Rigidbodyrb.AddTorque(Transform.up*Mathf.Clamp(control.turnAccel,-rotateSpeed,rotateSpeed))
+        my_Rigidbody.AddForce(transform.forward * Mathf.Clamp(control.accel, -speed * 0.5f, speed));
+        my_Rigidbody.AddTorque(transform.up * Mathf.Clamp(control.turnAccel, -rotateSpeed, rotateSpeed));
     }
 }
 
