@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class playerMnager : MonoBehaviour
 {
-    public float moveForce = 20f;   // 加える力の強さ
-    public float maxSpeed = 10000f;    // 最高速度の制限
-    public float turnSpeed = 180f;  // 回転速度
+    private float moveForce = 20f;   // 加える力の強さ
+    private float maxSpeed = 10000f;    // 最高速度の制限
+    private float turnSpeed = 180f;  // 回転速度
     private Rigidbody rb;
     public LayerMask groundlayer;
     private bool Jokou = false;
@@ -77,7 +77,6 @@ public class playerMnager : MonoBehaviour
         {//下のは自転車
             JokouUnFreezeRotation();
             Jokou = false;
-            //もし飲んで乗った瞬間飛ばすならここで分岐
         }
         else if (!Jokou && Input.GetKeyDown(KeyCode.Space))
         {//下のは歩行
