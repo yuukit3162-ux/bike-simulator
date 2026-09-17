@@ -72,6 +72,7 @@
     <Compile Include="Assets\cords\startgamebutton.cs" />
     <Compile Include="Assets\cords\nomalcarMnager.cs" />
     <Compile Include="Assets\cords\PoliceNPCMnager2.cs" />
+    <Compile Include="Assets\cords\Ai Navigation agent.cs" />
     <Compile Include="Assets\http\httprequest.cs" />
     <Compile Include="Assets\cords\nomalcar.cs" />
     <Compile Include="Assets\cords\PoliceNPCMnager.cs" />
