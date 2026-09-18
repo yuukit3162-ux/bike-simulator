@@ -1,0 +1,54 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PoliceNPCMnager : MonoBehaviour
+{
+    public Transform Player;
+    public float speed = 0;
+    private float rotateSpeed = 100;
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (GameMnager.Insector.violatcount > 0)
+        {
+            Vector3 dir = (Player.position - transform.position).normalized;
+            Quaternion lookrotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                Quaternion.Euler(0, lookrotation.eulerAngles.y, 0), rotateSpeed * Time.deltaTime);
+            //transform.position += transform.forward * speed * Time.deltaTime;
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+        if (GameMnager.Insector.violatcount == 0)
+        {
+
+        }//結局pythonでの判定じたいは断念したからWebSocketClientはもう使わないんじゃないの？
+        else if (GameMnager.Insector.violatcount < 3)//1.2
+        {
+            speed = 10;//speedはより大きくないと後ろに下がる
+            //直したいならコードを書き換えないといけないよw
+        }
+        else if (GameMnager.Insector.violatcount < 5)//3.4
+        {
+            speed = 15;
+        }
+        else if (GameMnager.Insector.violatcount < 7)//5.6
+        {
+            speed = 20;
+        }
+        else if (GameMnager.Insector.violatcount < 8)//7.8
+        {
+            speed = 25;
+        }
+        else
+        {
+            speed = 30;
+        }
+    }
+}
