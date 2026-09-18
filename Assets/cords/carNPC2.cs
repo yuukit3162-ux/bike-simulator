@@ -186,6 +186,7 @@ public class carNPC2 : MonoBehaviour
                             distances = 0;
                         }
                         rotatedist = Mathf.MoveTowards(transform.InverseTransformPoint(car.transform.position).x, 0f, 3.5f+ distances/5);
+                        //このコードは相手の車を相対座標に変更ー　つまり回避用
                     }
 
                 }
