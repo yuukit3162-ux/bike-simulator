@@ -23,11 +23,11 @@ public class AiNavigationagent : MonoBehaviour
         Debug.Log("NavMesh上？ " + agent.isOnNavMesh);//NavMeshの上かどうか
         agent.updatePosition = false;
         agent.updateRotation = false;
-        Rigidbody = transform.parent.parent.GetComponent<Rigidbody>();
+        Rigidbody = transform.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!agent.isOnNavMesh)
         {
@@ -70,7 +70,7 @@ public class AiNavigationagent : MonoBehaviour
             dddd.y = 0;
             dddd.Normalize();
             //yukiの↑
-
+            agent.nextPosition = transform.position;
 
 
             float lookrotation_y = Quaternion.LookRotation(dddd).eulerAngles.y;
@@ -80,15 +80,15 @@ public class AiNavigationagent : MonoBehaviour
 
             Vector3 localVel = transform.InverseTransformDirection(Rigidbody.velocity);
             //Debug.Log(distance);
-            float look_to_rotation_y = Mathf.Clamp(look_to * Mathf.PI / 180f  - Rigidbody.angularVelocity.y, -handle, +handle);//
+            float look_to_rotation_y = Mathf.Clamp(look_to - Rigidbody.angularVelocity.y * 180f / Mathf.PI, -handle, +handle);//
 
             float speed = fixedspeed * dist;
             float movefored = speed - localVel.z;//* Mathf.Clamp(dist - localVel.z, 0f, 1f)
             Vector3 moveforedV3 = transform.forward * Mathf.Min(movefored, Maxspeed);
-            Rigidbody.AddForce(moveforedV3 - transform.right * localVel.x * 2, ForceMode.Acceleration);
+            Rigidbody.AddForce(moveforedV3 - transform.right * localVel.x , ForceMode.Acceleration);
             //↓すべるの対策
-            Rigidbody.AddTorque(new Vector3(0, look_to_rotation_y * Mathf.Clamp(localVel.z / 80, 0.1f, 1f) * rotationspeed, 0), ForceMode.Acceleration);
-
+            Rigidbody.AddTorque(new Vector3(0, look_to_rotation_y * Mathf.Clamp(localVel.z / 80, 0.1f, 1f), 0), ForceMode.Acceleration);
+            Debug.Log(look_to_rotation_y * Mathf.Clamp(localVel.z / 80, 0.1f, 1f));
             // コンソールに取得した座標の数を表示
             Debug.Log($"経路のポイント数: {corners.Length}");
 
