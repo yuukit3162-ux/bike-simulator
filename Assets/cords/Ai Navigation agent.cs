@@ -8,7 +8,7 @@ public class AiNavigationagent : MonoBehaviour
     // Start is called before the first frame update
     private NavMeshAgent agent;
     public Transform target;
-    private Rigidbody targetRB
+    private Rigidbody targetRB;
     private Rigidbody Rigidbody;
     [SerializeField] private float fixedspeed = 10f;
     [SerializeField] private float rotationspeed = 1f;
@@ -50,10 +50,15 @@ public class AiNavigationagent : MonoBehaviour
     
         Vector3 localVel = transform.InverseTransformDirection(Rigidbody.velocity);
         localVel.x = 0f;
-        rigidbody.velocity = transform.TransformDirection(localVel);//ごり押しじゃぁあああああああぁあああああああ
+        GetComponent<Rigidbody>().velocity = transform.TransformDirection(localVel);//ごり押しじゃぁあああああああぁあああああああ
         Vector3 start = transform.position;
-        Vector3 end = target.position + targetRB.velocity*dist/Vector3.Dot(rigidbody.velocity,(target.position - transform.position).normalized);
-        if (NavMesh.SamplePosition(start, out NavMeshHit hit, float.PositiveInfinity, NavMesh.AllAreas))
+        Vector3 end = target.position + targetRB.velocity*dist/Vector3.Dot(GetComponent<Rigidbody>().velocity,(target.position - transform.position).normalized);
+        if (float.IsNaN(end.x) || float.IsNaN(end.y) || float.IsNaN(end.z))
+        {
+            end = target.position;
+        }
+
+            if (NavMesh.SamplePosition(start, out NavMeshHit hit, float.PositiveInfinity, NavMesh.AllAreas))
         {
             start = hit.position;
         }
@@ -86,15 +91,15 @@ public class AiNavigationagent : MonoBehaviour
             
 
             //Debug.Log(distance);
-            float look_to_rotation_y = Mathf.Clamp(look_to - Rigidbody.angularVelocity.y * 180f / Mathf.PI, -handle, +handle);//
+            float look_to_rotation_y = Mathf.Clamp(look_to*5f - (Rigidbody.angularVelocity.y * 180f / Mathf.PI ), -handle, +handle);//
 
             float speed = fixedspeed * dist;
             float movefored = speed - localVel.z;//* Mathf.Clamp(dist - localVel.z, 0f, 1f)
             Vector3 moveforedV3 = transform.forward * Mathf.Min(movefored, Maxspeed);
             Rigidbody.AddForce(moveforedV3, ForceMode.Acceleration);// - transform.right * localVel.x 
             //↓すべるの対策
-            Rigidbody.AddTorque(new Vector3(0, look_to_rotation_y * Mathf.Clamp(localVel.z / 80, 0.1f, 1f), 0), ForceMode.Acceleration);
-            Debug.Log(look_to_rotation_y * Mathf.Clamp(localVel.z / 80, 0.1f, 1f));
+            Rigidbody.AddTorque(new Vector3(0, look_to_rotation_y * Mathf.Clamp(localVel.z, 0.1f, 1f), 0), ForceMode.Acceleration);
+            Debug.Log((look_to_rotation_y * Mathf.Clamp(localVel.z , 0.1f, 1f),look_to_rotation_y));
             // コンソールに取得した座標の数を表示
             Debug.Log($"経路のポイント数: {corners.Length}");
 

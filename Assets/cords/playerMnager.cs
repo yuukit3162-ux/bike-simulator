@@ -30,6 +30,7 @@ public class playerMnager : MonoBehaviour
     private float DrunkNoise = 0;
     public Text DrunkText;
     private float nowSpeed;
+    [SerializeField] bool huzimi;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -89,7 +90,7 @@ public class playerMnager : MonoBehaviour
             playerReset();
         }
 
-        if (GameMnager.Insector.PlayerReset)//GameMnager
+        if (GameMnager.Insector.PlayerReset && huzimi)//GameMnager
         {
             playerReset();
             GameMnager.Insector.PlayerReset = false;
