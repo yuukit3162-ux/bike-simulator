@@ -8,6 +8,7 @@ public class AiNavigationagent : MonoBehaviour
     // Start is called before the first frame update
     private NavMeshAgent agent;
     public Transform target;
+    private Rigidbody targetRB
     private Rigidbody Rigidbody;
     [SerializeField] private float fixedspeed = 10f;
     [SerializeField] private float rotationspeed = 1f;
@@ -18,12 +19,13 @@ public class AiNavigationagent : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        Debug.Log("Agent—LŒø: " + agent.isActiveAndEnabled);
-        Debug.Log("Ô‚ÌˆÊ’u: " + transform.position);
-        Debug.Log("NavMeshãH " + agent.isOnNavMesh);//NavMesh‚Ìã‚©‚Ç‚¤‚©
+        Debug.Log("Agentæœ‰åŠ¹: " + agent.isActiveAndEnabled);
+        Debug.Log("è»Šã®ä½ç½®: " + transform.position);
+        Debug.Log("NavMeshä¸Šï¼Ÿ " + agent.isOnNavMesh);//NavMeshã®ä¸Šã‹ã©ã†ã‹
         agent.updatePosition = false;
         agent.updateRotation = false;
         Rigidbody = transform.GetComponent<Rigidbody>();
+        targetRB = target.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -31,20 +33,26 @@ public class AiNavigationagent : MonoBehaviour
     {
         if (!agent.isOnNavMesh)
         {
-            Debug.LogWarning("Ô‚ªNavMeshã‚É‚¢‚Ü‚¹‚ñI");
+            Debug.LogWarning("è»ŠãŒNavMeshä¸Šã«ã„ã¾ã›ã‚“ï¼");
             return;
         }
         //agent.SetDestination(target.position);
 
 
 
-        // 1. Œo˜Hƒf[ƒ^‚ğŠi”[‚·‚éƒRƒ“ƒeƒiiNavMeshPathj‚ğì¬
+        // 1. çµŒè·¯ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹ã‚³ãƒ³ãƒ†ãƒŠï¼ˆNavMeshPathï¼‰ã‚’ä½œæˆ
         NavMeshPath path = new NavMeshPath();
 
-        // 2. Œo˜H‚ğŒvZiƒXƒ^[ƒgˆÊ’uAƒS[ƒ‹ˆÊ’uA’Ês‰Â”\‚ÈƒGƒŠƒAAŠi”[æj
-        // Œo˜H‚ªŒ©‚Â‚©‚é‚Æ true ‚ğ•Ô‚µ‚Ü‚·
+        // 2. çµŒè·¯ã‚’è¨ˆç®—ï¼ˆã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®ã€ã‚´ãƒ¼ãƒ«ä½ç½®ã€é€šè¡Œå¯èƒ½ãªã‚¨ãƒªã‚¢ã€æ ¼ç´å…ˆï¼‰
+        // çµŒè·¯ãŒè¦‹ã¤ã‹ã‚‹ã¨ true ã‚’è¿”ã—ã¾ã™
+        
+        float dist = Vector3.Distance(transform.position, target.position);
+    
+        Vector3 localVel = transform.InverseTransformDirection(Rigidbody.velocity);
+        localVel.x = 0f;
+        rigidbody.velocity = transform.TransformDirection(localVel);//ã”ã‚ŠæŠ¼ã—ã˜ã‚ƒãã‚ã‚ã‚ã‚ã‚ã‚ã‚ãã‚ã‚ã‚ã‚ã‚ã‚ã‚
         Vector3 start = transform.position;
-        Vector3 end = target.position;
+        Vector3 end = target.position + targetRB.velocity*dist/Vector3.Dot(rigidbody.velocity,(target.position - transform.position).normalized);
         if (NavMesh.SamplePosition(start, out NavMeshHit hit, float.PositiveInfinity, NavMesh.AllAreas))
         {
             start = hit.position;
@@ -55,10 +63,10 @@ public class AiNavigationagent : MonoBehaviour
         }
         if (NavMesh.CalculatePath(start, end, NavMesh.AllAreas, path))
         {
-            // 3. Œo˜H‚Ì‚·‚×‚Ä‚Ì‹È‚ª‚èŠpiÀ•Wj‚Ì”z—ñ‚ğæ“¾
+            // 3. çµŒè·¯ã®ã™ã¹ã¦ã®æ›²ãŒã‚Šè§’ï¼ˆåº§æ¨™ï¼‰ã®é…åˆ—ã‚’å–å¾—
             Vector3[] corners = path.corners;
             Vector3 dddd;
-            //yuki‚Ì«
+            //yukiã®â†“
             if (corners.Length < 2)
             {
                 dddd = start - transform.position;
@@ -69,30 +77,28 @@ public class AiNavigationagent : MonoBehaviour
             }
             dddd.y = 0;
             dddd.Normalize();
-            //yuki‚Ìª
+            //yukiã®â†‘
             agent.nextPosition = transform.position;
 
 
             float lookrotation_y = Quaternion.LookRotation(dddd).eulerAngles.y;
             float look_to = Mathf.DeltaAngle(transform.eulerAngles.y, lookrotation_y);
-            float dist = Vector3.Distance(transform.position, target.position);
             
 
-            Vector3 localVel = transform.InverseTransformDirection(Rigidbody.velocity);
             //Debug.Log(distance);
             float look_to_rotation_y = Mathf.Clamp(look_to - Rigidbody.angularVelocity.y * 180f / Mathf.PI, -handle, +handle);//
 
             float speed = fixedspeed * dist;
             float movefored = speed - localVel.z;//* Mathf.Clamp(dist - localVel.z, 0f, 1f)
             Vector3 moveforedV3 = transform.forward * Mathf.Min(movefored, Maxspeed);
-            Rigidbody.AddForce(moveforedV3 - transform.right * localVel.x , ForceMode.Acceleration);
-            //«‚·‚×‚é‚Ì‘Îô
+            Rigidbody.AddForce(moveforedV3, ForceMode.Acceleration);// - transform.right * localVel.x 
+            //â†“ã™ã¹ã‚‹ã®å¯¾ç­–
             Rigidbody.AddTorque(new Vector3(0, look_to_rotation_y * Mathf.Clamp(localVel.z / 80, 0.1f, 1f), 0), ForceMode.Acceleration);
             Debug.Log(look_to_rotation_y * Mathf.Clamp(localVel.z / 80, 0.1f, 1f));
-            // ƒRƒ“ƒ\[ƒ‹‚Éæ“¾‚µ‚½À•W‚Ì”‚ğ•\¦
-            Debug.Log($"Œo˜H‚Ìƒ|ƒCƒ“ƒg”: {corners.Length}");
+            // ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«å–å¾—ã—ãŸåº§æ¨™ã®æ•°ã‚’è¡¨ç¤º
+            Debug.Log($"çµŒè·¯ã®ãƒã‚¤ãƒ³ãƒˆæ•°: {corners.Length}");
 
-            // ƒV[ƒ“ƒrƒ…[‚ÉŒo˜H‚ğü‚Æ‚µ‚Ä•`‰æiƒfƒoƒbƒO—pj
+            // ã‚·ãƒ¼ãƒ³ãƒ“ãƒ¥ãƒ¼ã«çµŒè·¯ã‚’ç·šã¨ã—ã¦æç”»ï¼ˆãƒ‡ãƒãƒƒã‚°ç”¨ï¼‰
             for (int i = 0; i < corners.Length - 1; i++)
             {
                 Debug.DrawLine(start, corners[1], Color.red);
