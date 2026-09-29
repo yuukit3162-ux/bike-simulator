@@ -31,6 +31,7 @@ public class AiNavigationagent : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!Physics.Raycast(transform.position, -transform.up, 0.8f, groundlayer)) return;
         if (!agent.isOnNavMesh)
         {
             Debug.LogWarning("車がNavMesh上にいません！");
