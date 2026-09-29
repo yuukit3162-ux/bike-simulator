@@ -21,6 +21,7 @@ public class carNPC2 : MonoBehaviour
     string turnback = "";
     public bool traficbool;
     public carMnager carMnager;
+    public LayerMask groundlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,7 @@ public class carNPC2 : MonoBehaviour
 
         // 2. このオブジェクトの子要素にして前方を向かせる
         cameraObj.transform.SetParent(this.transform);
-        cameraObj.transform.localPosition = new Vector3(0f,-1f, 1f);
+        cameraObj.transform.localPosition = new Vector3(0f,-1f, 3f);
         cameraObj.transform.localRotation = Quaternion.identity;
 
 
@@ -99,7 +100,9 @@ public class carNPC2 : MonoBehaviour
     }
     void Update()
     {
-        if (!Physics.Raycast(transform.position, -transform.up, 0.8f, groundlayer)) return;
+        Vector3 Hosei = transform.position + new Vector3(0, -1.4f, 0);
+        Debug.DrawLine(Hosei, Hosei - transform.up, Color.red);
+        if (!Physics.Raycast(Hosei, -transform.up, 1f, groundlayer)) return;
         if (traficbool)
         {
             if (isTouching)

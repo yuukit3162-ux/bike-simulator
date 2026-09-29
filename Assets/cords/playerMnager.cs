@@ -54,7 +54,7 @@ public class playerMnager : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezePosition;
             playerReset();//初期配置
         }
-        if ((Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift)) && Jokou == false)
+        if ((Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift)) && !Jokou)
         {
             moveForce = 15f;
         }
@@ -62,7 +62,7 @@ public class playerMnager : MonoBehaviour
         {
             moveForce = 30f;
         }
-        if ((Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift)) && Jokou == true)
+        if ((Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift)) && Jokou)
         {
             moveForce = 10f;
         }
@@ -87,7 +87,7 @@ public class playerMnager : MonoBehaviour
         if (gameObject.transform.position.y < 80f)
         {
             Debug.Log("落ちないためにリセット");
-            playerReset();
+            //playerReset();
         }
 
         if (GameMnager.Insector.PlayerReset && huzimi)//GameMnager
@@ -265,17 +265,17 @@ public class playerMnager : MonoBehaviour
     }
     void JokouFreezeRotation()//歩き
     {
-        
+
         //rb.rotation = Quaternion.Euler(0f, gameObject.transform.rotation.y, 0f);
         //rb.constraints = RigidbodyConstraints.FreezeRotation;
         Mcolor.color = Color.blue;
-        people.localPosition = new Vector3(0, -0.3f, 0);
+        //people.localPosition = new Vector3(0, -0.3f, 0);
     }
     void JokouUnFreezeRotation()//自転車
     {
-        rb.constraints = RigidbodyConstraints.None;
+        //rb.constraints = RigidbodyConstraints.None;
         Mcolor.color = Color.green;
-        people.localPosition = new Vector3(0, 0, 0);
+        //people.localPosition = new Vector3(0, 0, 0);
     }
     IEnumerator Noise()
     {
@@ -315,6 +315,7 @@ public class playerMnager : MonoBehaviour
                 //yロール加速度
                 //Quaternion turnRotation = Quaternion.Euler(0f, turnInput * turnSpeed * Time.fixedDeltaTime * moveInput / 2, 0f);
                 //rb.MoveRotation();
+                rb.AddForce(tt2, ForceMode.Acceleration);//加速
             }
             else//↓自転車
             {
@@ -419,6 +420,10 @@ public class playerMnager : MonoBehaviour
             Debug.Log("衝突今は切っている");
             Rigidbody r = gameObject.GetComponent<Rigidbody>();
             //r.AddForce(new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)) * 10000, ForceMode.Acceleration);
+        }
+        if(other.gameObject.tag == "Police")
+        {
+            playerReset();
         }
     }
 
