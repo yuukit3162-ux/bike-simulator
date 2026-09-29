@@ -99,6 +99,7 @@ public class carNPC2 : MonoBehaviour
     }
     void Update()
     {
+        if (!Physics.Raycast(transform.position, -transform.up, 0.8f, groundlayer)) return;
         if (traficbool)
         {
             if (isTouching)
