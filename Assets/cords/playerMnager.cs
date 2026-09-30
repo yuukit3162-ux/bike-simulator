@@ -423,7 +423,7 @@ public class playerMnager : MonoBehaviour
         }
         if(other.gameObject.tag == "Police")
         {
-            playerReset();
+            GameMnager.Insector.GameOver();
         }
     }
 

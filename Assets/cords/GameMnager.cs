@@ -52,6 +52,7 @@ public class GameMnager : MonoBehaviour
     public Text Rank;//A,B,C‚È‚Ç‚Ì‚â‚Â
     public Text RankText;//‚»‚ÌA,B,C‚É‘Î‚·‚éà–¾
     public Text evaluation;//•]‰¿
+    public CanvasGroup GameOverCanvas;
 
     private bool FadeoutB = false;
     private float counttime = 0;
@@ -175,6 +176,11 @@ public class GameMnager : MonoBehaviour
             }
         }
     }
+    public void GameOver()
+    {
+        GameOverCanvas.alpha = 1;
+        StartCoroutine(Fadeout(GameOverCanvas));
+    }
     private void guilty(int value)
     {
         //‹ï‘Ì“I‚Èßó
@@ -190,24 +196,24 @@ public class GameMnager : MonoBehaviour
         whatSin = violationType.none;
         if(FadeoutB == false)
         {
-            StartCoroutine(Fadeout());
+            StartCoroutine(Fadeout(Danger));
         }
     }
-    IEnumerator Fadeout()
+    IEnumerator Fadeout(CanvasGroup canvas)
     {
         FadeoutB = true;
         yield return new WaitForSeconds(1);
         counttime = 0f;
-        while (Danger.alpha > 0)
+        while (canvas.alpha > 0)
         {
             counttime += Time.deltaTime;
             float percentage = counttime / fadeoutTime;
-            Danger.alpha = Mathf.Lerp(1f, 0f, percentage);
+            canvas.alpha = Mathf.Lerp(1f, 0f, percentage);
             yield return null;
         }
         FadeoutB = false;
         Debug.Log("”ñ•\Ž¦");
-        Danger.alpha = 0f;
+        canvas.alpha = 0f;
         //Danger.interactable = false;
         //Danger.blocksRaycasts = false;//‚¢‚é‚©•ª‚©‚ç‚È‚¢
     }
