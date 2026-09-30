@@ -16,6 +16,7 @@ public class AiNavigationagent : MonoBehaviour
     [SerializeField] private float handle = 1f;
     private float Maxspeed = 20f;
     public LayerMask groundlayer;
+    private bool useNavMesh;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -44,7 +45,7 @@ public class AiNavigationagent : MonoBehaviour
 
 
         // 1. 経路データを格納するコンテナ（NavMeshPath）を作成
-        NavMeshPath path = new NavMeshPath();
+        //NavMeshPath path = new NavMeshPath();
 
         // 2. 経路を計算（スタート位置、ゴール位置、通行可能なエリア、格納先）
         // 経路が見つかると true を返します
@@ -61,9 +62,12 @@ public class AiNavigationagent : MonoBehaviour
             end = target.position;
         }
 
-            if (NavMesh.SamplePosition(start, out NavMeshHit hit, float.PositiveInfinity, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(start, out NavMeshHit hit, 10, NavMesh.AllAreas))
         {
             start = hit.position;
+            useNavMesh=true;
+        }else{
+            useNavMesh=false;
         }
         if (NavMesh.SamplePosition(end, out NavMeshHit hit2, float.PositiveInfinity, NavMesh.AllAreas))
         {
@@ -72,24 +76,30 @@ public class AiNavigationagent : MonoBehaviour
         if (agent.SetDestination(end))
         {
             // 3. 経路のすべての曲がり角（座標）の配列を取得
-            Vector3[] corners = path.corners;
-            //Vector3 dddd;
-            ////yukiの↓
-            //if (corners.Length < 2)
-            //{
+            //Vector3[] corners = path.corners;
+            Vector3 dddd;
+            //yukiの↓
+            // if (corners.Length < 2)
+            // {
             //    dddd = start - transform.position;
-            //}
-            //else
-            //{
+            // }
+            // else
+            // {
             //    dddd = corners[1] - transform.position;
-            //}
-            //dddd.y = 0;
-            //dddd.Normalize();
+            // }
+            if(useNavMesh){
+                agent.nextPosition = start;
+                dddd=agent.desiredVelocity;
+            }else{
+                dddd=end-start;
+            }
+            dddd.y = 0;
+            dddd.Normalize();
             //yukiの↑
-            agent.nextPosition = transform.position;
+            
 
 
-            float lookrotation_y = Quaternion.LookRotation(agent.desiredVelocity).eulerAngles.y;
+            float lookrotation_y = Quaternion.LookRotation(dddd).eulerAngles.y;
             float look_to = Mathf.DeltaAngle(transform.eulerAngles.y, lookrotation_y);
             
 
@@ -104,13 +114,13 @@ public class AiNavigationagent : MonoBehaviour
             Rigidbody.AddTorque(new Vector3(0, look_to_rotation_y * Mathf.Clamp(localVel.z, 0.1f, 1f), 0), ForceMode.Acceleration);
             Debug.Log(agent.desiredVelocity);
             // コンソールに取得した座標の数を表示
-            Debug.Log($"経路のポイント数: {corners.Length}");
+            //Debug.Log($"経路のポイント数: {corners.Length}");
 
             // シーンビューに経路を線として描画（デバッグ用）
-            for (int i = 0; i < corners.Length - 1; i++)
-            {
-                Debug.DrawLine(start, corners[1], Color.red);
-            }
+            // for (int i = 0; i < corners.Length - 1; i++)
+            // {
+            //     Debug.DrawLine(start, corners[1], Color.red);
+            // }
         }
     }
 }
