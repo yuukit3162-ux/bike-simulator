@@ -96,10 +96,10 @@ public class AiNavigationagent : MonoBehaviour
                 if(NavMesh.Raycast(start, start-transform.right*5, out NavMeshHit hit4, NavMesh.AllAreas)){
                     float leftlong = Vector3.Distance(start,hit4.position);
                     if(NavMesh.Raycast(start, (hit4.position-start)*3, out NavMeshHit hit5, NavMesh.AllAreas)){
-                        float alllong = Vector3.Distance(hit5.position,hit4.position)
-                        float leftpa_sent = leftlong/alllong
-                        float mokuhyouti = 0.3-leftpa_sent
-                        dddd+=transform.right*mokuhyouti*hoseikyoudo
+                        float alllong = Vector3.Distance(hit5.position,hit4.position);
+                        float leftpa_sent = leftlong/alllong;
+                        float mokuhyouti = 0.3-leftpa_sent;
+                        dddd+=transform.right*mokuhyouti*hoseikyoudo;
                     }
                 }
             }else{
