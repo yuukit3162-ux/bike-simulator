@@ -14,6 +14,7 @@ public class AiNavigationagent : MonoBehaviour
     [SerializeField] private float rotationspeed = 1f;
 
     [SerializeField] private float handle = 1f;
+    [SerializeField] private float hoseikyoudo = 1f;
     private float Maxspeed = 20f;
     public LayerMask groundlayer;
     private bool useNavMesh;
@@ -92,9 +93,19 @@ public class AiNavigationagent : MonoBehaviour
             if(useNavMesh){
                 agent.nextPosition = start;
                 dddd=agent.desiredVelocity;
+                if(NavMesh.Raycast(start, start-transform.right*5, out NavMeshHit hit4, NavMesh.AllAreas)){
+                    float leftlong = Vector3.Distance(start,hit4.position);
+                    if(NavMesh.Raycast(start, (hit4.position-start)*3, out NavMeshHit hit5, NavMesh.AllAreas)){
+                        float alllong = Vector3.Distance(hit5.position,hit4.position)
+                        float leftpa_sent = leftlong/alllong
+                        float mokuhyouti = 0.3-leftpa_sent
+                        dddd+=transform.right*mokuhyouti*hoseikyoudo
+                    }
+                }
             }else{
                 dddd=end-start;
             }
+            
             dddd.y = 0;
             dddd.Normalize();
             //yukiの↑
