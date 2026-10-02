@@ -8,7 +8,9 @@ public class GameMnager : MonoBehaviour
 {
     public static GameMnager Insector;
     public static violationType whatSin;//罪の種類
-   
+
+    public Transform PlayerTranform;
+
     public int stage = 0;
     public int Countwaypoints = 0;
     
@@ -17,7 +19,7 @@ public class GameMnager : MonoBehaviour
     public bool Countpls = false;
     public bool PlayerReset = false;
 
-    public string GameStatus = "start";
+    public string GameStatus = "start";//start,play,finish,restart
     
     
     public CanvasGroup canvas;//uiを非表示に
@@ -26,6 +28,7 @@ public class GameMnager : MonoBehaviour
     public Text explain;
     public GameObject startbutton;
     public GameObject nextbutton;
+    public Text nextbuttonText;
     private int nextint = 3;
     private int nextCount = 0;
 
@@ -57,6 +60,10 @@ public class GameMnager : MonoBehaviour
     private bool FadeoutB = false;
     private float counttime = 0;
     public bool night = false;
+
+    private List<Vector3> syokihaiti;//初期配置
+    private List<GameObject> Cars;//インスタンス化したやつら
+    public GameObject police;
     // UIを表示
     private void ShowUI()
     {
@@ -180,6 +187,12 @@ public class GameMnager : MonoBehaviour
     {
         GameOverCanvas.alpha = 1;
         StartCoroutine(Fadeout(GameOverCanvas));
+        GameStatus = "Restart";
+        nextbuttonText.text = "restart";
+        Rank.text = "ー";
+        RankText.text = "ランクなし";
+        evaluation.text = "現行犯";
+        UIofAlpah();
     }
     private void guilty(int value)
     {
@@ -219,14 +232,33 @@ public class GameMnager : MonoBehaviour
     }
     public void nextTo()//nextbutton
     {
-        if(stage == 1)
+        Debug.Log(GameStatus);
+        if(GameStatus == "Restart")
         {
+            explain.text = "違反したら警察が来るよ\n" +
+                "ぶつかったら逮捕される";
+            //インスタンス化した物体などをsyokihaitiで指定して戻す
+            //for(int i = 0;i < Cars.Count; i++)
+            //{
+            //    Cars[i].transform.position = syokihaiti[i];
+            //}
             Risultgroup.alpha = 0;
             nextbutton.SetActive(false);
             UIsgroup.alpha = 1;
             startbutton.SetActive(true);
         }
-        if(stage == 0)
+        if(GameStatus == "finish")
+        {
+            if (stage == 1)
+            {
+                explain.text = "車に注意しよう\n*車はすべて直進で進むよ*";
+                Risultgroup.alpha = 0;
+                nextbutton.SetActive(false);
+                UIsgroup.alpha = 1;
+                startbutton.SetActive(true);
+            }
+        }
+        if(GameStatus == "start")
         {
             if (nextCount == 0)
             {
@@ -252,10 +284,20 @@ public class GameMnager : MonoBehaviour
             nextCount++;
             if (nextint == nextCount)
             {
-                nextbutton.SetActive(false);
                 startbutton.SetActive(true);
+                nextbutton.SetActive(false);
+                //Vector3 pos = new Vector3(124, 102, -54);
+                //GameObject obj = Instantiate(police, pos, Quaternion.identity);
+                //if(obj = null)
+                //{            
+                
+                //]}
+                //Cars.Add(obj);
+                //syokihaiti.Add(pos);
+                
             }
         }
+        
     }
     public void startgame()//startbutton
     {
@@ -275,6 +317,18 @@ public class GameMnager : MonoBehaviour
             waypoints[Countwaypoints].SetActive(true);
         }
     }
+    void UIofAlpah()
+    {
+        UIcanvas.alpha = 0;
+        violationsNumber.text = "違反回数:" + violatcount;
+        //WebSocketClient.webC.Countviolations = 0;
+        violatcount = 0;
+        resultpenlty.text = "総額:" + penaltyint + "円";
+        ClearTimeText.text = "クリア時間:" + ClearTime;
+        ClearTime = 0;
+        Risultgroup.alpha = 1;
+        nextbutton.SetActive(true);
+    }
     void finishgame()
     {
         //できたリスト
@@ -287,13 +341,8 @@ public class GameMnager : MonoBehaviour
         stage++;
         Debug.Log("finish");
         title.text = "stage" + stage;
-        if (stage == 1)
-        {
-            explain.text = "車に注意しよう\n*車はすべて直進で進むよ*";
-
-        }
-        UIcanvas.alpha = 0;
         //int V = WebSocketClient.webC.Countviolations;
+        nextbuttonText.text = "next";
         if (violatcount == 0)
         {
             Rank.text = "A";
@@ -318,19 +367,12 @@ public class GameMnager : MonoBehaviour
             RankText.text = "ランク";
             evaluation.text = "犯罪者";
         }
-        else 
+        else
         {
             Rank.text = "E";
             RankText.text = "最低ランク";
             evaluation.text = "重罪人";
         }
-        violationsNumber.text = "違反回数:" + violatcount;
-        //WebSocketClient.webC.Countviolations = 0;
-        violatcount = 0;
-        resultpenlty.text = "総額:" + penaltyint + "円";
-        ClearTimeText.text = "クリア時間:" + ClearTime;
-        ClearTime = 0;
-        Risultgroup.alpha = 1;
-        nextbutton.SetActive(true);
+        UIofAlpah();
     }
 }

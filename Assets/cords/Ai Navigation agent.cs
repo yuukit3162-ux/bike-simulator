@@ -20,6 +20,10 @@ public class AiNavigationagent : MonoBehaviour
     private bool useNavMesh;
     void Start()
     {
+        if(target == null)
+        {
+            target = GameMnager.Insector.PlayerTranform;
+        }
         agent = GetComponent<NavMeshAgent>();
         Debug.Log("Agent有効: " + agent.isActiveAndEnabled);
         Debug.Log("車の位置: " + transform.position);
@@ -81,8 +85,11 @@ public class AiNavigationagent : MonoBehaviour
             // 3. 経路のすべての曲がり角（座標）の配列を取得
             Vector3[] corners = agent.path.corners;
             Vector3 dddd;
-
-            float speed = fixedspeed * dist;
+            //if (corners.Length > 1)
+            //{
+            //    dist = Vector3.Distance(transform.position, corners[1]);
+            //}
+            float speed = fixedspeed * Mathf.Clamp(dist,100,float.PositiveInfinity);
             float movefored = Mathf.Min( speed - localVel.z, Maxspeed);//* Mathf.Clamp(dist - localVel.z, 0f, 1f)
             //yukiの↓
             // if (corners.Length < 2)
@@ -96,42 +103,50 @@ public class AiNavigationagent : MonoBehaviour
             if (useNavMesh){
                 agent.nextPosition = start;
                 dddd=agent.desiredVelocity;
-                Debug.DrawLine(start, start+dddd*10, Color.magenta);
-                Vector3 startx = start + dddd.normalized * movefored + Rigidbody.velocity;
-                Debug.DrawLine(startx, startx - transform.right * 80, Color.blue);
-                if (NavMesh.Raycast(startx, startx - transform.right*80, out NavMeshHit hit4, NavMesh.AllAreas)){
-                    float leftlong = Vector3.Distance(startx, hit4.position);
-                    Debug.DrawLine(startx, startx + transform.right * 80, Color.green);
-                    if (NavMesh.Raycast(startx, startx + transform.right * 80, out NavMeshHit hit5, NavMesh.AllAreas)){
-                        float alllong = Vector3.Distance(hit5.position,hit4.position);
-                        float leftpa_sent = leftlong/alllong;
-                        float mokuhyouti = 0.3f-leftpa_sent;
-                        Debug.Log("目標"+mokuhyouti);
-                        //dddd = Vector3.ProjectOnPlane(dddd, transform.right);
-                        dddd += transform.right * mokuhyouti * hoseikyoudo * alllong;
-                        Debug.DrawLine(start, start + dddd*10, Color.cyan);
-                        //if (NavMesh.FindClosestEdge(transform.position,out NavMeshHit edge,NavMesh.AllAreas))
-                        //{
-                        //    Vector3 toEdge = edge.position - transform.position;
+                ////float agentrotation_y = Quaternion.LookRotation(dddd).eulerAngles.y;
+                //Debug.DrawLine(start, start+dddd*10, Color.magenta);
+                //Vector3 startx = start;// + dddd.normalized+ Rigidbody.velocity;
+                //Debug.DrawLine(startx, startx - transform.right * 60, Color.blue);
+                //if (NavMesh.Raycast(startx, startx - transform.right*60, out NavMeshHit hit4, NavMesh.AllAreas)){
+                //    float leftlong = Vector3.Distance(startx, hit4.position);
+                //    Debug.DrawLine(startx, startx + transform.right * 80, Color.green);
+                //    if (NavMesh.Raycast(startx, startx + transform.right * 80, out NavMeshHit hit5, NavMesh.AllAreas)){
+                //        float alllong = Vector3.Distance(hit5.position,hit4.position);
+                //        float leftpa_sent = leftlong/alllong;
+                //        float mokuhyouti = 0.3f-leftpa_sent;
+                //        Debug.Log("目標"+mokuhyouti);
+                //        //dddd = Vector3.ProjectOnPlane(dddd, transform.right);
+                //        if (NavMesh.FindClosestEdge(transform.position, out NavMeshHit edge, NavMesh.AllAreas))
+                //        {
+                //            dddd += transform.right * mokuhyouti * alllong + transform.forward * (mokuhyouti * alllong / Mathf.Tan(handle * Mathf.Deg2Rad + Mathf.Acos(Mathf.Abs(Vector3.Dot(Vector3.right, (transform.position - edge.position))))));// + Rigidbody.velocity;
+                //        }
+                //        Debug.DrawLine(start, start + dddd*10, Color.cyan);
+                //        DebugEx.DrawPoint(hit5.position, Color.red,3f,shape:DebugEx.ShapeType.Star);
+                //        DebugEx.DrawPoint(hit4.position, Color.red, 3f, shape: DebugEx.ShapeType.Star);
+                //        DebugEx.DrawPoint(edge.position, Color.yellow, 3f, shape: DebugEx.ShapeType.Star);
+                //        DebugEx.DrawPoint(start+mokuhyouti*alllong*transform.right, Color.cyan, 3f, shape: DebugEx.ShapeType.Circle);
+                //        //if (NavMesh.FindClosestEdge(transform.position,out NavMeshHit edge,NavMesh.AllAreas))
+                //        //{
+                //        //    Vector3 toEdge = edge.position - transform.position;
 
-                        //    // Y方向を無視
-                        //    toEdge.y = 0;
+                //        //    // Y方向を無視
+                //        //    toEdge.y = 0;
 
-                        //    float distance = toEdge.magnitude;
-                        //    float targetDistance = 2.0f;
-                        //    if (distance < targetDistance)
-                        //    {
-                        //        Vector3 awayFromEdge = -toEdge.normalized;
+                //        //    float distance = toEdge.magnitude;
+                //        //    float targetDistance = 2.0f;
+                //        //    if (distance < targetDistance)
+                //        //    {
+                //        //        Vector3 awayFromEdge = -toEdge.normalized;
 
-                        //        // 端に近いほど強くする
-                        //        float strength = Mathf.Clamp(targetDistance - distance,0f,0.5f);
+                //        //        // 端に近いほど強くする
+                //        //        float strength = Mathf.Clamp(targetDistance - distance,0f,0.5f);
 
-                        //        dddd += awayFromEdge * strength;
+                //        //        dddd += awayFromEdge * strength;
 
-                        //    }
-                        //}
-                    }
-                }
+                //        //    }
+                //        //}
+                //    }
+                //}
             }
             else{
                 dddd=end-start;

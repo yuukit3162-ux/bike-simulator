@@ -48,7 +48,7 @@ public class playerMnager : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.None;
         }
-        if (GameMnager.Insector.GameStatus == "finish")
+        if (GameMnager.Insector.GameStatus == "finish" || GameMnager.Insector.GameStatus == "Restart")
         {
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             rb.constraints = RigidbodyConstraints.FreezePosition;
