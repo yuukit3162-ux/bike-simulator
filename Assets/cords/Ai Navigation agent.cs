@@ -97,7 +97,7 @@ public class AiNavigationagent : MonoBehaviour
                 agent.nextPosition = start;
                 dddd=agent.desiredVelocity;
                 Debug.DrawLine(start, start+dddd*10, Color.magenta);
-                Vector3 startx = start + dddd.normalized * movefored;
+                Vector3 startx = start + dddd.normalized * movefored + Rigidbody.velocity;
                 Debug.DrawLine(startx, startx - transform.right * 80, Color.blue);
                 if (NavMesh.Raycast(startx, startx - transform.right*80, out NavMeshHit hit4, NavMesh.AllAreas)){
                     float leftlong = Vector3.Distance(startx, hit4.position);
