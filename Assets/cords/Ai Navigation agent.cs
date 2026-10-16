@@ -37,6 +37,10 @@ public class AiNavigationagent : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(GameMnager.Insector.GameStatus != "play")
+        {
+            return;
+        }
         Vector3 Hosei = transform.position + new Vector3(0, 0.8f, 0);
         Debug.DrawLine(Hosei, Hosei - transform.up*0.8f, Color.red);
         if (!Physics.Raycast(Hosei, -transform.up, 0.8f, groundlayer)) return;

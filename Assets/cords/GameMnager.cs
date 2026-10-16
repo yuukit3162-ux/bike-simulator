@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameMnager : MonoBehaviour
 {
@@ -60,10 +61,10 @@ public class GameMnager : MonoBehaviour
     private bool FadeoutB = false;
     private float counttime = 0;
     public bool night = false;
-
-    private List<Vector3> syokihaiti;//初期配置
-    private List<GameObject> Cars;//インスタンス化したやつら
     public GameObject police;
+
+    public static string[] SenceName = { "bike","bike2"};
+    private static bool Itsfirsttime = true;
     // UIを表示
     private void ShowUI()
     {
@@ -89,9 +90,28 @@ public class GameMnager : MonoBehaviour
         drunkDriving,//酒気帯び運転
         offLights //夜間無灯火
     }
+    private Dictionary<GameObject,CarInfo> Cars = new Dictionary<GameObject, CarInfo>();//インスタンス化したやつら
+    class CarInfo
+    {
+        public GameObject car;
+        public Vector3 firstposition;
+        public string kinds;
+        public CarInfo(GameObject obj,Vector3 pos,string kind)
+        {
+            obj = car;
+            pos = firstposition;
+            kind = kinds;
+        }
+    }
+    void subCarInfor(GameObject obj, Vector3 pos, string kinds)
+    {
+        CarInfo A = new CarInfo(obj, pos, kinds);
+        Cars.Add(obj, A);
+    }
     // Start is called before the first frame update
     void Start()
     {
+        
         UIsgroup.alpha = 1;
         startbutton.SetActive(false);
 
@@ -128,6 +148,13 @@ public class GameMnager : MonoBehaviour
             {violationType.offLights, 5000},//反則金　できた
 
         };
+        if (!Itsfirsttime)
+        {
+            nextTo();
+        }
+        //Vector3 pos = new Vector3(124, 102, -54);
+        //GameObject obj = Instantiate(police, pos, Quaternion.identity);
+        //subCarInfor(obj, pos, "police");
     }
 
     // Update is called once per frame
@@ -193,6 +220,17 @@ public class GameMnager : MonoBehaviour
         RankText.text = "ランクなし";
         evaluation.text = "現行犯";
         UIofAlpah();
+        resetposition();
+    }
+    private void resetposition()
+    {
+        //if (stage == 0)
+        //{
+        //    foreach(KeyValuePair<GameObject, CarInfo> car in Cars)
+        //    {
+        //        if(car.Key == )
+        //    }
+        //}
     }
     private void guilty(int value)
     {
@@ -235,6 +273,7 @@ public class GameMnager : MonoBehaviour
         Debug.Log(GameStatus);
         if(GameStatus == "Restart")
         {
+
             explain.text = "違反したら警察が来るよ\n" +
                 "ぶつかったら逮捕される";
             //インスタンス化した物体などをsyokihaitiで指定して戻す
@@ -260,47 +299,69 @@ public class GameMnager : MonoBehaviour
         }
         if(GameStatus == "start")
         {
-            if (nextCount == 0)
+            if (Itsfirsttime)
             {
-                explain.text = "自転車には青色と緑色があって\n" +
-                    "青色:動きが遅いが倒れない、歩いているイメージ\n" +
-                    "緑色:動きが早いが倒れる";
+                if (nextCount == 0)
+                {
+                    explain.text = "自転車には青色と緑色があって\n" +
+                        "青色:動きが遅いが倒れない、歩いているイメージ\n" +
+                        "緑色:動きが早いが倒れる";
+                }
+                if (nextCount == 1)
+                {
+                    explain.text = "自転車の色はspaceキーでの変更ができる\n" +
+                        "リスポーン時は青色にできるよ\n" +
+                        "それではstartボタンを\n" +
+                        "押してね";
+                }
+                if (nextCount == 2)
+                {
+                    title.text = "チュートリアル";
+                    explain.text = "みどりのチェックポイントを\n" +
+                        "通っていってね\n" +
+                        "赤色がゴールだよ\n" +
+                        "信号に注意しよう";
+                }
+                nextCount++;
+                if (nextint == nextCount)
+                {
+                    startbutton.SetActive(true);
+                    nextbutton.SetActive(false);
+
+                }
+
             }
-            if (nextCount == 1)
-            {
-                explain.text = "自転車の色はspaceキーでの変更ができる\n" +
-                    "リスポーン時は青色にできるよ\n" +
-                    "それではstartボタンを\n" +
-                    "押してね";
-            }
-            if (nextCount == 2)
+            else
             {
                 title.text = "チュートリアル";
-                explain.text = "みどりのチェックポイントを\n" +
-                    "通っていってね\n" +
-                    "赤色がゴールだよ\n" +
-                    "信号に注意しよう";
-            }
-            nextCount++;
-            if (nextint == nextCount)
-            {
+                explain.text = "警察に捕まらないように\n" +
+                    "安全運転しよう";
                 startbutton.SetActive(true);
                 nextbutton.SetActive(false);
-                //Vector3 pos = new Vector3(124, 102, -54);
-                //GameObject obj = Instantiate(police, pos, Quaternion.identity);
-                //if(obj = null)
-                //{            
-                
-                //]}
-                //Cars.Add(obj);
-                //syokihaiti.Add(pos);
-                
             }
+            
         }
         
     }
     public void startgame()//startbutton
     {
+        if (stage == 0)
+        {
+            Countwaypoints = 0;
+            waypoints[Countwaypoints].SetActive(true);
+        }
+        Debug.Log(Itsfirsttime);
+        if (GameStatus == "Restart")
+        {
+            Itsfirsttime = false;
+            Debug.Log("イエーイ");
+            SenceEx.next(0);
+        }
+        if(GameStatus == "finish")
+        {
+            Itsfirsttime = true;
+            SenceEx.next();
+        }
         //canvas.enabled = false;
         UIsgroup.alpha = 0;
         startbutton.SetActive(false);
@@ -311,11 +372,6 @@ public class GameMnager : MonoBehaviour
         Debug.Log("総額リセット");
         penaltyint = 0;
         Risultgroup.alpha = 0;
-        if(stage == 0)
-        {
-            Countwaypoints = 0;
-            waypoints[Countwaypoints].SetActive(true);
-        }
     }
     void UIofAlpah()
     {
@@ -324,7 +380,7 @@ public class GameMnager : MonoBehaviour
         //WebSocketClient.webC.Countviolations = 0;
         violatcount = 0;
         resultpenlty.text = "総額:" + penaltyint + "円";
-        ClearTimeText.text = "クリア時間:" + ClearTime;
+        ClearTimeText.text = "時間:" + ClearTime;
         ClearTime = 0;
         Risultgroup.alpha = 1;
         nextbutton.SetActive(true);
@@ -374,5 +430,6 @@ public class GameMnager : MonoBehaviour
             evaluation.text = "重罪人";
         }
         UIofAlpah();
+        resetposition();
     }
 }

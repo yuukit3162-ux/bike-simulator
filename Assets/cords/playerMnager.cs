@@ -31,12 +31,17 @@ public class playerMnager : MonoBehaviour
     public Text DrunkText;
     private float nowSpeed;
     [SerializeField] bool huzimi;
+
+    private Vector3 firstpos;
+    private Quaternion firstrotate;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         Mcolor.color = Color.green;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.constraints = RigidbodyConstraints.FreezePosition;
+        firstpos = transform.position;
+        firstrotate = transform.rotation;
     }
 
     void Update()
@@ -248,8 +253,8 @@ public class playerMnager : MonoBehaviour
     }
     void playerReset()
     {
-        transform.position = new Vector3(22f, 103f, -10f);
-        transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        transform.position = firstpos;
+        transform.rotation = firstrotate;
         rb.velocity = new Vector3(0f, 0f, 0f); ;
         rb.rotation = Quaternion.Euler(0f, 0f, 0f);
         handleft.SetActive(false);

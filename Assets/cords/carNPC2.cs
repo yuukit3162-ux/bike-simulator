@@ -100,6 +100,10 @@ public class carNPC2 : MonoBehaviour
     }
     void Update()
     {
+        if(GameMnager.Insector.GameStatus != "play")
+        {
+            return;
+        }
         Vector3 Hosei = transform.position + new Vector3(0, -1.4f, 0);
         Debug.DrawLine(Hosei, Hosei - transform.up, Color.red);
         if (!Physics.Raycast(Hosei, -transform.up, 1f, groundlayer)) return;

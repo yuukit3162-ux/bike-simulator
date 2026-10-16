@@ -65,6 +65,7 @@
     <Compile Include="Assets\cords\carNPC2.cs" />
     <Compile Include="Assets\cords\playerMnager.cs" />
     <Compile Include="Assets\cords\stratbutton.cs" />
+    <Compile Include="Assets\cords\SenceEx.cs" />
     <Compile Include="Assets\cords\GameMnager.cs" />
     <Compile Include="Assets\cords\hekomaseru.cs" />
     <Compile Include="Assets\cords\maincameraMnager.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets\cords\nomalcarMnager.cs" />
     <Compile Include="Assets\cords\PoliceNPCMnager2.cs" />
     <Compile Include="Assets\cords\Ai Navigation agent.cs" />
+    <Compile Include="Assets\cords\SenceMnager.cs" />
     <Compile Include="Assets\http\httprequest.cs" />
     <Compile Include="Assets\cords\nomalcar.cs" />
     <Compile Include="Assets\cords\PoliceNPCMnager.cs" />

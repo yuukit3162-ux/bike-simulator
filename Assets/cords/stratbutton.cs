@@ -7,6 +7,6 @@ public class stratbutton : MonoBehaviour
 {
     public void Clickstart()
     {
-        SceneManager.LoadScene("bike");
+        SenceEx.next();
     }
 }
