@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameMnager : MonoBehaviour
 {
     public static GameMnager Insector;
-    public static violationType whatSin;//ß‚Ìí—Ş
+    public static violationType whatSin;//ç½ªã®ç¨®é¡
 
     public Transform PlayerTranform;
 
@@ -23,7 +23,7 @@ public class GameMnager : MonoBehaviour
     public string GameStatus = "start";//start,play,finish,restart
     
     
-    public CanvasGroup canvas;//ui‚ğ”ñ•\¦‚É
+    public CanvasGroup canvas;//uiã‚’éè¡¨ç¤ºã«
     public CanvasGroup UIsgroup;//UIs
     public Text title;
     public Text explain;
@@ -33,29 +33,29 @@ public class GameMnager : MonoBehaviour
     private int nextint = 3;
     private int nextCount = 0;
 
-    public GameObject penalty;//”½‘¥‹à
+    public GameObject penalty;//åå‰‡é‡‘
     private Text penaltytext;
     private int penaltyint = 0;
 
-    public CanvasGroup Danger;//ˆá”½‚Ì•\¦
+    public CanvasGroup Danger;//é•åæ™‚ã®è¡¨ç¤º
     public Text DangerText;
     private Dictionary<int, string> DangerDictionary;
     private Dictionary<violationType, int> violatDictionary;
     public int violatcount = 0;
 
-    public GameObject Sun;//–¾‚é‚³
-    private float lightAngle = 50f;//ŠÔ ‘¾—z‚ÌŠp“x 50:’© 210:–é 0~360
+    public GameObject Sun;//æ˜ã‚‹ã•
+    private float lightAngle = 50f;//æ™‚é–“ å¤ªé™½ã®è§’åº¦ 50:æœ 210:å¤œ 0~360
 
-    public CanvasGroup UIcanvas;//ƒAƒ‹ƒR[ƒ‹@”½‘¥‹à
+    public CanvasGroup UIcanvas;//ã‚¢ãƒ«ã‚³ãƒ¼ãƒ«ã€€åå‰‡é‡‘
 
     public CanvasGroup Risultgroup;
     public Text violationsNumber;
     public Text resultpenlty;
     public Text ClearTimeText;
     private float ClearTime;
-    public Text Rank;//A,B,C‚È‚Ç‚Ì‚â‚Â
-    public Text RankText;//‚»‚ÌA,B,C‚É‘Î‚·‚éà–¾
-    public Text evaluation;//•]‰¿
+    public Text Rank;//A,B,Cãªã©ã®ã‚„ã¤
+    public Text RankText;//ãã®A,B,Cã«å¯¾ã™ã‚‹èª¬æ˜
+    public Text evaluation;//è©•ä¾¡
     public CanvasGroup GameOverCanvas;
 
     private bool FadeoutB = false;
@@ -63,16 +63,15 @@ public class GameMnager : MonoBehaviour
     public bool night = false;
     public GameObject police;
 
-    public static string[] SenceName = { "bike","bike2"};
     private static bool Itsfirsttime = true;
-    // UI‚ğ•\¦
+    // UIã‚’è¡¨ç¤º
     private void ShowUI()
     {
         Debug.Log("showUI");
         counttime = 0;
         Danger.alpha = 1f;
         //Danger.interactable = true;
-        //Danger.blocksRaycasts = true;//‚¢‚é‚©•ª‚©‚ç‚È‚¢
+        //Danger.blocksRaycasts = true;//ã„ã‚‹ã‹åˆ†ã‹ã‚‰ãªã„
     }
     public GameObject[] waypoints;
     private void Awake()
@@ -81,32 +80,14 @@ public class GameMnager : MonoBehaviour
     }
     public enum violationType
     {
-        none,//–³‚µ
-        IgnoringTrafficLights,//M†–³‹
-        RunningBackwards,//‹t‘–(‰E‘¤’Ês)
-        smartphoneUse,//‚È‚ª‚çƒXƒ}ƒz
-        OnTheSidewalk,//•à“¹‘–s
-        FailStop, //ˆê•s’â~
-        drunkDriving,//ğ‹C‘Ñ‚Ñ‰^“]
-        offLights //–éŠÔ–³“”‰Î
-    }
-    private Dictionary<GameObject,CarInfo> Cars = new Dictionary<GameObject, CarInfo>();//ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚µ‚½‚â‚Â‚ç
-    class CarInfo
-    {
-        public GameObject car;
-        public Vector3 firstposition;
-        public string kinds;
-        public CarInfo(GameObject obj,Vector3 pos,string kind)
-        {
-            obj = car;
-            pos = firstposition;
-            kind = kinds;
-        }
-    }
-    void subCarInfor(GameObject obj, Vector3 pos, string kinds)
-    {
-        CarInfo A = new CarInfo(obj, pos, kinds);
-        Cars.Add(obj, A);
+        none,//ç„¡ã—
+        IgnoringTrafficLights,//ä¿¡å·ç„¡è¦–
+        RunningBackwards,//é€†èµ°(å³å´é€šè¡Œ)
+        smartphoneUse,//ãªãŒã‚‰ã‚¹ãƒãƒ›
+        OnTheSidewalk,//æ­©é“èµ°è¡Œ
+        FailStop, //ä¸€æ™‚ä¸åœæ­¢
+        drunkDriving,//é…’æ°—å¸¯ã³é‹è»¢
+        offLights //å¤œé–“ç„¡ç¯ç«
     }
     // Start is called before the first frame update
     void Start()
@@ -121,31 +102,31 @@ public class GameMnager : MonoBehaviour
         Risultgroup.alpha = 0;
         Danger.alpha = 0f;
         //Danger.interactable = false;
-        //Danger.blocksRaycasts = false;//‚¢‚é‚©•ª‚©‚ç‚È‚¢
+        //Danger.blocksRaycasts = false;//ã„ã‚‹ã‹åˆ†ã‹ã‚‰ãªã„
 
         stage = 0;
         DangerDictionary = new Dictionary<int, string>
         {
-            {0, "ˆá”½‚È‚µ" },
-            {1, "M†–³‹‚É‚æ‚è\r\n”½‘¥‹à:6000‰~" },
-            {2 ,"‹t‘–‚É‚æ‚è\r\n”½‘¥‹à:6000‰~" },
-            {3 ,"‚È‚ª‚çƒXƒ}ƒz‚É‚æ‚è\r\n”½‘¥‹à:12000‰~" },
-            {4 ,"•à“¹‘–s‚É‚æ‚è\r\n”½‘¥‹à:6000‰~" },
-            {5 ,"ˆê•s’â~‚É‚æ‚è\r\n”½‘¥‹à:5000‰~" },
-            {6 ,"ğ‹C‘Ñ‚Ñ‰^“]‚É‚æ‚è\r\n”±‹à:500000‰~" },
-            {7 ,"–éŠÔ–³“”‰Î‚É‚æ‚è\r\n”½‘¥‹à:5000‰~" }
+            {0, "é•åãªã—" },
+            {1, "ä¿¡å·ç„¡è¦–ã«ã‚ˆã‚Š\r\nåå‰‡é‡‘:6000å††" },
+            {2 ,"é€†èµ°ã«ã‚ˆã‚Š\r\nåå‰‡é‡‘:6000å††" },
+            {3 ,"ãªãŒã‚‰ã‚¹ãƒãƒ›ã«ã‚ˆã‚Š\r\nåå‰‡é‡‘:12000å††" },
+            {4 ,"æ­©é“èµ°è¡Œã«ã‚ˆã‚Š\r\nåå‰‡é‡‘:6000å††" },
+            {5 ,"ä¸€æ™‚ä¸åœæ­¢ã«ã‚ˆã‚Š\r\nåå‰‡é‡‘:5000å††" },
+            {6 ,"é…’æ°—å¸¯ã³é‹è»¢ã«ã‚ˆã‚Š\r\nç½°é‡‘:500000å††" },
+            {7 ,"å¤œé–“ç„¡ç¯ç«ã«ã‚ˆã‚Š\r\nåå‰‡é‡‘:5000å††" }
         };
 
         violatDictionary = new Dictionary<violationType, int>
         {
             {violationType.none, 0},
-            {violationType.IgnoringTrafficLights, 6000},//”½‘¥‹à ‚Å‚«‚½
-            {violationType.RunningBackwards, 6000},//”½‘¥‹à
-            {violationType.smartphoneUse, 12000},//”½‘¥‹à@‚Å‚«‚½
-            {violationType.OnTheSidewalk, 6000},//”½‘¥‹à
-            {violationType.FailStop, 5000},//”½‘¥‹à
-            {violationType.drunkDriving, 500000},//”±‹à ‚Å‚«‚½
-            {violationType.offLights, 5000},//”½‘¥‹à@‚Å‚«‚½
+            {violationType.IgnoringTrafficLights, 6000},//åå‰‡é‡‘ ã§ããŸ
+            {violationType.RunningBackwards, 6000},//åå‰‡é‡‘
+            {violationType.smartphoneUse, 12000},//åå‰‡é‡‘ã€€ã§ããŸ
+            {violationType.OnTheSidewalk, 6000},//åå‰‡é‡‘
+            {violationType.FailStop, 5000},//åå‰‡é‡‘
+            {violationType.drunkDriving, 500000},//ç½°é‡‘ ã§ããŸ
+            {violationType.offLights, 5000},//åå‰‡é‡‘ã€€ã§ããŸ
 
         };
         if (!Itsfirsttime)
@@ -169,7 +150,7 @@ public class GameMnager : MonoBehaviour
         {
             waypoints[Countwaypoints].SetActive(false);
             Countwaypoints++;
-            //waypoint‚Ì•\¦
+            //waypointã®è¡¨ç¤º
             if (waypoints.Length - 1 < Countwaypoints)
             {
                 finishgame();
@@ -216,9 +197,9 @@ public class GameMnager : MonoBehaviour
         StartCoroutine(Fadeout(GameOverCanvas));
         GameStatus = "Restart";
         nextbuttonText.text = "restart";
-        Rank.text = "[";
-        RankText.text = "ƒ‰ƒ“ƒN‚È‚µ";
-        evaluation.text = "Œ»s”Æ";
+        Rank.text = "ãƒ¼";
+        RankText.text = "ãƒ©ãƒ³ã‚¯ãªã—";
+        evaluation.text = "ç¾è¡ŒçŠ¯";
         UIofAlpah();
         resetposition();
     }
@@ -234,14 +215,14 @@ public class GameMnager : MonoBehaviour
     }
     private void guilty(int value)
     {
-        //‹ï‘Ì“I‚Èßó
+        //å…·ä½“çš„ãªç½ªçŠ¶
         ShowUI();
 
-        //player‚ÌˆÊ’u‚ğƒŠƒZƒbƒg
+        //playerã®ä½ç½®ã‚’ãƒªã‚»ãƒƒãƒˆ
         PlayerReset = true;
-        //‘Šz‚ğ‘‚â‚·
+        //ç·é¡ã‚’å¢—ã‚„ã™
         penaltyint += value;
-        penaltytext.text = "‘Šz:" + penaltyint + "‰~";
+        penaltytext.text = "ç·é¡:" + penaltyint + "å††";
         //WebSocketClient.webC.Countviolations++;
         violatcount++;
         whatSin = violationType.none;
@@ -263,10 +244,10 @@ public class GameMnager : MonoBehaviour
             yield return null;
         }
         FadeoutB = false;
-        Debug.Log("”ñ•\¦");
+        Debug.Log("éè¡¨ç¤º");
         canvas.alpha = 0f;
         //Danger.interactable = false;
-        //Danger.blocksRaycasts = false;//‚¢‚é‚©•ª‚©‚ç‚È‚¢
+        //Danger.blocksRaycasts = false;//ã„ã‚‹ã‹åˆ†ã‹ã‚‰ãªã„
     }
     public void nextTo()//nextbutton
     {
@@ -274,9 +255,9 @@ public class GameMnager : MonoBehaviour
         if(GameStatus == "Restart")
         {
 
-            explain.text = "ˆá”½‚µ‚½‚çŒx@‚ª—ˆ‚é‚æ\n" +
-                "‚Ô‚Â‚©‚Á‚½‚ç‘ß•ß‚³‚ê‚é";
-            //ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚µ‚½•¨‘Ì‚È‚Ç‚ğsyokihaiti‚Åw’è‚µ‚Ä–ß‚·
+            explain.text = "é•åã—ãŸã‚‰è­¦å¯ŸãŒæ¥ã‚‹ã‚ˆ\n" +
+                "ã¶ã¤ã‹ã£ãŸã‚‰é€®æ•ã•ã‚Œã‚‹";
+            //ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã—ãŸç‰©ä½“ãªã©ã‚’syokihaitiã§æŒ‡å®šã—ã¦æˆ»ã™
             //for(int i = 0;i < Cars.Count; i++)
             //{
             //    Cars[i].transform.position = syokihaiti[i];
@@ -290,7 +271,7 @@ public class GameMnager : MonoBehaviour
         {
             if (stage == 1)
             {
-                explain.text = "Ô‚É’ˆÓ‚µ‚æ‚¤\n*Ô‚Í‚·‚×‚Ä’¼i‚Åi‚Ş‚æ*";
+                explain.text = "è»Šã«æ³¨æ„ã—ã‚ˆã†";
                 Risultgroup.alpha = 0;
                 nextbutton.SetActive(false);
                 UIsgroup.alpha = 1;
@@ -303,24 +284,24 @@ public class GameMnager : MonoBehaviour
             {
                 if (nextCount == 0)
                 {
-                    explain.text = "©“]Ô‚É‚ÍÂF‚Æ—ÎF‚ª‚ ‚Á‚Ä\n" +
-                        "ÂF:“®‚«‚ª’x‚¢‚ª“|‚ê‚È‚¢A•à‚¢‚Ä‚¢‚éƒCƒ[ƒW\n" +
-                        "—ÎF:“®‚«‚ª‘‚¢‚ª“|‚ê‚é";
+                    explain.text = "è‡ªè»¢è»Šã«ã¯é’è‰²ã¨ç·‘è‰²ãŒã‚ã£ã¦\n" +
+                        "é’è‰²:å‹•ããŒé…ã„ãŒå€’ã‚Œãªã„ã€æ­©ã„ã¦ã„ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸\n" +
+                        "ç·‘è‰²:å‹•ããŒæ—©ã„ãŒå€’ã‚Œã‚‹";
                 }
                 if (nextCount == 1)
                 {
-                    explain.text = "©“]Ô‚ÌF‚ÍspaceƒL[‚Å‚Ì•ÏX‚ª‚Å‚«‚é\n" +
-                        "ƒŠƒXƒ|[ƒ“‚ÍÂF‚É‚Å‚«‚é‚æ\n" +
-                        "‚»‚ê‚Å‚Ístartƒ{ƒ^ƒ“‚ğ\n" +
-                        "‰Ÿ‚µ‚Ä‚Ë";
+                    explain.text = "è‡ªè»¢è»Šã®è‰²ã¯spaceã‚­ãƒ¼ã§ã®å¤‰æ›´ãŒã§ãã‚‹\n" +
+                        "ãƒªã‚¹ãƒãƒ¼ãƒ³æ™‚ã¯é’è‰²ã«ã§ãã‚‹ã‚ˆ\n" +
+                        "ãã‚Œã§ã¯startãƒœã‚¿ãƒ³ã‚’\n" +
+                        "æŠ¼ã—ã¦ã­";
                 }
                 if (nextCount == 2)
                 {
-                    title.text = "ƒ`ƒ…[ƒgƒŠƒAƒ‹";
-                    explain.text = "‚İ‚Ç‚è‚Ìƒ`ƒFƒbƒNƒ|ƒCƒ“ƒg‚ğ\n" +
-                        "’Ê‚Á‚Ä‚¢‚Á‚Ä‚Ë\n" +
-                        "ÔF‚ªƒS[ƒ‹‚¾‚æ\n" +
-                        "M†‚É’ˆÓ‚µ‚æ‚¤";
+                    title.text = "ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«";
+                    explain.text = "ã¿ã©ã‚Šã®ãƒã‚§ãƒƒã‚¯ãƒã‚¤ãƒ³ãƒˆã‚’\n" +
+                        "é€šã£ã¦ã„ã£ã¦ã­\n" +
+                        "èµ¤è‰²ãŒã‚´ãƒ¼ãƒ«ã ã‚ˆ\n" +
+                        "ä¿¡å·ã«æ³¨æ„ã—ã‚ˆã†";
                 }
                 nextCount++;
                 if (nextint == nextCount)
@@ -333,9 +314,9 @@ public class GameMnager : MonoBehaviour
             }
             else
             {
-                title.text = "ƒ`ƒ…[ƒgƒŠƒAƒ‹";
-                explain.text = "Œx@‚É•ß‚Ü‚ç‚È‚¢‚æ‚¤‚É\n" +
-                    "ˆÀ‘S‰^“]‚µ‚æ‚¤";
+                title.text = "ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«";
+                explain.text = "è­¦å¯Ÿã«æ•ã¾ã‚‰ãªã„ã‚ˆã†ã«\n" +
+                    "å®‰å…¨é‹è»¢ã—ã‚ˆã†";
                 startbutton.SetActive(true);
                 nextbutton.SetActive(false);
             }
@@ -354,7 +335,7 @@ public class GameMnager : MonoBehaviour
         if (GameStatus == "Restart")
         {
             Itsfirsttime = false;
-            Debug.Log("ƒCƒG[ƒC");
+            Debug.Log("ã‚¤ã‚¨ãƒ¼ã‚¤");
             SenceEx.next(0);
         }
         if(GameStatus == "finish")
@@ -368,31 +349,31 @@ public class GameMnager : MonoBehaviour
         GameStatus = "play";
         Debug.Log(GameStatus);
         UIcanvas.alpha = 1;
-        penaltytext.text = "‘Šz:0‰~";
-        Debug.Log("‘ŠzƒŠƒZƒbƒg");
+        penaltytext.text = "ç·é¡:0å††";
+        Debug.Log("ç·é¡ãƒªã‚»ãƒƒãƒˆ");
         penaltyint = 0;
         Risultgroup.alpha = 0;
     }
     void UIofAlpah()
     {
         UIcanvas.alpha = 0;
-        violationsNumber.text = "ˆá”½‰ñ”:" + violatcount;
+        violationsNumber.text = "é•åå›æ•°:" + violatcount;
         //WebSocketClient.webC.Countviolations = 0;
         violatcount = 0;
-        resultpenlty.text = "‘Šz:" + penaltyint + "‰~";
-        ClearTimeText.text = "ŠÔ:" + ClearTime;
+        resultpenlty.text = "ç·é¡:" + penaltyint + "å††";
+        ClearTimeText.text = "æ™‚é–“:" + ClearTime;
         ClearTime = 0;
         Risultgroup.alpha = 1;
         nextbutton.SetActive(true);
     }
     void finishgame()
     {
-        //‚Å‚«‚½ƒŠƒXƒg
-        //playerˆÊ’u•ÏX
+        //ã§ããŸãƒªã‚¹ãƒˆ
+        //playerä½ç½®å¤‰æ›´
 
-        //‚â‚é‚±‚ÆƒŠƒXƒg
-        //stage‚Ì•Ï‰»A’nŒ`‚â•¨‘Ì‚ÌˆÚ“®
-        //NPC‚Ì”z’u
+        //ã‚„ã‚‹ã“ã¨ãƒªã‚¹ãƒˆ
+        //stageã®å¤‰åŒ–ã€åœ°å½¢ã‚„ç‰©ä½“ã®ç§»å‹•
+        //NPCã®é…ç½®
         GameStatus = "finish";
         stage++;
         Debug.Log("finish");
@@ -402,32 +383,32 @@ public class GameMnager : MonoBehaviour
         if (violatcount == 0)
         {
             Rank.text = "A";
-            RankText.text = "Å‚ƒ‰ƒ“ƒN";
-            evaluation.text = "´—õŒ‰”’";
+            RankText.text = "æœ€é«˜ãƒ©ãƒ³ã‚¯";
+            evaluation.text = "æ¸…å»‰æ½”ç™½";
         }
         else if (violatcount < 3)//1 2
         {
             Rank.text = "B";
-            RankText.text = "ƒ‰ƒ“ƒN";
-            evaluation.text = "”÷”ÆßÒ";
+            RankText.text = "ãƒ©ãƒ³ã‚¯";
+            evaluation.text = "å¾®çŠ¯ç½ªè€…";
         }
         else if (violatcount < 5)//3 4
         {
             Rank.text = "C";
-            RankText.text = "ƒ‰ƒ“ƒN";
-            evaluation.text = "”ÆßÒ—\”õŒR";
+            RankText.text = "ãƒ©ãƒ³ã‚¯";
+            evaluation.text = "çŠ¯ç½ªè€…äºˆå‚™è»";
         }
         else if (violatcount < 7)//5 6
         {
             Rank.text = "D";
-            RankText.text = "ƒ‰ƒ“ƒN";
-            evaluation.text = "”ÆßÒ";
+            RankText.text = "ãƒ©ãƒ³ã‚¯";
+            evaluation.text = "çŠ¯ç½ªè€…";
         }
         else
         {
             Rank.text = "E";
-            RankText.text = "Å’áƒ‰ƒ“ƒN";
-            evaluation.text = "dßl";
+            RankText.text = "æœ€ä½ãƒ©ãƒ³ã‚¯";
+            evaluation.text = "é‡ç½ªäºº";
         }
         UIofAlpah();
         resetposition();
