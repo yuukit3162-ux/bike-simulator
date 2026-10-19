@@ -201,17 +201,6 @@ public class GameMnager : MonoBehaviour
         RankText.text = "ランクなし";
         evaluation.text = "現行犯";
         UIofAlpah();
-        resetposition();
-    }
-    private void resetposition()
-    {
-        //if (stage == 0)
-        //{
-        //    foreach(KeyValuePair<GameObject, CarInfo> car in Cars)
-        //    {
-        //        if(car.Key == )
-        //    }
-        //}
     }
     private void guilty(int value)
     {
@@ -277,6 +266,10 @@ public class GameMnager : MonoBehaviour
                 UIsgroup.alpha = 1;
                 startbutton.SetActive(true);
             }
+            //if (stage == 2)目標まで走って行く
+            //if (stage == 3)何秒までゴールタイムアタック的な
+            //if (stage == 4)ものを配達する
+            
         }
         if(GameStatus == "start")
         {
@@ -411,6 +404,5 @@ public class GameMnager : MonoBehaviour
             evaluation.text = "重罪人";
         }
         UIofAlpah();
-        resetposition();
     }
 }
