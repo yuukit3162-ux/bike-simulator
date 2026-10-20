@@ -15,8 +15,10 @@ public class playerMnager : MonoBehaviour
     public traficlightMnager traficlightMnager;
     private bool traficlightIn = false;
     private bool traficlightIn2 = false;
-    private bool carwayright;
+    public bool carwayright;
+    private float carwayrighttime;
     public bool carway;
+    private float carwaytime;
     private int hand_sine = 4;//left:1 rigth:2 none:4
     public GameObject handleft;
     public GameObject handright;
@@ -48,6 +50,30 @@ public class playerMnager : MonoBehaviour
     {
         //WebSocketClient.webC.road_type = carway;
         //WebSocketClient.webC.move_inRight = carwayright;
+        if (carwayright)
+        {
+            carwayrighttime += Time.deltaTime;
+        }
+        else
+        {
+            carwayrighttime = 0;
+        }
+        if(carwayrighttime > 3)
+        {
+            GameMnager.whatSin = GameMnager.violationType.RunningBackwards;
+        }
+        if (!carway)
+        {
+            carwaytime += Time.deltaTime;
+        }
+        else
+        {
+            carwaytime = 0;
+        }
+        if(carwaytime > 3)
+        {
+            GameMnager.whatSin = GameMnager.violationType.OnTheSidewalk;
+        }
         // Debug.Log(carway);
         if (GameMnager.Insector.GameStatus == "play")
         {

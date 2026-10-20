@@ -64,6 +64,11 @@ public class GameMnager : MonoBehaviour
     public GameObject police;
 
     private static bool Itsfirsttime = true;
+
+    public arrowMnager arrowMnager;
+    public Image[] stars;
+    public Sprite blackstar;
+    public Sprite yellowstar;
     // UIを表示
     private void ShowUI()
     {
@@ -121,9 +126,9 @@ public class GameMnager : MonoBehaviour
         {
             {violationType.none, 0},
             {violationType.IgnoringTrafficLights, 6000},//反則金 できた
-            {violationType.RunningBackwards, 6000},//反則金
+            {violationType.RunningBackwards, 6000},//反則金 一応できた
             {violationType.smartphoneUse, 12000},//反則金　できた
-            {violationType.OnTheSidewalk, 6000},//反則金
+            {violationType.OnTheSidewalk, 6000},//反則金　一応できた
             {violationType.FailStop, 5000},//反則金
             {violationType.drunkDriving, 500000},//罰金 できた
             {violationType.offLights, 5000},//反則金　できた
@@ -158,6 +163,7 @@ public class GameMnager : MonoBehaviour
             else
             {
                 waypoints[Countwaypoints].SetActive(true);
+                arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
             }
             Countpls = false;
         }
@@ -219,6 +225,24 @@ public class GameMnager : MonoBehaviour
         {
             StartCoroutine(Fadeout(Danger));
         }
+        if (violatcount > 0)
+            boolstar(true, stars[0]);
+        if (violatcount > 2)//1 2
+            boolstar(true, stars[1]);
+        if (violatcount > 4)//3 4
+            boolstar(true, stars[2]);
+        if (violatcount > 6)//5 6
+            boolstar(true, stars[3]);
+        if (violatcount > 8)
+            boolstar(true, stars[4]);
+    }
+    void boolstar(bool TF,Image S)
+    {
+        if (TF)
+            S.sprite = yellowstar;
+        else
+            S.sprite = blackstar;
+
     }
     IEnumerator Fadeout(CanvasGroup canvas)
     {
@@ -323,6 +347,7 @@ public class GameMnager : MonoBehaviour
         {
             Countwaypoints = 0;
             waypoints[Countwaypoints].SetActive(true);
+            arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
         }
         Debug.Log(Itsfirsttime);
         if (GameStatus == "Restart")

@@ -71,6 +71,7 @@
     <Compile Include="Assets\cords\maincameraMnager.cs" />
     <Compile Include="Assets\http\httprequestforchatapi.cs" />
     <Compile Include="Assets\cords\nextbutton.cs" />
+    <Compile Include="Assets\cords\arrowMnager.cs" />
     <Compile Include="Assets\cords\startgamebutton.cs" />
     <Compile Include="Assets\cords\nomalcarMnager.cs" />
     <Compile Include="Assets\cords\PoliceNPCMnager2.cs" />
