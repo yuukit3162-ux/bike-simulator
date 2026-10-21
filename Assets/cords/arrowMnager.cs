@@ -8,6 +8,7 @@ public class arrowMnager : MonoBehaviour
     private Vector3 pos;
     [SerializeField]private int speed=5;
     // Start is called before the first frame update
+    /*矢印が目的地上空へ近づいたら移動するようにした...パラ調整とデバックはガンバへ*/
     void Start()
     {
         pos=transform.position;
