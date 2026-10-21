@@ -5,7 +5,7 @@ using UnityEngine;
 public class arrowMnager : MonoBehaviour
 {
     private Transform target;
-    privete Vector3 pos;
+    private Vector3 pos;
     [SerializeField]private int speed=5;
     // Start is called before the first frame update
     void Start()
