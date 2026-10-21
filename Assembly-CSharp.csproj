@@ -75,6 +75,7 @@
     <Compile Include="Assets\cords\startgamebutton.cs" />
     <Compile Include="Assets\cords\nomalcarMnager.cs" />
     <Compile Include="Assets\cords\PoliceNPCMnager2.cs" />
+    <Compile Include="Assets\cords\arrow2Mnager.cs" />
     <Compile Include="Assets\cords\Ai Navigation agent.cs" />
     <Compile Include="Assets\cords\SenceMnager.cs" />
     <Compile Include="Assets\http\httprequest.cs" />

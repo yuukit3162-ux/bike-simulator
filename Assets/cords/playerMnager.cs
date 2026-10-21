@@ -36,6 +36,8 @@ public class playerMnager : MonoBehaviour
 
     private Vector3 firstpos;
     private Quaternion firstrotate;
+
+    public LayerMask Carwaylayer;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -50,18 +52,19 @@ public class playerMnager : MonoBehaviour
     {
         //WebSocketClient.webC.road_type = carway;
         //WebSocketClient.webC.move_inRight = carwayright;
-        if (carwayright)
-        {
-            carwayrighttime += Time.deltaTime;
-        }
-        else
-        {
-            carwayrighttime = 0;
-        }
-        if(carwayrighttime > 3)
-        {
-            GameMnager.whatSin = GameMnager.violationType.RunningBackwards;
-        }
+
+        //if (carwayright)//そもそも逆走を正しく判定できない
+        //{
+        //    carwayrighttime += Time.deltaTime;
+        //}
+        //else
+        //{
+        //    carwayrighttime = 0;
+        //}
+        //if(carwayrighttime > 3)
+        //{
+        //    GameMnager.whatSin = GameMnager.violationType.RunningBackwards;
+        //}
         if (!carway)
         {
             carwaytime += Time.deltaTime;
@@ -70,7 +73,7 @@ public class playerMnager : MonoBehaviour
         {
             carwaytime = 0;
         }
-        if(carwaytime > 3)
+        if (carwaytime > 3)
         {
             GameMnager.whatSin = GameMnager.violationType.OnTheSidewalk;
         }
@@ -439,7 +442,7 @@ public class playerMnager : MonoBehaviour
         {
             carwayright = false;
         }
-        if (other.gameObject.tag == "carway")
+        if (other.gameObject.layer == 7)
         {
             carway = true;
         }
@@ -468,7 +471,7 @@ public class playerMnager : MonoBehaviour
         {
             carwayright = false;
         }
-        if (other.gameObject.tag == "carway")
+        if (other.gameObject.layer == 7)
         {
             carway = false;
         }

@@ -19,12 +19,13 @@ public class arrowMnager : MonoBehaviour
     {
         if(target != null)
         {
-            if((target.position-transform.position).sqrMagnitude <= 2500){
-                transform.position = Vector3.Lerp(transform.position, target.position+new Vector3(0,20,0), Time.deltaTime * speed):
-                
-            }else{
+            if((target.position-transform.position).sqrMagnitude <= 2500)
+            {
+                transform.position = Vector3.Lerp(transform.position, target.position + new Vector3(0, 20, 0), Time.deltaTime * speed);
+            }
+            else
+            {
                 transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * speed);
-                
             }
             transform.LookAt(target);
         }
