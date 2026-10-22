@@ -63,10 +63,10 @@ public class GameMnager : MonoBehaviour
     public bool night = false;
     public GameObject police;
 
-    private static bool Itsfirsttime = true;
+    public static bool Itsfirsttime = true;
 
     public arrowMnager arrowMnager;
-    public arrow2Mnager arrow2Mnager;
+    //public arrow2Mnager arrow2Mnager; あたまの上に出て次の場所を示すやつ
     public Image[] stars;
     public Sprite blackstar;
     public Sprite yellowstar;
@@ -98,7 +98,7 @@ public class GameMnager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log(Itsfirsttime);
         UIsgroup.alpha = 1;
         startbutton.SetActive(false);
 
@@ -165,7 +165,7 @@ public class GameMnager : MonoBehaviour
             {
                 waypoints[Countwaypoints].SetActive(true);
                 arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
-                arrow2Mnager.Gettarget2(waypoints[Countwaypoints].transform);
+                //arrow2Mnager.Gettarget2(waypoints[Countwaypoints].transform);
             }
             Countpls = false;
         }
@@ -350,7 +350,7 @@ public class GameMnager : MonoBehaviour
             Countwaypoints = 0;
             waypoints[Countwaypoints].SetActive(true);
             arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
-            arrow2Mnager.Gettarget2(waypoints[Countwaypoints].transform);
+            //arrow2Mnager.Gettarget2(waypoints[Countwaypoints].transform);
         }
         Debug.Log(Itsfirsttime);
         if (GameStatus == "Restart")

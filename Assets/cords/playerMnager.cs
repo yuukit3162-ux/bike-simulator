@@ -17,7 +17,7 @@ public class playerMnager : MonoBehaviour
     private bool traficlightIn2 = false;
     public bool carwayright;
     private float carwayrighttime;
-    public bool carway;
+    public bool sidewalk;
     private float carwaytime;
     private int hand_sine = 4;//left:1 rigth:2 none:4
     public GameObject handleft;
@@ -65,7 +65,7 @@ public class playerMnager : MonoBehaviour
         //{
         //    GameMnager.whatSin = GameMnager.violationType.RunningBackwards;
         //}
-        if (!carway)
+        if (sidewalk)
         {
             carwaytime += Time.deltaTime;
         }
@@ -75,7 +75,9 @@ public class playerMnager : MonoBehaviour
         }
         if (carwaytime > 3)
         {
-            GameMnager.whatSin = GameMnager.violationType.OnTheSidewalk;
+            if (!Jokou)
+                GameMnager.whatSin = GameMnager.violationType.OnTheSidewalk;
+            carwaytime = 0;
         }
         // Debug.Log(carway);
         if (GameMnager.Insector.GameStatus == "play")
@@ -442,9 +444,10 @@ public class playerMnager : MonoBehaviour
         {
             carwayright = false;
         }
-        if (other.gameObject.layer == 7)
+        if (other.gameObject.tag == "footway")
         {
-            carway = true;
+            sidewalk = true;
+            Debug.Log("carwayeee!!!!!");
         }
         if (other.gameObject.tag == "carNPC")
         {
@@ -471,9 +474,9 @@ public class playerMnager : MonoBehaviour
         {
             carwayright = false;
         }
-        if (other.gameObject.layer == 7)
+        if (other.gameObject.tag == "footway")
         {
-            carway = false;
+            sidewalk = false;
         }
         if (other.gameObject.tag == "traficlight")
         {
