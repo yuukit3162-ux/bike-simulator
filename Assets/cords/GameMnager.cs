@@ -63,7 +63,7 @@ public class GameMnager : MonoBehaviour
     public bool night = false;
     public GameObject police;
 
-    public static bool Itsfirsttime = true;
+    public static bool ReverseItsfirsttime;
 
     public arrowMnager arrowMnager;
     //public arrow2Mnager arrow2Mnager; あたまの上に出て次の場所を示すやつ
@@ -98,7 +98,7 @@ public class GameMnager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(Itsfirsttime);
+        Debug.Log(ReverseItsfirsttime);
         UIsgroup.alpha = 1;
         startbutton.SetActive(false);
 
@@ -135,7 +135,7 @@ public class GameMnager : MonoBehaviour
             {violationType.offLights, 5000},//反則金　できた
 
         };
-        if (!Itsfirsttime)
+        if (ReverseItsfirsttime)
         {
             nextTo();
         }
@@ -299,7 +299,7 @@ public class GameMnager : MonoBehaviour
         }
         if(GameStatus == "start")
         {
-            if (Itsfirsttime)
+            if (!ReverseItsfirsttime)
             {
                 if (nextCount == 0)
                 {
@@ -309,9 +309,9 @@ public class GameMnager : MonoBehaviour
                 }
                 if (nextCount == 1)
                 {
-                    explain.text = "自転車の色はspaceキーでの変更ができる\n" +
-                        "リスポーン時は青色にできるよ\n" +
-                        "それではstartボタンを\n" +
+                    explain.text = "自転車の色はspaceキーでの変更\n" +
+                        "リスポーン時は青色\n" +
+                        "startボタンを\n" +
                         "押してね";
                 }
                 if (nextCount == 2)
@@ -352,16 +352,16 @@ public class GameMnager : MonoBehaviour
             arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
             //arrow2Mnager.Gettarget2(waypoints[Countwaypoints].transform);
         }
-        Debug.Log(Itsfirsttime);
+        Debug.Log(ReverseItsfirsttime);
         if (GameStatus == "Restart")
         {
-            Itsfirsttime = false;
+            ReverseItsfirsttime = true;
             Debug.Log("イエーイ");
             SenceEx.next(0);
         }
         if(GameStatus == "finish")
         {
-            Itsfirsttime = true;
+            ReverseItsfirsttime = true;
             SenceEx.next();
         }
         //canvas.enabled = false;
