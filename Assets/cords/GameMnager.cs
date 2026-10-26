@@ -35,11 +35,19 @@ public class GameMnager : MonoBehaviour
 
     public GameObject penalty;//反則金
     private Text penaltytext;
-    private int penaltyint = 0;
+    private float penaltyfloat = 0;
 
     public CanvasGroup Danger;//違反時の表示
     public Text DangerText;
     private Dictionary<int, string> DangerDictionary;
+
+    public CanvasGroup DemoDanger;
+    public Text DemoDengerText;
+    private Dictionary<int, string> DemoDangerDictionary;
+    private float combo = 1f;
+    private int comboCount = 0;
+    private float crimeInterval = 5f;
+
     private Dictionary<violationType, int> violatDictionary;
     public int violatcount = 0;
 
@@ -70,12 +78,15 @@ public class GameMnager : MonoBehaviour
     public Image[] stars;
     public Sprite blackstar;
     public Sprite yellowstar;
+
+    public Text ComboText;
     // UIを表示
     private void ShowUI()
     {
         Debug.Log("showUI");
         counttime = 0;
         Danger.alpha = 1f;
+        DemoDanger.alpha = 1f;
         //Danger.interactable = true;
         //Danger.blocksRaycasts = true;//いるか分からない
     }
@@ -107,6 +118,7 @@ public class GameMnager : MonoBehaviour
 
         Risultgroup.alpha = 0;
         Danger.alpha = 0f;
+        DemoDanger.alpha = 0f;
         //Danger.interactable = false;
         //Danger.blocksRaycasts = false;//いるか分からない
 
@@ -121,6 +133,17 @@ public class GameMnager : MonoBehaviour
             {5 ,"一時不停止により\r\n反則金:5000円" },
             {6 ,"酒気帯び運転により\r\n罰金:500000円" },
             {7 ,"夜間無灯火により\r\n反則金:5000円" }
+        };
+        DemoDangerDictionary = new Dictionary<int, string>
+        {
+            {0, "違反なし" },
+            {1, "信号無視:6000円" },
+            {2 ,"逆走:6000円" },
+            {3 ,"ながらスマホ:12000円" },
+            {4 ,"歩道走行:6000円" },
+            {5 ,"一時不停止:5000円" },
+            {6 ,"酒気帯び運転:500000円" },
+            {7 ,"夜間無灯火:5000円" }
         };
 
         violatDictionary = new Dictionary<violationType, int>
@@ -169,15 +192,28 @@ public class GameMnager : MonoBehaviour
             }
             Countpls = false;
         }
+        crimeInterval += Time.deltaTime;
         if(whatSin != violationType.none)
         {
+            combo += 0.1f;
+            comboCount++;
             int Dnumber = (int)whatSin;
             int penalty = violatDictionary[whatSin];
             DangerText.text = DangerDictionary[Dnumber];
-            guilty(penalty);
+            DemoDengerText.text = DemoDangerDictionary[Dnumber] + "*" + combo;
+            guilty(penalty * combo);
+            crimeInterval = 0;
         }
-        
-
+        if (crimeInterval >= 5f)
+        {
+            combo = 1f;
+            comboCount = 0;
+        }
+        if (comboCount > 0)
+        {
+            //ComboText.text = comboCount.ToString();
+        }
+        ComboText.text = comboCount.ToString();
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -210,7 +246,7 @@ public class GameMnager : MonoBehaviour
         evaluation.text = "現行犯";
         UIofAlpah();
     }
-    private void guilty(int value)
+    private void guilty(float value)
     {
         //具体的な罪状
         ShowUI();
@@ -218,14 +254,15 @@ public class GameMnager : MonoBehaviour
         //playerの位置をリセット
         PlayerReset = true;
         //総額を増やす
-        penaltyint += value;
-        penaltytext.text = "総額:" + penaltyint + "円";
+        penaltyfloat += Mathf.Floor(value); ;
+        penaltytext.text = "総額:" + penaltyfloat + "円";
         //WebSocketClient.webC.Countviolations++;
         violatcount++;
         whatSin = violationType.none;
         if(FadeoutB == false)
         {
             StartCoroutine(Fadeout(Danger));
+            StartCoroutine(Fadeout(DemoDanger));
         }
         if (violatcount > 0)
             boolstar(true, stars[0]);
@@ -372,7 +409,7 @@ public class GameMnager : MonoBehaviour
         UIcanvas.alpha = 1;
         penaltytext.text = "総額:0円";
         Debug.Log("総額リセット");
-        penaltyint = 0;
+        penaltyfloat = 0;
         Risultgroup.alpha = 0;
     }
     void UIofAlpah()
@@ -381,7 +418,7 @@ public class GameMnager : MonoBehaviour
         violationsNumber.text = "違反回数:" + violatcount;
         //WebSocketClient.webC.Countviolations = 0;
         violatcount = 0;
-        resultpenlty.text = "総額:" + penaltyint + "円";
+        resultpenlty.text = "総額:" + penaltyfloat + "円";
         ClearTimeText.text = "時間:" + ClearTime;
         ClearTime = 0;
         Risultgroup.alpha = 1;

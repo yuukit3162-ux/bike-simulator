@@ -25,10 +25,13 @@ public class playerMnager : MonoBehaviour
     private float handinclination = 0;//傾き
     private float handdismiter = 1f;
     private bool usingSmartPhone;
+    private float usingSmartPhoneTime;
     public Camera maincamera;
     public CanvasGroup CanvasGroup;
     public GameObject bikelight;
+    private float bikelightTime;
     private int DrunkLevel;//酔い度　0~3
+    private float DrunkLevelTime;
     private float DrunkNoise = 0;
     public Text DrunkText;
     private float nowSpeed;
@@ -201,15 +204,42 @@ public class playerMnager : MonoBehaviour
         {
             if (usingSmartPhone)
             {
-                GameMnager.whatSin = GameMnager.violationType.smartphoneUse;
+                usingSmartPhoneTime += Time.deltaTime;
+                if(usingSmartPhoneTime > 3)
+                {
+                    GameMnager.whatSin = GameMnager.violationType.smartphoneUse;
+                    usingSmartPhoneTime = 0;
+                }
+            }
+            else
+            {
+                usingSmartPhoneTime = 0;
             }
             if(DrunkLevel > 0)
             {
-                GameMnager.whatSin = GameMnager.violationType.drunkDriving;
+                DrunkLevelTime += Time.deltaTime;
+                if(DrunkLevelTime > 3)
+                {
+                    GameMnager.whatSin = GameMnager.violationType.drunkDriving;
+                    DrunkLevelTime = 0;
+                } 
+            }
+            else
+            {
+                DrunkLevelTime = 0;
             }
             if (!bikelight.activeSelf && GameMnager.Insector.night)
             {
-                GameMnager.whatSin = GameMnager.violationType.offLights;
+                bikelightTime += Time.deltaTime;
+                if (bikelightTime > 3)
+                {
+                    bikelightTime = 0;
+                    GameMnager.whatSin = GameMnager.violationType.offLights;
+                }
+            }
+            else
+            {
+                bikelightTime = 0;
             }
         }
         if (Input.GetKeyDown(KeyCode.R))
@@ -294,6 +324,7 @@ public class playerMnager : MonoBehaviour
         usingSmartPhone = false;
         maincamera.farClipPlane = 300f;
         CanvasGroup.alpha = 0;
+        sidewalk = false;
         DrunkLevel = 0;
         DrunkText.text = "酔い度:" + DrunkLevel;
         JokouFreezeRotation();
@@ -394,6 +425,24 @@ public class playerMnager : MonoBehaviour
 
         }
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "footway")
+        {
+            if (other is BoxCollider box)
+            {
+                if (Onit(box))
+                {
+                    sidewalk = true;
+                }
+                else
+                {
+                    sidewalk = false;
+                }
+            }
+
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "traficlight" && !traficlightIn2)
@@ -444,11 +493,7 @@ public class playerMnager : MonoBehaviour
         {
             carwayright = false;
         }
-        if (other.gameObject.tag == "footway")
-        {
-            sidewalk = true;
-            Debug.Log("carwayeee!!!!!");
-        }
+        
         if (other.gameObject.tag == "carNPC")
         {
             //if (other.gameObject.GetComponent<Rigidbody>() == null)
@@ -474,10 +519,10 @@ public class playerMnager : MonoBehaviour
         {
             carwayright = false;
         }
-        if (other.gameObject.tag == "footway")
-        {
-            sidewalk = false;
-        }
+        //if (other.gameObject.tag == "footway")
+        //{
+        //    sidewalk = false;
+        //}
         if (other.gameObject.tag == "traficlight")
         {
             //WebSocketClient.webC.lights_on = 4;
@@ -488,6 +533,11 @@ public class playerMnager : MonoBehaviour
             //WebSocketClient.webC.lights_on = 4;
             traficlightIn2 = false;
         }
+    }
+
+    private bool Onit(BoxCollider boxCollider)
+    {
+        return (boxCollider.ClosestPoint(transform.position)-transform.position).sqrMagnitude < 0.001;
     }
 }
 
