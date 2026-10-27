@@ -45,6 +45,7 @@ public class GameMnager : MonoBehaviour
     public Text DemoDengerText;
     private Dictionary<int, string> DemoDangerDictionary;
     private float combo = 1f;
+    public CanvasGroup comboGroup;
     private int comboCount = 0;
     private float crimeInterval = 5f;
 
@@ -209,9 +210,14 @@ public class GameMnager : MonoBehaviour
             combo = 1f;
             comboCount = 0;
         }
+
         if (comboCount > 0)
         {
-            //ComboText.text = comboCount.ToString();
+            comboGroup.alpha = 1;
+        }
+        else if(comboCount <= 0)
+        {
+            comboGroup.alpha = 0;
         }
         ComboText.text = comboCount.ToString();
 
