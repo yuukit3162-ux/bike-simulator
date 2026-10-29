@@ -12,7 +12,7 @@ public class GameMnager : MonoBehaviour
 
     public Transform PlayerTranform;
 
-    public int stage = 0;
+    public static int stage;
     public int Countwaypoints = 0;
     
     private float fadeoutTime = 2f;
@@ -32,7 +32,6 @@ public class GameMnager : MonoBehaviour
     public Text nextbuttonText;
     private int nextint = 3;
     private int nextCount = 0;
-
     public GameObject penalty;//反則金
     private Text penaltytext;
     private float penaltyfloat = 0;
@@ -41,9 +40,9 @@ public class GameMnager : MonoBehaviour
     public Text DangerText;
     private Dictionary<int, string> DangerDictionary;
 
-    public CanvasGroup DemoDanger;
-    public Text DemoDengerText;
-    private Dictionary<int, string> DemoDangerDictionary;
+    //public CanvasGroup DemoDanger;
+    //public Text DemoDengerText;
+    //private Dictionary<int, string> DemoDangerDictionary;
     private float combo = 1f;
     public CanvasGroup comboGroup;
     private int comboCount = 0;
@@ -81,13 +80,17 @@ public class GameMnager : MonoBehaviour
     public Sprite yellowstar;
 
     public Text ComboText;
+
+    private int PoliceCount;
+    public Transform PoliceOfficePos;
+    private float PoliceTime;
     // UIを表示
     private void ShowUI()
     {
         Debug.Log("showUI");
         counttime = 0;
         Danger.alpha = 1f;
-        DemoDanger.alpha = 1f;
+        //DemoDanger.alpha = 1f;
         //Danger.interactable = true;
         //Danger.blocksRaycasts = true;//いるか分からない
     }
@@ -119,11 +122,10 @@ public class GameMnager : MonoBehaviour
 
         Risultgroup.alpha = 0;
         Danger.alpha = 0f;
-        DemoDanger.alpha = 0f;
+        //DemoDanger.alpha = 0f;
         //Danger.interactable = false;
         //Danger.blocksRaycasts = false;//いるか分からない
 
-        stage = 0;
         DangerDictionary = new Dictionary<int, string>
         {
             {0, "違反なし" },
@@ -135,17 +137,17 @@ public class GameMnager : MonoBehaviour
             {6 ,"酒気帯び運転により\r\n罰金:500000円" },
             {7 ,"夜間無灯火により\r\n反則金:5000円" }
         };
-        DemoDangerDictionary = new Dictionary<int, string>
-        {
-            {0, "違反なし" },
-            {1, "信号無視:6000円" },
-            {2 ,"逆走:6000円" },
-            {3 ,"ながらスマホ:12000円" },
-            {4 ,"歩道走行:6000円" },
-            {5 ,"一時不停止:5000円" },
-            {6 ,"酒気帯び運転:500000円" },
-            {7 ,"夜間無灯火:5000円" }
-        };
+        //DemoDangerDictionary = new Dictionary<int, string>
+        //{
+        //    {0, "違反なし" },
+        //    {1, "信号無視:6000円" },
+        //    {2 ,"逆走:6000円" },
+        //    {3 ,"ながらスマホ:12000円" },
+        //    {4 ,"歩道走行:6000円" },
+        //    {5 ,"一時不停止:5000円" },
+        //    {6 ,"酒気帯び運転:500000円" },
+        //    {7 ,"夜間無灯火:5000円" }
+        //};
 
         violatDictionary = new Dictionary<violationType, int>
         {
@@ -201,7 +203,7 @@ public class GameMnager : MonoBehaviour
             int Dnumber = (int)whatSin;
             int penalty = violatDictionary[whatSin];
             DangerText.text = DangerDictionary[Dnumber];
-            DemoDengerText.text = DemoDangerDictionary[Dnumber] + "*" + combo;
+            //DemoDengerText.text = DemoDangerDictionary[Dnumber] + "*" + combo;
             guilty(penalty * combo);
             crimeInterval = 0;
         }
@@ -240,6 +242,13 @@ public class GameMnager : MonoBehaviour
                 //WebSocketClient.webC.morning = false;
             }
         }
+        PoliceTime += Time.deltaTime;
+        if(PoliceCount > 0 && PoliceTime > 3)
+        {
+            Instantiate(police, PoliceOfficePos.position, Quaternion.identity);
+            PoliceCount--;
+            PoliceTime = 0;
+        }
     }
     public void GameOver()
     {
@@ -268,18 +277,34 @@ public class GameMnager : MonoBehaviour
         if(FadeoutB == false)
         {
             StartCoroutine(Fadeout(Danger));
-            StartCoroutine(Fadeout(DemoDanger));
+            //StartCoroutine(Fadeout(DemoDanger));
         }
         if (violatcount > 0)
+        {
             boolstar(true, stars[0]);
+            PoliceCount += 1;
+        }
         if (violatcount > 2)//1 2
+        {
             boolstar(true, stars[1]);
+            PoliceCount += 2;
+        }
         if (violatcount > 4)//3 4
+        {
             boolstar(true, stars[2]);
+            PoliceCount += 3;
+        }   
         if (violatcount > 6)//5 6
+        {
             boolstar(true, stars[3]);
+            PoliceCount += 4;
+        }
         if (violatcount > 8)
+        {
             boolstar(true, stars[4]);
+            PoliceCount += 5;
+        }
+           
     }
     void boolstar(bool TF,Image S)
     {
@@ -434,7 +459,7 @@ public class GameMnager : MonoBehaviour
     {
         //できたリスト
         //player位置変更
-
+        PoliceCount = 0;
         //やることリスト
         //stageの変化、地形や物体の移動
         //NPCの配置

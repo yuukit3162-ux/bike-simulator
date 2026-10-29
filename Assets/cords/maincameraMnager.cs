@@ -7,19 +7,17 @@ public class maincameraMnager : MonoBehaviour
     public Transform player;
     private Vector3 offset = new Vector3(0, 2, -4);
     private Vector3 parentAngles;
-    private Vector3 childAngles;
+    [SerializeField]
+    private GameObject[] cam;
     private Vector3 pos;
     private Vector3 localpos;
-    private bool posbool;
+    private int posbool;
     //private Quaternion pos;
     // Start is called before the first frame update
     void Start()
     {
-        parentAngles = transform.parent.rotation.eulerAngles;
 
-        childAngles = transform.rotation.eulerAngles;
-
-        localpos = transform.InverseTransformPoint(transform.parent.position);
+        localpos = transform.InverseTransformPoint(transform.position);
     }
 
     // Update is called once per frame
@@ -27,23 +25,28 @@ public class maincameraMnager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            if(posbool = !posbool)
-            {
-                posbool = true;
-                transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 10);
-            }
-            else
-            {
-                posbool = false;
-                transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10);
-            }
+            cam[posbool].SetActive(false);
+            posbool++;
+            posbool %= cam.Length;
+            cam[posbool].SetActive(true);
+            //switch (posbool) {
+            //    case 0:
+            //        transform.position = transform.TransformPoint( new Vector3(localpos.x, localpos.y, localpos.z + 10));
+            //        break;
+            //    case 1:
+            //        transform.position = transform.TransformPoint(new Vector3(localpos.x, localpos.y, localpos.z - 10));
+            //        break;
+            //    case 2:
+            //        transform.position = transform.TransformPoint(new Vector3(localpos.x, localpos.y+10, localpos.z));
+            //        break;
+            //}
         }
-        pos = player.transform.position - gameObject.transform.position + new Vector3(0, 2.7f, 0);
-
+        pos = player.transform.position + new Vector3(0, 2.7f, 0);
+        cam[posbool].transform.LookAt(pos);
         //pos.x -= 0.2f;
         //pos.z = 0f;
         //transform.parent.eulerAngles = new Vector3(0,Input.mousePosition.x - Screen.width / 2,0);
-        this.transform.rotation = Quaternion.LookRotation(pos);
+        //this.transform.rotation = Quaternion.LookRotation(pos);
         //childAngles.x = parentAngles.x + 10;
         //childAngles.y = parentAngles.y;
         //childAngles.z = parentAngles.z;

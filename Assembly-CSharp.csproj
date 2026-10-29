@@ -87,6 +87,7 @@
   <ItemGroup>
     <None Include="Assets\ZRNAssets\Documents\ReadMe.txt" />
     <None Include="Assets\materiar\bildings.shader" />
+    <None Include="Assets\model\Materials\both.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
