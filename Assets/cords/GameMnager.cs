@@ -84,6 +84,8 @@ public class GameMnager : MonoBehaviour
     private int PoliceCount;
     public Transform PoliceOfficePos;
     private float PoliceTime;
+
+    private bool muteki;
     // UIを表示
     private void ShowUI()
     {
@@ -122,6 +124,8 @@ public class GameMnager : MonoBehaviour
 
         Risultgroup.alpha = 0;
         Danger.alpha = 0f;
+
+        muteki = false;
         //DemoDanger.alpha = 0f;
         //Danger.interactable = false;
         //Danger.blocksRaycasts = false;//いるか分からない
@@ -195,6 +199,23 @@ public class GameMnager : MonoBehaviour
             }
             Countpls = false;
         }
+        if (stage == 1 && Countpls)
+        {
+            waypoints[Countwaypoints].SetActive(false);
+            Countwaypoints++;
+            //waypointの表示
+            if (waypoints.Length - 1 < Countwaypoints)
+            {
+                finishgame();
+            }
+            else
+            {
+                waypoints[Countwaypoints].SetActive(true);
+                arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
+                //arrow2Mnager.Gettarget2(waypoints[Countwaypoints].transform);
+            }
+            Countpls = false;
+        }
         crimeInterval += Time.deltaTime;
         if(whatSin != violationType.none)
         {
@@ -252,6 +273,8 @@ public class GameMnager : MonoBehaviour
     }
     public void GameOver()
     {
+        if (muteki)
+            return;
         GameOverCanvas.alpha = 1;
         StartCoroutine(Fadeout(GameOverCanvas));
         GameStatus = "Restart";
@@ -345,25 +368,19 @@ public class GameMnager : MonoBehaviour
             //{
             //    Cars[i].transform.position = syokihaiti[i];
             //}
-            Risultgroup.alpha = 0;
-            nextbutton.SetActive(false);
-            UIsgroup.alpha = 1;
-            startbutton.SetActive(true);
+            //Risultgroup.alpha = 0;
+            //nextbutton.SetActive(false);
+            //UIsgroup.alpha = 1;
+            //startbutton.SetActive(true);
+            ReverseItsfirsttime = true;
+            Debug.Log("イエーイ");
+            SenceEx.next(0);
         }
         if(GameStatus == "finish")
         {
-            if (stage == 1)
-            {
-                explain.text = "車に注意しよう";
-                Risultgroup.alpha = 0;
-                nextbutton.SetActive(false);
-                UIsgroup.alpha = 1;
-                startbutton.SetActive(true);
-            }
-            //if (stage == 2)目標まで走って行く
-            //if (stage == 3)何秒までゴールタイムアタック的な
-            //if (stage == 4)ものを配達する
-            
+            ReverseItsfirsttime = true;
+            SenceEx.next();
+
         }
         if(GameStatus == "start")
         {
@@ -415,22 +432,36 @@ public class GameMnager : MonoBehaviour
     {
         if (stage == 0)
         {
-            Countwaypoints = 0;
-            waypoints[Countwaypoints].SetActive(true);
-            arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
+            CountplsSetup();
             //arrow2Mnager.Gettarget2(waypoints[Countwaypoints].transform);
         }
+        if (stage == 1)
+        {
+            CountplsSetup();
+            explain.text = "車に注意";
+            Risultgroup.alpha = 0;
+            nextbutton.SetActive(false);
+            UIsgroup.alpha = 1;
+            startbutton.SetActive(true);
+        }
+        if (stage == 2)
+        {
+            explain.text = "目的地まで商品を運ぶ";
+            Risultgroup.alpha = 0;
+            nextbutton.SetActive(false);
+            UIsgroup.alpha = 1;
+            startbutton.SetActive(true);
+        }
+        //if (stage == 3)何秒までゴールタイムアタック的な
+        //if (stage == 4)ものを配達する
         Debug.Log(ReverseItsfirsttime);
         if (GameStatus == "Restart")
         {
-            ReverseItsfirsttime = true;
-            Debug.Log("イエーイ");
-            SenceEx.next(0);
+           
         }
         if(GameStatus == "finish")
         {
-            ReverseItsfirsttime = true;
-            SenceEx.next();
+
         }
         //canvas.enabled = false;
         UIsgroup.alpha = 0;
@@ -442,6 +473,12 @@ public class GameMnager : MonoBehaviour
         Debug.Log("総額リセット");
         penaltyfloat = 0;
         Risultgroup.alpha = 0;
+    }
+    void CountplsSetup()
+    {
+        Countwaypoints = 0;
+        waypoints[Countwaypoints].SetActive(true);
+        arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
     }
     void UIofAlpah()
     {
@@ -457,6 +494,8 @@ public class GameMnager : MonoBehaviour
     }
     void finishgame()
     {
+        //playerを無敵に
+        muteki = true;
         //できたリスト
         //player位置変更
         PoliceCount = 0;
