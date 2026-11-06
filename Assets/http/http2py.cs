@@ -55,6 +55,7 @@ public class LlamaChatManager : MonoBehaviour
     public bool putdata(string data)
     {
         //今日はここまで
+        return true;
     }
 
     private void OnDestroy()
