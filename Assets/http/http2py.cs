@@ -9,7 +9,7 @@ using LLama;
 public class LlamaChatManager : MonoBehaviour
 {
     // 💡 ダウンロードしたGGUFモデルファイルのフルパスを指定してください
-    [SerializeField] private string modelPath = @"C:\LLM_Models\your_model.gguf";
+    [SerializeField] private string modelPath = @"C:\Users\g254303\AI-Models\llm-jp-3-1.8b-instruct-Q4_K_M.gguf";
     [SerializeField] private int contextSize = 2048;
     [SerializeField] private int gpuLayers = 0; // CPUのみの場合は0。GPUを使う場合は枚数やレイヤー数（例: 20）を指定
 

@@ -116,9 +116,6 @@
   <ItemGroup>
     <None Include="Assets\Packages\System.Linq.AsyncEnumerable.10.0.13\useSharedDesignerContext.txt" />
     <None Include="Assets\Packages\Microsoft.Bcl.Memory.10.0.13\useSharedDesignerContext.txt" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\noavx\ggml-cpu.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-arm64\native\ggml-cpu.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\noavx\llama.dll" />
     <None Include="Assets\Packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.xml" />
     <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx\ggml-cpu.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\THIRD-PARTY-NOTICES.TXT" />
@@ -129,11 +126,7 @@
     <None Include="Assets\Packages\System.IO.Pipelines.10.0.13\lib\netstandard2.0\System.IO.Pipelines.xml" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.0\cs\ja\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn3.11\cs\pl\Microsoft.Extensions.Logging.Generators.resources.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx2\ggml-base.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\noavx\ggml.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx512\mtmd.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.4\cs\System.Text.Json.SourceGeneration.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\noavx\ggml-base.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.0\cs\zh-Hans\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\System.Numerics.Tensors.10.0.13\THIRD-PARTY-NOTICES.TXT" />
     <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx\ggml-base.dll" />
@@ -149,7 +142,6 @@
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.4\cs\it\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.0\cs\es\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn3.11\cs\pt-BR\System.Text.Json.SourceGeneration.resources.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx512\ggml-base.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn3.11\cs\zh-Hans\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn3.11\cs\ko\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn3.11\cs\tr\System.Text.Json.SourceGeneration.resources.dll" />
@@ -186,16 +178,11 @@
     <None Include="Assets\Packages\LLamaSharp.0.30.0\lib\netstandard2.0\LLamaSharp.xml" />
     <None Include="Assets\Packages\Microsoft.Bcl.Numerics.10.0.13\THIRD-PARTY-NOTICES.TXT" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.0\cs\ko\Microsoft.Extensions.Logging.Generators.resources.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx2\mtmd.dll" />
     <None Include="Assets\Packages\System.Text.Encodings.Web.10.0.13\lib\netstandard2.0\System.Text.Encodings.Web.dll" />
     <None Include="Assets\Packages\Microsoft.Bcl.AsyncInterfaces.10.0.13\lib\netstandard2.1\Microsoft.Bcl.AsyncInterfaces.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn3.11\cs\it\Microsoft.Extensions.Logging.Generators.resources.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx2\ggml.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx512\ggml.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.4\cs\es\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.0\cs\it\System.Text.Json.SourceGeneration.resources.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-arm64\native\mtmd.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-arm64\native\ggml-base.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.0\cs\zh-Hans\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.0\cs\System.Text.Json.SourceGeneration.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.4\cs\cs\System.Text.Json.SourceGeneration.resources.dll" />
@@ -220,31 +207,26 @@
     <None Include="Assets\Packages\System.Linq.Async.7.0.1\lib\netstandard2.1\System.Linq.Async.dll" />
     <None Include="Assets\Packages\System.Diagnostics.DiagnosticSource.10.0.13\useSharedDesignerContext.txt" />
     <None Include="Assets\Packages\System.IO.Pipelines.10.0.13\useSharedDesignerContext.txt" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx512\ggml-cpu.dll" />
     <None Include="Assets\Packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll" />
     <None Include="Assets\Packages\Microsoft.Bcl.Memory.10.0.13\lib\netstandard2.1\Microsoft.Bcl.Memory.xml" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.4\cs\pt-BR\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.Linq.AsyncEnumerable.10.0.13\THIRD-PARTY-NOTICES.TXT" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-arm64\native\ggml.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\useSharedDesignerContext.txt" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.4\cs\ru\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.0\cs\it\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.4\cs\pl\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\Microsoft.Bcl.Memory.10.0.13\lib\netstandard2.1\Microsoft.Bcl.Memory.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-arm64\native\llama.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn3.11\cs\fr\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\CommunityToolkit.HighPerformance.8.4.2\lib\netstandard2.1\CommunityToolkit.HighPerformance.xml" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.4\cs\de\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn3.11\cs\tr\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.IO.Pipelines.10.0.13\THIRD-PARTY-NOTICES.TXT" />
     <None Include="Assets\Packages\Microsoft.Bcl.Memory.10.0.13\THIRD-PARTY-NOTICES.TXT" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx2\llama.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.4\cs\fr\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.Diagnostics.DiagnosticSource.10.0.13\lib\netstandard2.0\System.Diagnostics.DiagnosticSource.xml" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn3.11\cs\es\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn3.11\cs\ru\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\System.IO.Pipelines.10.0.13\lib\netstandard2.0\System.IO.Pipelines.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx2\ggml-cpu.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn3.11\cs\fr\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.0\cs\de\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.4\cs\de\System.Text.Json.SourceGeneration.resources.dll" />
@@ -255,7 +237,6 @@
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn3.11\cs\ja\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.4\cs\ru\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn3.11\cs\ko\System.Text.Json.SourceGeneration.resources.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\noavx\mtmd.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.4\cs\fr\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\System.Text.Encodings.Web.10.0.13\lib\netstandard2.0\System.Text.Encodings.Web.xml" />
     <None Include="Assets\Packages\System.Linq.Async.7.0.1\lib\netstandard2.1\System.Linq.Async.xml" />
@@ -267,7 +248,6 @@
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.4\cs\ja\Microsoft.Extensions.Logging.Generators.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.0\cs\cs\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn4.0\cs\pt-BR\Microsoft.Extensions.Logging.Generators.resources.dll" />
-    <None Include="Assets\Packages\LLamaSharp.Backend.Cpu.0.30.0\LLamaSharpRuntimes\win-x64\native\avx512\llama.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.4\cs\tr\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\System.Text.Json.10.0.13\analyzers\dotnet\roslyn4.0\cs\ja\System.Text.Json.SourceGeneration.resources.dll" />
     <None Include="Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\analyzers\dotnet\roslyn3.11\cs\zh-Hant\Microsoft.Extensions.Logging.Generators.resources.dll" />
@@ -629,56 +609,56 @@
       <HintPath>Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\lib\ReportGenerator\ReportGeneratorMerged.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>Library\PackageCache\com.unity.analytics@3.8.1\AnalyticsStandardEvents\Unity.Analytics.StandardEvents.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Linq.AsyncEnumerable">
-      <HintPath>Assets\Packages\System.Linq.AsyncEnumerable.10.0.13\lib\netstandard2.0\System.Linq.AsyncEnumerable.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces">
-      <HintPath>Assets\Packages\Microsoft.Bcl.AsyncInterfaces.10.0.13\lib\netstandard2.1\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Linq.Async">
-      <HintPath>Assets\Packages\System.Linq.Async.7.0.1\lib\netstandard2.1\System.Linq.Async.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.Numerics">
-      <HintPath>Assets\Packages\Microsoft.Bcl.Numerics.10.0.13\lib\netstandard2.1\Microsoft.Bcl.Numerics.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource">
+      <HintPath>Assets\Packages\System.Diagnostics.DiagnosticSource.10.0.13\lib\netstandard2.0\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.AI.Abstractions">
       <HintPath>Assets\Packages\Microsoft.Extensions.AI.Abstractions.10.11.0\lib\netstandard2.0\Microsoft.Extensions.AI.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Interactive.Async">
+      <HintPath>Assets\Packages\System.Interactive.Async.7.0.1\lib\netstandard2.1\System.Interactive.Async.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CommunityToolkit.HighPerformance">
+      <HintPath>Assets\Packages\CommunityToolkit.HighPerformance.8.4.2\lib\netstandard2.1\CommunityToolkit.HighPerformance.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.Numerics">
+      <HintPath>Assets\Packages\Microsoft.Bcl.Numerics.10.0.13\lib\netstandard2.1\Microsoft.Bcl.Numerics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Text.Encodings.Web">
       <HintPath>Assets\Packages\System.Text.Encodings.Web.10.0.13\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="LLamaSharp">
-      <HintPath>Assets\Packages\LLamaSharp.0.30.0\lib\netstandard2.0\LLamaSharp.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces">
+      <HintPath>Assets\Packages\Microsoft.Bcl.AsyncInterfaces.10.0.13\lib\netstandard2.1\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Linq.AsyncEnumerable">
+      <HintPath>Assets\Packages\System.Linq.AsyncEnumerable.10.0.13\lib\netstandard2.0\System.Linq.AsyncEnumerable.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+      <HintPath>Assets\Packages\Microsoft.Extensions.DependencyInjection.Abstractions.10.0.13\lib\netstandard2.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Text.Json">
       <HintPath>Assets\Packages\System.Text.Json.10.0.13\lib\netstandard2.0\System.Text.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.IO.Pipelines">
-      <HintPath>Assets\Packages\System.IO.Pipelines.10.0.13\lib\netstandard2.0\System.IO.Pipelines.dll</HintPath>
+    <Reference Include="System.Numerics.Tensors">
+      <HintPath>Assets\Packages\System.Numerics.Tensors.10.0.13\lib\netstandard2.0\System.Numerics.Tensors.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-      <HintPath>Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    <Reference Include="System.Linq.Async">
+      <HintPath>Assets\Packages\System.Linq.Async.7.0.1\lib\netstandard2.1\System.Linq.Async.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+      <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
@@ -689,24 +669,24 @@
       <HintPath>Assets\Packages\Microsoft.Bcl.Memory.10.0.13\lib\netstandard2.1\Microsoft.Bcl.Memory.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
-      <HintPath>Assets\Packages\Microsoft.Extensions.DependencyInjection.Abstractions.10.0.13\lib\netstandard2.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    <Reference Include="System.IO.Pipelines">
+      <HintPath>Assets\Packages\System.IO.Pipelines.10.0.13\lib\netstandard2.0\System.IO.Pipelines.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="CommunityToolkit.HighPerformance">
-      <HintPath>Assets\Packages\CommunityToolkit.HighPerformance.8.4.2\lib\netstandard2.1\CommunityToolkit.HighPerformance.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Diagnostics.DiagnosticSource">
-      <HintPath>Assets\Packages\System.Diagnostics.DiagnosticSource.10.0.13\lib\netstandard2.0\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions">
+      <HintPath>Assets\Packages\Microsoft.Extensions.Logging.Abstractions.10.0.13\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Interactive.Async">
-      <HintPath>Assets\Packages\System.Interactive.Async.7.0.1\lib\netstandard2.1\System.Interactive.Async.dll</HintPath>
+    <Reference Include="LLamaSharp">
+      <HintPath>Assets\Packages\LLamaSharp.0.30.0\lib\netstandard2.0\LLamaSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Numerics.Tensors">
-      <HintPath>Assets\Packages\System.Numerics.Tensors.10.0.13\lib\netstandard2.0\System.Numerics.Tensors.dll</HintPath>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>Library\PackageCache\com.unity.analytics@3.8.1\AnalyticsStandardEvents\Unity.Analytics.StandardEvents.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">
