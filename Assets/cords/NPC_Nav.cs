@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AiNavigationagent : MonoBehaviour
+public class NPC_Nav : MonoBehaviour
 {
     // Start is called before the first frame update
     private NavMeshAgent agent;
     public Vector3 target;
-    private Rigidbody targetRB;
+    [SerializeField] private bool traficbool;
     private Rigidbody Rigidbody;
     [SerializeField] private float fixedspeed = 10f;
     [SerializeField] private float rotationspeed = 1f;
@@ -18,6 +18,7 @@ public class AiNavigationagent : MonoBehaviour
     private float Maxspeed = 20f;
     public LayerMask groundlayer;
     private bool useNavMesh;
+    public carMnager mnager;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -39,6 +40,54 @@ public class AiNavigationagent : MonoBehaviour
         Vector3 Hosei = transform.position + new Vector3(0, 0.8f, 0);
         Debug.DrawLine(Hosei, Hosei - transform.up*0.8f, Color.red);
         if (!Physics.Raycast(Hosei, -transform.up, 0.8f, groundlayer)) return;
+        if (traficbool)
+        {
+            if (isTouching)
+            {
+                if (traficlightMnager.traficColor == 1)//赤
+                {
+                    CarCondition = 0;
+                    //Debug.Log("red");
+                }
+                if (traficlightMnager.traficColor == 2)//黄色
+                {
+                    CarCondition = 0;
+                    //Debug.Log("yellow");
+                }
+                if (traficlightMnager.traficColor == 3)//青色
+                {
+                    CarCondition = 1;
+                    //Debug.Log("blue");
+                }
+
+            }
+            if (isTouching2)
+            {
+                if (traficlightMnager.traficColor2 == 4)//赤
+                {
+                    CarCondition = 0;
+                    //Debug.Log("red");
+                }
+                if (traficlightMnager.traficColor2 == 5)//黄色
+                {
+                    CarCondition = 0;
+                    //Debug.Log("yellow");
+                }
+                if (traficlightMnager.traficColor2 == 6)//青色
+                {
+                    CarCondition = 1;
+                    //Debug.Log("blue");
+                }
+            }
+        }
+        
+        if (CarCondition == 0) return;
+        if((transform.position - target).magnitude < 100)
+        {
+            
+            mnager.cars.Add(gameObject);
+            this.gameObject.SetActive(false);
+        }
         //if (!agent.isOnNavMesh)
         //{
         //    Debug.LogWarning("車がNavMesh上にいません！");
@@ -177,6 +226,38 @@ public class AiNavigationagent : MonoBehaviour
             {
                 Debug.DrawLine(start, corners[1], Color.red);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("traficlight") && !isTouching2)
+        {
+            isTouching = true;
+        }
+        if (other.CompareTag("traficlight2") && !isTouching)
+        {
+            isTouching2 = true;
+        }
+        if (other.gameObject.tag == "carway")
+        {
+            carway = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("traficlight"))
+        {
+            isTouching = false;
+        }
+        if (other.CompareTag("traficlight2"))
+        {
+            isTouching2 = false;
+        }
+        if (other.gameObject.tag == "carway")
+        {
+            carway = false;//いったんフラグだけ作成、挙動はこれから考える。
         }
     }
 }
