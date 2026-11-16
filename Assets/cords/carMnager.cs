@@ -12,10 +12,11 @@ public class carMnager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        RandomActionRoutine();
     }
     IEnumerator RandomActionRoutine()
     {
+        Debug.LogWarning("rand");
         while (true)
         {
             // 例：1秒〜5秒の間でランダムな時間を待つ
@@ -28,8 +29,9 @@ public class carMnager : MonoBehaviour
     }
     void spown()
     {
-        Vector3 pos=spownpoint[Random.Range(0, spownpoint.Length)].position;
-        Vector3 target=spownpoint[Random.Range(0, spownpoint.Length)].position;
+        Debug.LogWarning("spown");
+        Vector3 pos=spownpoint[Random.Range(0, spownpoint.Length)].transform.position;
+        Vector3 target=spownpoint[Random.Range(0, spownpoint.Length)].transform.position;
         GameObject NPC_Object;
         if (cars.Count <= 0)
         {
@@ -37,10 +39,10 @@ public class carMnager : MonoBehaviour
         }
         else
         {
-            NPC_Object = items.First();
-            items.Remove(NPC_Object);
-            NPC_Object.position=pos;
-            NPC_Object.SetActive=true;
+            NPC_Object = cars.First();
+            cars.Remove(NPC_Object);
+            NPC_Object.transform.position=pos;
+            NPC_Object.SetActive(true);
         }
         NPC_Nav code=NPC_Object.GetComponent<NPC_Nav>();
         code.target=target;

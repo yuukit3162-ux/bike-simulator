@@ -8,17 +8,22 @@ public class NPC_Nav : MonoBehaviour
     // Start is called before the first frame update
     private NavMeshAgent agent;
     public Vector3 target;
+
     [SerializeField] private bool traficbool;
     private Rigidbody Rigidbody;
     [SerializeField] private float fixedspeed = 10f;
     [SerializeField] private float rotationspeed = 1f;
-
+    private bool isTouching = true;
+    private bool isTouching2 = true;
     [SerializeField] private float handle = 1f;
     [SerializeField] private float hoseikyoudo = 1f;
     private float Maxspeed = 20f;
     public LayerMask groundlayer;
     private bool useNavMesh;
     public carMnager mnager;
+    public bool carway;
+    public int CarCondition;
+    public traficlightMnager traficlightMnager;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
