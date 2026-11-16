@@ -15,9 +15,11 @@ public class LlamaChatManager : MonoBehaviour
 
     private LLamaWeights _model;
     private LLamaContext _context;
-    private InteractiveExecutor _executor;
-    private ChatSession _session;
+    private BatchedExecutor executor;
+    private LLama.Batched.Conversation conversation;
     private bool canuseAI = false;
+    private LLamaToken[] baseTokens;
+    private int start;
     async void Start()
     {
         Debug.Log("[LLama] モデルの読み込みを開始します...（数秒かかります）");
@@ -34,9 +36,13 @@ public class LlamaChatManager : MonoBehaviour
                 };
 
                 _model = LLamaWeights.LoadFromFile(modelParams);
-                _context = _model.CreateContext(modelParams);
-                _executor = new InteractiveExecutor(_context);
-                _session = new ChatSession(_executor);
+                executor = new BatchedExecutor(_model, modelParams);
+                conversation = executor.Create();
+                baseTokens = executor.Context.Tokenize("あなたは優秀なアシスタントです。\n", addBos: true, special: true);
+                conversation.Prompt(baseTokens);
+                start = conversation.TokenCount;
+
+
             }
             catch (Exception e)
             {
@@ -44,7 +50,7 @@ public class LlamaChatManager : MonoBehaviour
             }
         });
 
-        if (_session != null)
+        if (_model != null)
         {
             Debug.Log("[LLama] モデルの読み込みが完了しました！");
             // テスト質問の実行
@@ -61,7 +67,6 @@ public class LlamaChatManager : MonoBehaviour
     private void OnDestroy()
     {
         // メモリリークを防ぐため、ゲーム終了時にC++側のメモリを確実に解放する
-        _context?.Dispose();
         _model?.Dispose();
         Debug.Log("[LLama] リソースを解放しました。");
     }
