@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using LLama.Common;
 using LLama;
+using LLama.Batched;
+using LLama.Native;
 
 public class LlamaChatManager : MonoBehaviour
 {
