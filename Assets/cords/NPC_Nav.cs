@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AiNavigationagent : MonoBehaviour
+public class NPC_Nav : MonoBehaviour
 {
     // Start is called before the first frame update
     private NavMeshAgent agent;
