@@ -9,6 +9,7 @@ public class carMnager : MonoBehaviour
     [SerializeField] private GameObject[] spownpoint;
     [SerializeField] private GameObject car;
     public HashSet<GameObject> cars = new HashSet<GameObject>();
+    public traficlightMnager traficlightMnager;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,20 +17,18 @@ public class carMnager : MonoBehaviour
     }
     IEnumerator RandomActionRoutine()
     {
-        Debug.LogWarning("rand");
         while (true)
         {
             // 例：1秒〜5秒の間でランダムな時間を待つ
             float waitTime = Random.Range(1f, 10f);
             yield return new WaitForSeconds(waitTime);
-
+            
             // ここに実行したい処理を書く
             spown();
         }
     }
     void spown()
     {
-        Debug.LogWarning("spown");
         Vector3 pos=spownpoint[Random.Range(0, spownpoint.Length)].transform.position;
         Vector3 target=spownpoint[Random.Range(0, spownpoint.Length)].transform.position;
         GameObject NPC_Object;
@@ -46,6 +45,8 @@ public class carMnager : MonoBehaviour
         }
         NPC_Nav code=NPC_Object.GetComponent<NPC_Nav>();
         code.target=target;
+        code.traficlightMnager = traficlightMnager;
+        code.mnager = this;
 
     }
 

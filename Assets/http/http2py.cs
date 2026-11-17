@@ -8,6 +8,9 @@ using LLama;
 using LLama.Batched;
 using LLama.Native;
 using System.Runtime.InteropServices;
+using LLama.Sampling;
+using System.Collections.Generic;
+using System.Threading;
 
 public class LlamaChatManager : MonoBehaviour
 {
@@ -25,14 +28,14 @@ public class LlamaChatManager : MonoBehaviour
     private bool canuseAI = false;
     private LLamaToken[] baseTokens;
     private int start;
-    public List<LLamaToken> DATA;
+    public LLamaToken[] DATA;
 
     async void Start()
     {
         Debug.Log("[LLama] モデルの読み込みを開始します...（数秒かかります）");
 
         // バックグラウンドスレッドで重いモデル読み込み処理を実行
-        await Task.Run(() =>
+        await Task.Run(async () =>
         {
             try
             {
@@ -49,7 +52,7 @@ public class LlamaChatManager : MonoBehaviour
                 conversation = executor.Create();
                 baseTokens = executor.Context.Tokenize("あなたは優秀なアシスタントです。\n", addBos: true, special: true);
                 conversation.Prompt(baseTokens);
-                await executor.Infer()
+                await executor.Infer();
                 start = baseTokens.Length;
 
 
@@ -75,17 +78,17 @@ public class LlamaChatManager : MonoBehaviour
         int back;
         List<LLamaToken> tokenHistory = new List<LLamaToken>();
         do{
-            List<LLamaToken> data=Volatile.Read(ref DATA);
-            back = data.Count;
-            conversation.Prompt(CollectionsMarshal.AsSpan(data));
+            LLamaToken[] data=Volatile.Read(ref DATA);
+            back = data.Length;
+            conversation.Prompt(data);
             await executor.Infer();
-            nextToken = sampler.Sample(executor.Context.NativeHandle, conversation.Sample(), Array.Empty<LLamaToken>());
+            nextToken = conversation.Sample(sampler);
             conversation.Rewind(back);
             conversation.Prompt(nextToken);
             tokenHistory.Add(nextToken);
-        }while(!model.Vocab.IsEOG(nextToken));
+        }while(!nextToken.IsEndOfGeneration(_model.Vocab));
         await executor.Infer();
-        Conversation.Rewind(conversation.TokenCount-start);
+        conversation.Rewind(conversation.TokenCount-start);
         return tokenHistory;
     }
 

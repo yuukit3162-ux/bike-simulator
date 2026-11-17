@@ -17,12 +17,12 @@ public class NPC_Nav : MonoBehaviour
     private bool isTouching2 = true;
     [SerializeField] private float handle = 1f;
     [SerializeField] private float hoseikyoudo = 1f;
-    private float Maxspeed = 20f;
+    [SerializeField]  private float Maxspeed = 100f;
     public LayerMask groundlayer;
     private bool useNavMesh;
     public carMnager mnager;
     public bool carway;
-    public int CarCondition;
+    public int CarCondition = 1;
     public traficlightMnager traficlightMnager;
     void Start()
     {
@@ -38,13 +38,9 @@ public class NPC_Nav : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(GameMnager.Insector.GameStatus != "play")
-        {
-            return;
-        }
-        Vector3 Hosei = transform.position + new Vector3(0, 0.8f, 0);
-        Debug.DrawLine(Hosei, Hosei - transform.up*0.8f, Color.red);
-        if (!Physics.Raycast(Hosei, -transform.up, 0.8f, groundlayer)) return;
+        Vector3 Hosei = transform.position + new Vector3(0, 0, 0);
+        Debug.DrawLine(Hosei, Hosei - transform.up*1.8f, Color.red);
+        if (!Physics.Raycast(Hosei, -transform.up, 1.8f, groundlayer)) return;
         if (traficbool)
         {
             if (isTouching)
@@ -85,13 +81,16 @@ public class NPC_Nav : MonoBehaviour
                 }
             }
         }
-        
-        if (CarCondition == 0) return;
-        if((transform.position - target).magnitude < 100)
+
+        if (CarCondition == 0) { 
+            return;
+        }
+        if ((transform.position - target).magnitude < 10)
         {
             
             mnager.cars.Add(gameObject);
             this.gameObject.SetActive(false);
+            return;
         }
         //if (!agent.isOnNavMesh)
         //{
@@ -132,7 +131,7 @@ public class NPC_Nav : MonoBehaviour
             useNavMesh=false;
             end = hit3.position;
         }
-        
+        Debug.Log(agent.SetDestination(end));
         if (agent.SetDestination(end))
         {
             // 3. 経路のすべての曲がり角（座標）の配列を取得
@@ -156,50 +155,6 @@ public class NPC_Nav : MonoBehaviour
             if (useNavMesh){
                 agent.nextPosition = start;
                 dddd=agent.desiredVelocity;
-                ////float agentrotation_y = Quaternion.LookRotation(dddd).eulerAngles.y;
-                //Debug.DrawLine(start, start+dddd*10, Color.magenta);
-                //Vector3 startx = start;// + dddd.normalized+ Rigidbody.velocity;
-                //Debug.DrawLine(startx, startx - transform.right * 60, Color.blue);
-                //if (NavMesh.Raycast(startx, startx - transform.right*60, out NavMeshHit hit4, NavMesh.AllAreas)){
-                //    float leftlong = Vector3.Distance(startx, hit4.position);
-                //    Debug.DrawLine(startx, startx + transform.right * 80, Color.green);
-                //    if (NavMesh.Raycast(startx, startx + transform.right * 80, out NavMeshHit hit5, NavMesh.AllAreas)){
-                //        float alllong = Vector3.Distance(hit5.position,hit4.position);
-                //        float leftpa_sent = leftlong/alllong;
-                //        float mokuhyouti = 0.3f-leftpa_sent;
-                //        Debug.Log("目標"+mokuhyouti);
-                //        //dddd = Vector3.ProjectOnPlane(dddd, transform.right);
-                //        if (NavMesh.FindClosestEdge(transform.position, out NavMeshHit edge, NavMesh.AllAreas))
-                //        {
-                //            dddd += transform.right * mokuhyouti * alllong + transform.forward * (mokuhyouti * alllong / Mathf.Tan(handle * Mathf.Deg2Rad + Mathf.Acos(Mathf.Abs(Vector3.Dot(Vector3.right, (transform.position - edge.position))))));// + Rigidbody.velocity;
-                //        }
-                //        Debug.DrawLine(start, start + dddd*10, Color.cyan);
-                //        DebugEx.DrawPoint(hit5.position, Color.red,3f,shape:DebugEx.ShapeType.Star);
-                //        DebugEx.DrawPoint(hit4.position, Color.red, 3f, shape: DebugEx.ShapeType.Star);
-                //        DebugEx.DrawPoint(edge.position, Color.yellow, 3f, shape: DebugEx.ShapeType.Star);
-                //        DebugEx.DrawPoint(start+mokuhyouti*alllong*transform.right, Color.cyan, 3f, shape: DebugEx.ShapeType.Circle);
-                //        //if (NavMesh.FindClosestEdge(transform.position,out NavMeshHit edge,NavMesh.AllAreas))
-                //        //{
-                //        //    Vector3 toEdge = edge.position - transform.position;
-
-                //        //    // Y方向を無視
-                //        //    toEdge.y = 0;
-
-                //        //    float distance = toEdge.magnitude;
-                //        //    float targetDistance = 2.0f;
-                //        //    if (distance < targetDistance)
-                //        //    {
-                //        //        Vector3 awayFromEdge = -toEdge.normalized;
-
-                //        //        // 端に近いほど強くする
-                //        //        float strength = Mathf.Clamp(targetDistance - distance,0f,0.5f);
-
-                //        //        dddd += awayFromEdge * strength;
-
-                //        //    }
-                //        //}
-                //    }
-                //}
             }
             else{
                 dddd=end-start;
@@ -220,6 +175,7 @@ public class NPC_Nav : MonoBehaviour
 
             Vector3 moveforedV3 = transform.forward *movefored;
             Rigidbody.AddForce(moveforedV3, ForceMode.Acceleration);// - transform.right * localVel.x 
+            Debug.Log(moveforedV3);
             //↓すべるの対策
             Rigidbody.AddTorque(new Vector3(0, look_to_rotation_y * Mathf.Clamp(localVel.z, 0.1f, 1f), 0), ForceMode.Acceleration);
             Debug.Log(agent.desiredVelocity);
@@ -255,14 +211,23 @@ public class NPC_Nav : MonoBehaviour
         if (other.CompareTag("traficlight"))
         {
             isTouching = false;
+            if(CarCondition == 0)
+            {
+                CarCondition = 1;
+            }
         }
         if (other.CompareTag("traficlight2"))
         {
             isTouching2 = false;
+            if (CarCondition == 0)
+            {
+                CarCondition = 1;
+            }
         }
         if (other.gameObject.tag == "carway")
         {
             carway = false;//いったんフラグだけ作成、挙動はこれから考える。
         }
+        
     }
 }
