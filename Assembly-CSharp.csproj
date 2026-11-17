@@ -94,6 +94,7 @@
     <Compile Include="Assets\cords\playerMnager.cs" />
     <Compile Include="Assets\cords\stratbutton.cs" />
     <Compile Include="Assets\cords\SenceEx.cs" />
+    <Compile Include="Assets\cords\NPC_Nav.cs" />
     <Compile Include="Assets\cords\GameMnager.cs" />
     <Compile Include="Assets\http\http2py.cs" />
     <Compile Include="Assets\cords\hekomaseru.cs" />

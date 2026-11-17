@@ -6,6 +6,7 @@ public class playerMnager : MonoBehaviour
 {
     private float moveForce = 20f;   // 加える力の強さ
     private float maxSpeed = 10000f;    // 最高速度の制限
+    private float maxJokouSpeed = 20f;    // 最高速度の制限
     private float turnSpeed = 180f;  // 回転速度
     private Rigidbody rb;
     public LayerMask groundlayer;
@@ -95,19 +96,19 @@ public class playerMnager : MonoBehaviour
         }
         if ((Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift)) && !Jokou)
         {
-            moveForce = 15f;
+            moveForce = 30f;
         }
         else if (!Jokou)
         {
-            moveForce = 30f;
+            moveForce = 40f;
         }
         if ((Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift)) && Jokou)
         {
-            moveForce = 10f;
+            moveForce = 0.5f;
         }
         else if (Jokou)
         {
-            moveForce = 20f;
+            moveForce = 1f;
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -382,6 +383,15 @@ public class playerMnager : MonoBehaviour
                 //yロール加速度
                 //Quaternion turnRotation = Quaternion.Euler(0f, turnInput * turnSpeed * Time.fixedDeltaTime * moveInput / 2, 0f);
                 //rb.MoveRotation();
+                
+                if (localVel.z > maxJokouSpeed)
+                {
+                    Debug.Log(localVel + " 1 " + tt2);
+                    localVel.z -= localVel.z - maxJokouSpeed;
+                    rb.velocity = transform.TransformDirection(localVel);
+                    Debug.Log(localVel + " 2 " + tt2);
+                }
+                
                 rb.AddForce(tt2, ForceMode.Acceleration);//加速
             }
             else//↓自転車
