@@ -12,7 +12,7 @@ public class carMnager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RandomActionRoutine();
+        StartCoroutine(RandomActionRoutine());
     }
     IEnumerator RandomActionRoutine()
     {
