@@ -20,9 +20,8 @@ public class carMnager : MonoBehaviour
         while (true)
         {
             // 例：1秒〜5秒の間でランダムな時間を待つ
-            //float waitTime = Random.Range(1f, 10f);
-            //yield return new WaitForSeconds(waitTime);
-            yield return new WaitForSeconds(1f);
+            float waitTime = Random.Range(1f, 10f);
+            yield return new WaitForSeconds(waitTime);
             // ここに実行したい処理を書く
             spown();
         }

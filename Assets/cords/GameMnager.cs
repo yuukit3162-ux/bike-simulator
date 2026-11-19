@@ -27,6 +27,7 @@ public class GameMnager : MonoBehaviour
     public CanvasGroup UIsgroup;//UIs
     public Text title;
     public Text explain;
+    public Text explain2;
     public GameObject startbutton;
     public GameObject nextbutton;
     public Text nextbuttonText;
@@ -177,15 +178,27 @@ public class GameMnager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.A) && Input.GetKeyDown(KeyCode.M))
+        {
+            finishgame();
+        }
         if(GameStatus == "play")
         {
             ClearTime += Time.deltaTime;
         }
         //Debug.Log(Countpls);
-        if (stage == 0 && Countpls)
+        if (Countpls)
         {
+            if(waypoints.Length == 1)
+            {
+                finishgame();
+                Countpls = false;
+                return;
+            }
+            Debug.Log(Countwaypoints);
             waypoints[Countwaypoints].SetActive(false);
             Countwaypoints++;
+
             //waypointの表示
             if (waypoints.Length - 1 < Countwaypoints)
             {
@@ -199,23 +212,23 @@ public class GameMnager : MonoBehaviour
             }
             Countpls = false;
         }
-        if (stage == 1 && Countpls)
-        {
-            waypoints[Countwaypoints].SetActive(false);
-            Countwaypoints++;
-            //waypointの表示
-            if (waypoints.Length - 1 < Countwaypoints)
-            {
-                finishgame();
-            }
-            else
-            {
-                waypoints[Countwaypoints].SetActive(true);
-                arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
-                //arrow2Mnager.Gettarget2(waypoints[Countwaypoints].transform);
-            }
-            Countpls = false;
-        }
+        //if (stage == 1 && Countpls)
+        //{
+        //    waypoints[Countwaypoints].SetActive(false);
+        //    Countwaypoints++;
+        //    //waypointの表示
+        //    if (waypoints.Length - 1 < Countwaypoints)
+        //    {
+        //        finishgame();
+        //    }
+        //    else
+        //    {
+        //        waypoints[Countwaypoints].SetActive(true);
+        //        arrowMnager.Gettarget(waypoints[Countwaypoints].transform);
+        //        //arrow2Mnager.Gettarget2(waypoints[Countwaypoints].transform);
+        //    }
+        //    Countpls = false;
+        //}
         crimeInterval += Time.deltaTime;
         if(whatSin != violationType.none)
         {
@@ -418,11 +431,22 @@ public class GameMnager : MonoBehaviour
             }
             else
             {
-                title.text = "チュートリアル";
-                explain.text = "警察に捕まらないように\n" +
-                    "安全運転しよう";
-                startbutton.SetActive(true);
-                nextbutton.SetActive(false);
+                if(stage == 0 || stage == 1)
+                {
+                    title.text = "チュートリアル";
+                    explain.text = "警察に捕まらないように\n" +
+                        "安全運転しよう";
+                    startbutton.SetActive(true);
+                    nextbutton.SetActive(false);
+                }
+                else
+                {
+                    explain.text = "目的地まで商品を運ぶ";
+                    explain2.text = "目的地 : あの家";
+                    startbutton.SetActive(true);
+                    nextbutton.SetActive(false);
+                }
+                
             }
             
         }
@@ -446,7 +470,9 @@ public class GameMnager : MonoBehaviour
         }
         if (stage == 2)
         {
+            CountplsSetup();
             explain.text = "目的地まで商品を運ぶ";
+            explain2.text = "目的地 : あの家";
             Risultgroup.alpha = 0;
             nextbutton.SetActive(false);
             UIsgroup.alpha = 1;
@@ -488,6 +514,7 @@ public class GameMnager : MonoBehaviour
         violatcount = 0;
         resultpenlty.text = "総額:" + penaltyfloat + "円";
         ClearTimeText.text = "時間:" + ClearTime;
+        Debug.LogWarning(ClearTime);
         ClearTime = 0;
         Risultgroup.alpha = 1;
         nextbutton.SetActive(true);
